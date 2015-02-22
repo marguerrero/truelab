@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'mar-apps.net/truelab';
+$config['base_url']	= '';
 
 /*
 |--------------------------------------------------------------------------
