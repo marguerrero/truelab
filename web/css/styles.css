@@ -1,0 +1,67 @@
+/** Sidebar Styles **/
+.sidebar {
+    padding-top: 164px;
+    background: rgb(52,152,219);
+    position: fixed;
+    height: 100%;
+}
+.nav-bar {
+    background: rgb(52,152,219);
+}
+.nav-sidebar > li > a {
+    color: #fff !important;
+}
+.nav-sidebar > li > a.active {
+    color: rgb(52,152,219) !important;
+    background: #fff !important;
+}
+.nav-sidebar > li > a:hover {
+    color: rgb(52,152,219) !important;
+}
+.username-label {
+    text-decoration: underline;
+    font-style: italic;
+}
+.logged-in {
+    margin-bottom: 15px;
+    display: block;
+}
+/** Header Styles **/
+.header {
+    padding-left: 50px;
+    min-height: 205px;
+}
+
+/** Generic styles **/
+body {
+    background: url('../images/bg-blue.png') repeat-x;
+}
+h1.welcome-title {
+    margin-left: 50px;
+}
+
+.welcome-img {
+    margin-left: 250px;
+}
+.underline {
+    text-decoration: underline;
+}
+.module-container {
+    padding-left: 75px;
+    max-width: 1024px;
+}
+.margin-left-sm {
+    margin-left: 15px;
+}
+.margin-bottom {
+    margin-bottom: 30px;
+}
+.form-1 {
+    max-width: 720px;
+    margin-top: 40px;
+}
+.extra-label {
+    margin-top: 5px !important;
+    display: block;
+
+}
