@@ -8,37 +8,37 @@
                 <div class="form-group">
                     <label for="first-name" class="col-sm-2 control-label">First Name</label>
                     <div class="col-sm-10">
-                        <input type="text" name="first-name" class="form-control" id="first-name" placeholder="Enter Customer's First Name">
+                        <input type="text" name="first-name" class="form-control" id="cust_lastname" placeholder="Enter Customer's First Name">
                     </div>
                 </div><!--.form-group-->
                 <div class="form-group">
                     <label for="last-name" class="col-sm-2 control-label">Last Name</label>
                     <div class="col-sm-10">
-                        <input type="text" name="last-name" class="form-control" id="last-name" placeholder="Enter Customer's Last Name">
+                        <input type="text" name="last-name" class="form-control" id="cust_lastname" placeholder="Enter Customer's Last Name">
                     </div>
                 </div><!--.form-group-->
                 <div class="form-group">
                     <label for="first-name" class="col-sm-2 control-label">Gender</label>
                     <div class="col-sm-1">
                         <div class="radio">
-                          <label><input type="radio" name="gender" id="gender-male" value="Male" checked>Male</label>
+                          <label><input type="radio" name="gender" class="cust_gender" id="gender-male" value="Male" checked>Male</label>
                         </div><!--.radio-->
                     </div>
                     <div class="col-sm-1">
                         <div class="radio">
-                          <label><input type="radio" name="gender" id="gender-female" value="Female" checked>Female</label>
+                          <label><input type="radio" name="gender" class="cust_gender" id="gender-female" value="Female">Female</label>
                         </div><!--.radio-->
                     </div>
                 </div><!--.form-group-->
                 <div class="form-group">
                     <label for="birthday" class="col-sm-2 control-label">Birthday</label>
                     <div class="col-sm-3">
-                        <input disabled type="text" class="form-control" id="birthday" placeholder="Customer's Birthday">
+                        <input name="bday" class="datepicker" type="text" class="form-control" id="cust_bday" placeholder="Customer's Birthday">
                     </div>
                 </div><!--.form-group-->
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                      <button type="" class="btn btn-default pull-right">Save Customer</button>
+                      <button type="button" class="btn btn-default pull-right" id="save-customer-btn">Save Customer</button>
                     </div>
                 </div><!--.form-group-->
             </form>
@@ -85,3 +85,5 @@
     <button class="btn btn-default">Reset</button>
     <button class="pull-right btn btn-success">Save Transaction</button>
 </div><!--.row-->
+
+<script type="text/javascript" src="<?php echo site_url('web/js/add_customer.js');?>"></script>

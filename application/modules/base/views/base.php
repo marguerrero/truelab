@@ -5,6 +5,7 @@
     <title>TrueLab - Clinic and Diagnostic</title>
     <link rel="stylesheet" type="text/css" href="<?php echo site_url('web/css/bootstrap/bootstrap.min.css');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo site_url('web/css/styles.css');?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url('web/js/bootstrap-datepicker/css/bootstrap-datepicker.min.css');?>" />
 </head>
 <body>
  
@@ -26,11 +27,17 @@
         <img src="<?php echo site_url('web/images/logo.png');?>" />
       </div><!--header-->
       <div class="module-container">
+        <script type="text/javascript" src="<?php echo site_url('web/js/jquery/jquery-1.11.2.min.js');?>"></script>
+        <script type="text/javascript" src="<?php echo site_url('web/css/bootstrap/bootstrap.min.js');?>"></script>
+        <script type="text/javascript" src="<?php echo base_url('web/js/bootstrap-datepicker/js/bootstrap-datepicker.min.js');?>"></script>
         <?php echo modules::run("$location"); ?>
       </div><!--.module-container-->
     </div><!--.main-container-->
 </div>
-<script type="text/javascript" src="<?php echo site_url('web/js/jquery/jquery-1.11.2.min.js');?>"></script>
-<script type="text/javascript" src="<?php echo site_url('web/css/bootstrap/bootstrap.min.js');?>"></script>
+
+<script type="text/javascript">
+  
+
+</script>
 </body>
 </html>
