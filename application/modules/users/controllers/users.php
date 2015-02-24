@@ -6,6 +6,15 @@ class Users extends MX_Controller {
         // $this->load->view('users_view');
     }
 
+    public function export()
+    {
+        $this->load->library('CustomerTransactionExport');
+
+        $exporter = new CustomerTransactionExport('P', 'in', array(11, 8.5), true, 'UTF-8', false);
+        $exporter->build();
+        $exporter->to_file('vrymel_Test.pdf');
+    }
+
     public function add(){
         $module = "users";
         $action = "_add";
