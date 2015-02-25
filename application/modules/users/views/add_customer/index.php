@@ -4,29 +4,29 @@
         <legend>Customer Information</legend>
         <button class="btn btn-default">Existing Customer</button>
         <div class="row">
-            <form class="form-horizontal form-1">
+            <form id="customer-form" class="form-horizontal form-1">
                 <div class="form-group">
-                    <label for="first-name" class="col-sm-2 control-label">First Name</label>
+                    <label for="first-name" class="col-sm-2 control-label">Last Name</label>
                     <div class="col-sm-10">
-                        <input type="text" name="first-name" class="form-control" id="cust_lastname" placeholder="Enter Customer's First Name">
+                        <input type="text" name="first-name" class="form-control" id="cust_lastname" placeholder="Enter Customer's Last Name">
                     </div>
                 </div><!--.form-group-->
                 <div class="form-group">
-                    <label for="last-name" class="col-sm-2 control-label">Last Name</label>
+                    <label for="last-name" class="col-sm-2 control-label">First Name</label>
                     <div class="col-sm-10">
-                        <input type="text" name="last-name" class="form-control" id="cust_lastname" placeholder="Enter Customer's Last Name">
+                        <input type="text" name="last-name" class="form-control" id="cust_lastname" placeholder="Enter Customer's First Name">
                     </div>
                 </div><!--.form-group-->
                 <div class="form-group">
                     <label for="first-name" class="col-sm-2 control-label">Gender</label>
                     <div class="col-sm-1">
                         <div class="radio">
-                          <label><input type="radio" name="gender" class="cust_gender" id="gender-male" value="Male" checked>Male</label>
+                          <label><input type="radio" name="gender" class="cust_gender" id="gender-male" value="M" checked>Male</label>
                         </div><!--.radio-->
                     </div>
                     <div class="col-sm-1">
                         <div class="radio">
-                          <label><input type="radio" name="gender" class="cust_gender" id="gender-female" value="Female">Female</label>
+                          <label><input type="radio" name="gender" class="cust_gender" id="gender-female" value="F">Female</label>
                         </div><!--.radio-->
                     </div>
                 </div><!--.form-group-->
@@ -42,6 +42,15 @@
                     </div>
                 </div><!--.form-group-->
             </form>
+
+            <div id="save-customer-alert" class="alert alert-success col-sm-10" role="alert" style="display: none; float: left;">
+                <strong></strong><p></p>
+            </div>
+
+            <!-- spacer -->
+            <div style="float: left;" class="alert col-sm-2">
+                <p>&nbsp;</p>
+            </div>
         </div><!--.row-->
     </fieldset>
     <fieldset class="">

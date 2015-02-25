@@ -50,7 +50,7 @@ $active_record = TRUE;
 
 $db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'root';
-$db['default']['password'] = 'vizard21';
+$db['default']['password'] = '';
 $db['default']['database'] = 'truelab';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
