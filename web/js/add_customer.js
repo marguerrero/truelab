@@ -1,10 +1,29 @@
 $(function(){
+    var existingCustomerTable = null;
+
     $('.datepicker').datepicker({
       autoclose: true,
       endDate: new Date()
     });
 
     $('#save-customer-btn').on('click', saveCustomer);
+
+    existingCustomerTable = $('#existing-customer-dialog table').DataTable({
+        "ajax": "/truelab/index.php/users/getCustomers",
+        "columns": [
+            { "data": "num" },
+            { "data": "lastname" },
+            { "data": "firstname" },
+            { "data": "birthday" },
+            { "data": "select" }
+        ]
+    });
+
+    $('#existing-customer-btn').click(function() {
+        existingCustomerTable.ajax.reload();
+
+        $('#existing-customer-dialog').modal();
+    });
 });
 
 function validate(form) {

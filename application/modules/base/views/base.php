@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo site_url('web/css/bootstrap/bootstrap.min.css');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo site_url('web/css/styles.css');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('web/js/bootstrap-datepicker/css/bootstrap-datepicker.min.css');?>" />
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.5/css/jquery.dataTables.min.css" />
 </head>
 <body>
  

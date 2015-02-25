@@ -2,7 +2,7 @@
 <div class="row margin-left-sm">
     <fieldset class="">
         <legend>Customer Information</legend>
-        <button class="btn btn-default">Existing Customer</button>
+        <button id="existing-customer-btn" class="btn btn-default">Existing Customer</button>
         <div class="row">
             <form id="customer-form" class="form-horizontal form-1">
                 <div class="form-group">
@@ -95,4 +95,120 @@
     <button class="pull-right btn btn-success">Save Transaction</button>
 </div><!--.row-->
 
+<div id="existing-customer-dialog" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Customer Selection</h4>
+      </div>
+      <div class="modal-body">
+        <p>Press the check icon to select a customer.</p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Last Name</th>
+                    <th>First Name</th>
+                    <th>Birthday</th>
+                    <th>Select</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Guerrero</td>
+                    <td>Reymar</td>
+                    <td>January 11, 1992</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>Guerrero</td>
+                    <td>Reymar</td>
+                    <td>January 11, 1992</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>Guerrero</td>
+                    <td>Reymar</td>
+                    <td>January 11, 1992</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>Guerrero</td>
+                    <td>Reymar</td>
+                    <td>January 11, 1992</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>Guerrero</td>
+                    <td>Reymar</td>
+                    <td>January 11, 1992</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>Guerrero</td>
+                    <td>Reymar</td>
+                    <td>January 11, 1992</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>Guerrero</td>
+                    <td>Reymar</td>
+                    <td>January 11, 1992</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>Guerrero</td>
+                    <td>Reymar</td>
+                    <td>January 11, 1992</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>Guerrero</td>
+                    <td>Reymar</td>
+                    <td>January 11, 1992</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>Guerrero</td>
+                    <td>Reymar</td>
+                    <td>January 11, 1992</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>Guerrero</td>
+                    <td>Reymar</td>
+                    <td>January 11, 1992</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>Guerrero</td>
+                    <td>Reymar</td>
+                    <td>January 11, 1992</td>
+                    <td>&nbsp;</td>
+                </tr>
+            </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+
 <script type="text/javascript" src="<?php echo site_url('web/js/add_customer.js');?>"></script>
+<script type="text/javascript" src="//cdn.datatables.net/1.10.5/js/jquery.dataTables.min.js"></script>

@@ -36,10 +36,26 @@ class Users extends MX_Controller {
         $this->load->view('review_customer/index');
     }
 
-    public function foo() {
-        
-        echo "</pre>";
-        die();
+    public function getCustomers() 
+    {
+        $this->db->from('cust_list');
+
+        $raw_data = $this->db->get()->result_array();
+        $response_data = array();
+        $num = 0;
+
+        foreach ($raw_data as $key => $value) 
+        {
+            $response_data[] = array(
+                'num' => ++$num,
+                'firstname' => $value['firstname'],
+                'lastname' => $value['lastname'],
+                'birthday' => date('m/d/Y', strtotime($value['bday'])),
+                'select' => ''
+            );
+        }
+
+        die(json_encode(array('data' => $response_data)));
     }
 
     /*************************
@@ -59,8 +75,8 @@ class Users extends MX_Controller {
             $birthday = $input->post('bday');
             $birthday = date('Y-m-d', strtotime($birthday));
             $customer = array(
-                'firstname' => $firstname,
-                'lastname' => $lastname,
+                'firstname' => trim($firstname),
+                'lastname' => trim($lastname),
                 'sex' => $gender,
                 'bday' => $birthday
             );
