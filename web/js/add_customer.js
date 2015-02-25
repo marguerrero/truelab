@@ -24,6 +24,30 @@ $(function(){
 
         $('#existing-customer-dialog').modal();
     });
+
+    $('#add-more-services').on('click', function(){
+        var service_count = $('#service-count').val(),
+            next_count = parseInt(service_count,10) + 1;
+        if(service_count < 10){
+            $('#service-count').val(next_count);
+            $('#service-container').append($('.service-form').html());
+        }
+        else
+            handleResultById({
+                    success: false,
+                    msg: 'Customer can only have maximum of 10 services'
+                }, 'add-service-alert');
+    });
+
+    $('.service-cat').on('change',function(){
+        var child = $(this).attr('data-child'),
+            service_id = $(this).find(':selected').attr('data-id');
+        console.log($(this).find(':selected'));
+        $('#'+child).find('.service-null').attr('selected', true);
+        $('#'+child).find('.child-options').hide();
+        $('#'+child).find('.child-'+ service_id).show();
+
+    });
 });
 
 function validate(form) {
@@ -92,4 +116,22 @@ function handleResult(data) {
             el.slideUp();
         }, 5000);
     });
+}
+
+function handleResultById(data, id){
+    var el = $('#'+id);
+    var addClass = (data.success) ? 'alert-success' : 'alert-danger';
+
+    el.removeClass('alert-success').removeClass('alert-danger');
+    el.addClass(addClass);
+    el.find('p').text(data.msg);
+
+    el.slideDown(400, function() {
+        setTimeout(function() {
+            el.slideUp();
+        }, 5000);
+    });
+}
+function addService(){
+
 }

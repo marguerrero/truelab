@@ -65,3 +65,8 @@ h1.welcome-title {
     display: block;
 
 }
+.hr-line {
+    border: 1px solid #e3e3e3 !important;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}

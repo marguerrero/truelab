@@ -22,7 +22,23 @@ class Users extends MX_Controller {
     }
 
     public function _add(){
-        $this->load->view('add_customer/index');
+        $service_options = "<option value='0'>-- SELECT SERVICE --</option>";
+        $sub_options = "<option class='service-null' value='0'>-- SELECT SERVICE --</option>";
+
+        $query = $this->db->get('categ_main');
+        foreach ($query->result() as $row){
+            $service_options .= "<option data-id='{$row->main_test_id}' value='{$row->main_test_id}'>{$row->category}</option>";
+        }
+        
+        $query = $this->db->get('subcat');
+        foreach ($query->result() as $row)
+            $sub_options .= "<option hidden class='child-options child-{$row->main_test_id}' data-price='{$row->reg_price}' data-discount-price='$row->disc_price' data-parent='{$row->main_test_id}' value={$row->sub_test_id}>{$row->subcateg}</option>";
+        
+        $retval = array(
+            'service_options' => $service_options,
+            'sub_options' => $sub_options
+        );
+        $this->load->view('add_customer/index', $retval);
     }
 
     //-- renders review page
