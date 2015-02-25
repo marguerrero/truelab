@@ -6,7 +6,15 @@ class Users extends MX_Controller {
         // $this->load->view('users_view');
     }
 
-    //--renders add custoemr page
+    public function export()
+    {
+        $this->load->library('CustomerTransactionExport');
+
+        $exporter = new CustomerTransactionExport('P', 'in', array(11, 8.5), true, 'UTF-8', false);
+        $exporter->build();
+        $exporter->to_file('vrymel_Test.pdf');
+    }
+
     public function add(){
         $module = "users";
         $action = "_add";
@@ -28,38 +36,81 @@ class Users extends MX_Controller {
         $this->load->view('review_customer/index');
     }
 
+    public function getCustomers() 
+    {
+        $this->db->from('cust_list');
+
+        $raw_data = $this->db->get()->result_array();
+        $response_data = array();
+        $num = 0;
+
+        foreach ($raw_data as $key => $value) 
+        {
+            $response_data[] = array(
+                'num' => ++$num,
+                'firstname' => $value['firstname'],
+                'lastname' => $value['lastname'],
+                'birthday' => date('m/d/Y', strtotime($value['bday'])),
+                'select' => ''
+            );
+        }
+
+        die(json_encode(array('data' => $response_data)));
+    }
+
     /*************************
     * For ajax call actions
     *************************/
-    public function saveCustomer(){
+    public function saveCustomer() {
 
         $msg_info = "";
         $err_msg = "";
         $data = array();
+
         try {
             $input = $this->input;
             $firstname = $input->post('first-name');
             $lastname = $input->post('last-name');
             $gender = $input->post('gender');
+            $birthday = $input->post('bday');
+            $birthday = date('Y-m-d', strtotime($birthday));
             $customer = array(
-                    'firstname' => $firstname,
-                    'lastname' => $lastname,
-                    'sex' => $gender
-                );
-            
-            
-            $this->db->insert('cust_list', $customer);
-            $msg_info = "Successfully saved";
+                'firstname' => trim($firstname),
+                'lastname' => trim($lastname),
+                'sex' => $gender,
+                'bday' => $birthday
+            );
+
+            if($this->hasRecord($customer))
+            {
+                $msg_info = $err_msg = "Customer already exist";
+            }
+            else
+            {
+                $this->db->insert('cust_list', $customer);
+                $msg_info = "Successfully saved";
+            }
         } catch(Exception $e){
             $err_msg = $e->getMessage();
         }
 
         $retval = array(
             'msg' => ($msg_info) ? $msg_info : $err_msg,
-            'status' => ($msg_info) ? "success" : "failure"
+            'success' => (empty($err_msg))
         ); 
-        echo json_encode($retval);
-        die();
+
+        die(json_encode($retval));
+    }
+
+    private function hasRecord($data) 
+    {
+        $this->db->from('cust_list');
+        $this->db->where('lastname', $data['lastname']);
+        $this->db->where('firstname', $data['firstname']);
+        //-- include bday?
+        // $this->db->where('bday', $data['bday']);
+
+        return ($this->db->get()->num_rows() > 0);
     }
 }
  
