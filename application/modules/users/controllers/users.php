@@ -32,7 +32,7 @@ class Users extends MX_Controller {
         
         $query = $this->db->get('subcat');
         foreach ($query->result() as $row)
-            $sub_options .= "<option hidden class='child-options child-{$row->main_test_id}' data-price='{$row->reg_price}' data-discount-price='$row->disc_price' data-parent='{$row->main_test_id}' value={$row->sub_test_id}>{$row->subcateg}</option>";
+            $sub_options .= "<option hidden data-reg-price='{$row->reg_price}' data-disc-price='{$rowhidden}' class='child-options child-{$row->main_test_id}' data-price='{$row->reg_price}' data-discount-price='$row->disc_price' data-parent='{$row->main_test_id}' value={$row->sub_test_id}>{$row->subcateg}</option>";
         
         $retval = array(
             'service_options' => $service_options,
@@ -62,12 +62,22 @@ class Users extends MX_Controller {
 
         foreach ($raw_data as $key => $value) 
         {
+            $firstname = mysql_escape_string($value['firstname']);
+            $lastname = mysql_escape_string($value['lastname']);
+            $birthday = date('m/d/Y', strtotime($value['bday']));
+            $id = $value['service_id'];
+            $gender = $value['sex'];
+            $today = new Datetime();
+            $bday = new Datetime($value['bday']);
+            $interval = $today->diff($bday);
+            $partial_age = $interval->format('%y');
+            $age = floor($partial_age);
             $response_data[] = array(
                 'num' => ++$num,
                 'firstname' => $value['firstname'],
                 'lastname' => $value['lastname'],
-                'birthday' => date('m/d/Y', strtotime($value['bday'])),
-                'select' => ''
+                'birthday' => $birthday,
+                'select' => "<a data-dismiss='modal' data-age='$age' data-gender='$gender' data-bday='$birthday' data-id='$id' data-firstname='{$value['firstname']}' data-lastname='{$value['lastname']}' data-birthday='{$value['birthday']}' class='customer-select' href='#'> <span class='select-icon glyphicon glyphicon-ok'  aria-hidden='true'>&nbsp</span></a>"
             );
         }
 

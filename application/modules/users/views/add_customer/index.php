@@ -6,34 +6,46 @@
         <div class="row">
             <form id="customer-form" class="form-horizontal form-1">
                 <div class="form-group" data-service-order="1">
+                    <label for="first-name" class="col-sm-2 control-label">Customer ID</label>
+                    <div class="col-sm-10">
+                        <input type="text" name="cust-id" class="form-control" id="cust-id" readonly placeholder="[ NEW CUSTOMER ]">
+                    </div>
+                </div><!--.form-group-->
+                <div class="form-group" data-service-order="1">
                     <label for="first-name" class="col-sm-2 control-label">Last Name</label>
                     <div class="col-sm-10">
-                        <input type="text" name="first-name" class="form-control" id="cust_lastname" placeholder="Enter Customer's Last Name">
+                        <input type="text" name="first-name" class="form-control" id="cust-lastname" placeholder="Enter Customer's Last Name">
                     </div>
                 </div><!--.form-group-->
                 <div class="form-group">
                     <label for="last-name" class="col-sm-2 control-label">First Name</label>
                     <div class="col-sm-10">
-                        <input type="text" name="last-name" class="form-control" id="cust_lastname" placeholder="Enter Customer's First Name">
+                        <input type="text" name="last-name" class="form-control" id="cust-firstname" placeholder="Enter Customer's First Name">
                     </div>
                 </div><!--.form-group-->
                 <div class="form-group">
                     <label for="first-name" class="col-sm-2 control-label">Gender</label>
                     <div class="col-sm-1">
                         <div class="radio">
-                          <label><input type="radio" name="gender" class="cust_gender" id="gender-male" value="M" checked>Male</label>
+                          <label><input type="radio" name="gender" class="cust-gender" id="gender-male" value="M" checked>Male</label>
                         </div><!--.radio-->
                     </div>
                     <div class="col-sm-1">
                         <div class="radio">
-                          <label><input type="radio" name="gender" class="cust_gender" id="gender-female" value="F">Female</label>
+                          <label><input type="radio" name="gender" class="cust-gender" id="gender-female" value="F">Female</label>
                         </div><!--.radio-->
                     </div>
                 </div><!--.form-group-->
                 <div class="form-group">
                     <label for="birthday" class="col-sm-2 control-label">Birthday</label>
                     <div class="col-sm-3">
-                        <input name="bday" class="datepicker" type="text" class="form-control" id="cust_bday" placeholder="Customer's Birthday">
+                        <input name="bday" class="datepicker" type="text" class="form-control" id="cust-bday" placeholder="Customer's Birthday">
+                    </div>
+                </div><!--.form-group-->
+                <div class="form-group">
+                    <label for="birthday" class="col-sm-2 control-label">Age</label>
+                    <div class="col-sm-3">
+                        <input name="age"  type="text" readonly class="form-control" id="cust-age" placeholder="Customer's Age" />
                     </div>
                 </div><!--.form-group-->
                 <div class="form-group">
@@ -68,7 +80,7 @@
                 <div class="form-group">
                     <label for="service-1" class="col-sm-2 control-label">Sub-Category</label>
                     <div class="col-sm-10">
-                        <select class="form-control" id="service-child-1">
+                        <select class="form-control service-sub-cat" id="service-child-1">
                             <?php echo $sub_options; ?>
                         </select>
                     </div><!--.col-sm-10-->
@@ -77,14 +89,14 @@
                     <label for="first-name" class="col-sm-2 control-label">Discount</label>
                     <div class="col-sm-1">
                         <div class="checkbox">
-                          <label><input type="checkbox" name="service-1-discount" id="service-1-discount" value="1"></label>
+                          <label><input class="service-discount" type="checkbox" name="service-1-discount" id="service-1-discount" value="1"></label>
                         </div><!--.radio-->
                     </div>
                 </div><!--.form-group-->
                 <div class="form-group">
                     <label for="birthday" class="col-sm-2 control-label">Price</label>
                     <div class="col-sm-3">
-                        <input disabled type="text" class="form-control" id="birthday" placeholder="Amount"/>
+                        <input disabled type="text" class="form-control service-price" id="" placeholder="Amount"/>
                     </div>
                     <div class="col-sm-3"><span class="extra-label">PHP</span></div>
                 </div><!--.form-group-->
@@ -97,7 +109,7 @@
         <strong></strong><p></p>
     </div>
 </div><!--.row-->
-<div class="row margin-bottom">
+<div id="button-footer" class="row margin-bottom">
     <button class="btn btn-default">Reset</button>
     <button class="btn btn-default" id="add-more-services">Add More Services</button>
     <button class="pull-right btn btn-success">Save Transaction</button>

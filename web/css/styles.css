@@ -70,3 +70,15 @@ h1.welcome-title {
     margin-top: 15px;
     margin-bottom: 15px;
 }
+.select-icon, {
+    color: #e3e3e3 !important;
+}
+.select-icon:hover {
+    color: rgb(35, 82, 124) !important;
+};
+.remove-icon {
+    color: #555 !important;
+}
+.remove-icon:hover {
+    color: #d9534f !important;
+};

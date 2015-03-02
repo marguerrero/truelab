@@ -1,5 +1,10 @@
+$('.customer-select').on('click', selectCustomer);
+$('#cust-bday').on('change', calculateAge);
+$('.service-sub-cat').on('change',displayPrice);
 $(function(){
     var existingCustomerTable = null;
+
+
 
     $('.datepicker').datepicker({
       autoclose: true,
@@ -23,26 +28,18 @@ $(function(){
         existingCustomerTable.ajax.reload();
 
         $('#existing-customer-dialog').modal();
+        setTimeout(function(){
+            console.log('pressed');
+            $('.customer-select').on('click', selectCustomer);
+        }, 1000);
+
     });
 
-    $('#add-more-services').on('click', function(){
-        var service_count = $('#service-count').val(),
-            next_count = parseInt(service_count,10) + 1;
-        if(service_count < 10){
-            $('#service-count').val(next_count);
-            $('#service-container').append($('.service-form').html());
-        }
-        else
-            handleResultById({
-                    success: false,
-                    msg: 'Customer can only have maximum of 10 services'
-                }, 'add-service-alert');
-    });
+    $('#add-more-services').on('click', addMoreService);
 
     $('.service-cat').on('change',function(){
         var child = $(this).attr('data-child'),
             service_id = $(this).find(':selected').attr('data-id');
-        console.log($(this).find(':selected'));
         $('#'+child).find('.service-null').attr('selected', true);
         $('#'+child).find('.child-options').hide();
         $('#'+child).find('.child-'+ service_id).show();
@@ -75,6 +72,67 @@ function configureFadeInputError(el) {
     setTimeout(function() {
         el.removeClass('has-error');
     }, 5000);
+}
+
+function selectCustomer(){
+    var selection = $(this),
+        id = selection.attr('data-id'),
+        lastname = selection.attr('data-lastname'),
+        firstname = selection.attr('data-firstname'),
+        bday = selection.attr('data-bday'),
+        gender = selection.attr('data-gender');
+        age = selection.attr('data-age');
+
+        
+        $('#cust-id').val(id);
+        $('#cust-lastname').val(lastname);
+        $('#cust-firstname').val(firstname);
+        $('#cust-bday').val(bday);
+        $('#cust-age').val(age);
+        if(gender == 'M'){
+            console.log('here');
+            $('#gender-male').prop('checked', true);
+        }
+        else{
+            console.log('hey');
+            $('#gender-female').prop('checked', true);
+        }
+        $('.customer-select').off('click', '**');
+        return;
+}
+
+function displayPrice(){
+    var selection = $(this),
+        container = selection.parent().parent().parent(),
+        reg_price = selection.find(':selected').attr('data-reg-price'),
+        disc_price = selection.find(':selected').attr('data-disc-price'),
+        has_discount = container.find('.service-discount').attr('checked'),
+        service_price = container.find('.service-price');
+
+        service_price.attr('data-reg-price', reg_price);
+        service_price.attr('data-disc-price', disc_price);
+        service_price.val(reg_price);
+        if(has_discount)
+            service_price.val(disc_price);
+}
+
+function addMoreService(){
+    $('.remove-panel').off('click', '**');
+    var service_count = $('#service-count').val(),
+        next_count = parseInt(service_count,10) + 1;
+    if(service_count < 10){
+        var html = "<div class='service-form'><div class='row margin-bottom'><a href='#' class='remove-panel'><span class='remove-icon pull-right glyphicon glyphicon-remove'  aria-hidden='true'>&nbsp</span></a></div>" + $('.service-form').html() + "</div><!--.service-form-->";
+        $('#service-count').val(next_count);
+        $('#service-container').append(html);
+        window.location.href = '#add-more-services';
+        $('.remove-panel').on('click', removeForm);
+    }
+    else
+        handleResultById({
+                success: false,
+                msg: 'Customer can only have maximum of 10 services'
+            }, 'add-service-alert');
+    
 }
 
 function saveCustomer() {
@@ -134,4 +192,23 @@ function handleResultById(data, id){
 }
 function addService(){
 
+}
+
+function calculateAge(){
+    var today = new Date(),
+         bday = new Date($('#cust-bday').val()),
+         partial_age = today - bday,
+         age = Math.floor(partial_age/31557600000);
+    $('#cust-age').val(age);
+    return;
+}
+
+function removeForm(event){
+    event.preventDefault();
+    var panel = $(this).parent().parent();
+    console.log(panel);
+        panel.slideUp();
+    setTimeout(function(){
+        panel.remove()
+    }, 2000)
 }
