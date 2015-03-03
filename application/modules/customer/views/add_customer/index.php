@@ -79,8 +79,11 @@
                 </div><!--.form-group-->
                 <div class="form-group">
                     <label for="service-1" class="col-sm-2 control-label">Sub-Category</label>
-                    <div class="col-sm-10">
-                        <select class="form-control service-sub-cat" name="subcat-id[]" id="service-child-1">
+                    <div class="col-sm-10 service-sub-cat-container">
+                        <select class="form-control service-sub-cat" name="subcat-id[]" id="service-child-1-dummy">
+                            <option class="service-null" value="0" selected="selected">-- SELECT SERVICE --</option>
+                        </select>
+                        <select class="form-control service-sub-cat" name="" id="service-child-1" style="display: none">
                             <?php echo $sub_options; ?>
                         </select>
                     </div><!--.col-sm-10-->

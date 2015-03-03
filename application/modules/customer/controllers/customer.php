@@ -165,10 +165,11 @@ class Customer extends MX_Controller {
         
         
         $retval = array(
-            'service_options' => $service_options,
+            'service_options' => $service_options, 
             'sub_options' => $sub_options,
             'customer' => $customer,
-            'trans_id' => $trans_id
+            'trans_id' => $trans_id,
+            'is_edit' => 1
         );
         $this->load->view('edit_customer/index', $retval);
     }
@@ -396,8 +397,9 @@ class Customer extends MX_Controller {
 
         try {
             $input = $this->input;
+            $session_data = $this->session->all_userdata();
             $services = $input->post('subcat-id');
-            $cust_id = $input->post('cust_id');
+            $cust_id = $input->post('cust-id');
             $firstname = $input->post('first-name');
             $lastname = $input->post('last-name');
             $gender = $input->post('gender');
@@ -463,6 +465,7 @@ class Customer extends MX_Controller {
             );
             $this->db->insert('customer_transaction', $transaction);
 
+
             //-- Save entries to customer service
             foreach ($services as $key => $value) {
                 $s_id = $value;
@@ -470,6 +473,7 @@ class Customer extends MX_Controller {
                 $service_entry = array(
                     'subcat_id' => $s_id,
                     'has_discount' => $discount,
+                    'created_by' => $session_data['username'],
                     'trans_id' => $trans_id
                 );
                 $this->db->insert('customer_service', $service_entry);

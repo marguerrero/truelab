@@ -228,7 +228,10 @@ function displaySubCategory(){
         container = selection.parent().parent().parent(),
         subcat = container.find('.service-sub-cat');
     service_id = $(this).find(':selected').attr('data-id');
-    console.log($(subcat).find('.child-'+ service_id));
+
+    $('#service-child-1-dummy').html('<option class="service-null" value="0" selected="selected">-- SELECT SERVICE --</option>');
+    $('#service-child-1-dummy').append($(subcat).find('.child-'+ service_id));
+
     $(subcat).find('.service-null').attr('selected', true);
     $(subcat).find('.child-options').hide();
     container.find('.service-price').val("");
@@ -249,7 +252,7 @@ function saveTransaction(event){
         return;
     button.addClass('disabled');
     $.ajax({
-        url : 'saveTransaction',
+        url : '/truelab/index.php/customer/saveTransaction',
         method: 'POST',
         data: postfields,
         success: function(response){

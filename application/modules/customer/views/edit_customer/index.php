@@ -1,6 +1,7 @@
 <div class="row"><h2> Edit Customer Information</h2></div>
 <div class="row margin-left-sm">
     <form id="customer-transaction" class="form-horizontal form-1">
+    <input type="hidden" id="" name="is_edit" value="<?=$is_edit;?>" />
     <fieldset class="main-form">
         <legend>Customer Information</legend>
         <!-- <div class="row" style="margin-bottom: 30px;"><a href="#" data-toggle="modal" data-target="#existing-customer-dialog"  id="#existing-customer-btn" class="btn btn-default">Existing Customer</a></div> -->
@@ -8,7 +9,7 @@
                 <div class="form-group" data-service-order="1">
                     <label for="reference-no" class="col-sm-2 control-label">Reference No.</label>
                     <div class="col-sm-10">
-                        <input type="text" value="<?=$customer['reference_no']; ?>" name="reference-no" disabled class="form-control" id="cust-id" readonly placeholder="Reference Number">
+                        <input type="text" value="<?=$customer['reference_no']; ?>" name="reference-no"  class="form-control disabled" id="cust-id" readonly placeholder="Reference Number">
                     </div>
                 </div><!--.form-group-->
                 <div class="form-group" data-service-order="1">
@@ -85,8 +86,11 @@
                 </div><!--.form-group-->
                 <div class="form-group">
                     <label for="service-1" class="col-sm-2 control-label">Sub-Category</label>
-                    <div class="col-sm-10">
-                        <select class="form-control service-sub-cat" name="subcat-id[]" id="service-child-1">
+                    <div class="col-sm-10 service-sub-cat-container">
+                        <select class="form-control service-sub-cat" name="subcat-id[]" id="service-child-1-dummy">
+                            <option class="service-null" value="0" selected="selected">-- SELECT SERVICE --</option>
+                        </select>
+                        <select class="form-control service-sub-cat" name="" id="service-child-1" style="display: none">
                             <?php echo $sub_options; ?>
                         </select>
                     </div><!--.col-sm-10-->

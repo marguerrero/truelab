@@ -80,13 +80,43 @@ class Radtech extends MX_Controller {
                 $$key = $value;
             }
             switch ($code) {
-                case 'UTZ':
-                    $template = new ServiceTemplate();
+                case 'RD':
+                     case 'RD':
+                    $html = "<br />
+                        <h1>CHEST PA VIEW</h1>
+                        <p>$result_1</p>
+                        <p>$result_2</p>
+                        <p>$result_3</p>
+                        <p>$result_4</p>
+                        <h2>$result_5</h2>
+                    ";
+                    $template = new RadiologyTemplate("Radiology", $html);
                     $template->set_name($fullname);
                     $template->set_age_sex($age_sex);
                     $template->set_date($date_released);
                     $template->set_physician($physician);
-                    $template->set_barangay('test');
+                    $template->build();
+                    ob_end_clean();
+                    $template->to_file($filename);
+                    break;
+                    $template = new RadiologyTemplate("Radiology", $html);
+                    $template->set_name($fullname);
+                    $template->set_age_sex($age_sex);
+                    $template->set_date($date_released);
+                    $template->set_physician($physician);
+                    $template->build();
+                    ob_end_clean();
+                    $template->to_file($filename);
+                    break;
+                 case 'UTZ':
+                    $html = "<br />
+                        <h1>OK NA? :)</h1>
+                    ";
+                    $template = new RadiologyTemplate("Ultrasound", $html);
+                    $template->set_name($fullname);
+                    $template->set_age_sex($age_sex);
+                    $template->set_date($date_released);
+                    $template->set_physician($physician);
                     $template->build();
                     ob_end_clean();
                     $template->to_file($filename);
@@ -155,7 +185,7 @@ class Radtech extends MX_Controller {
                 $services[] = array(
                     'category' => $row->category,
                     'service' => $row->subcateg,
-                    'update' => (in_array($row->template_code, $allowed)) ? "<a href='#'>Update</a>" : ""
+                    'update' => (in_array($row->template_code, $allowed)) ? "<a href='".site_url('index.php/radtech/service/'.$row->id)."'>Update</a>" : ""
                 );
             }
             $msg_info = "Successfully fetched";
@@ -185,13 +215,13 @@ class Radtech extends MX_Controller {
             customer_transaction aa
             LEFT JOIN cust_list bb
             ON bb.service_id=aa.cust_id
-            ORDER BY transdate DESC
+            ORDER BY aa.id DESC
         ";
         $query = $this->db->query($sql);
         
         foreach($query->result() as $key => $row){
             $data[] = array(
-                'num' => $key,
+                'num' => $key + 1,
                 'customer' => "{$row->lastname}, {$row->firstname}",
                 'reference_no' => $row->receipt_no,
                 'services' => $row->services,

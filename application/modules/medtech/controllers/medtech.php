@@ -273,12 +273,12 @@ class Medtech extends MX_Controller {
                 WHERE aa.trans_id='$trans_id'
             ";
             $query = $this->db->query($sql);
-            
+            $allowed = array('UTZ', 'RD');
             foreach($query->result() as $key => $row){
                 $services[] = array(
                     'category' => $row->category,
                     'service' => $row->subcateg,
-                    'update' => "<a href='".site_url('index.php/medtech/service/'.$row->id)."'>View</a>"
+                    'update' =>  (in_array($row->template_code, $allowed)) ? "": "<a href='".site_url('index.php/medtech/service/'.$row->id)."'>View</a>"
                 );
             }
             
@@ -309,13 +309,13 @@ class Medtech extends MX_Controller {
             customer_transaction aa
             LEFT JOIN cust_list bb
             ON bb.service_id=aa.cust_id
-            ORDER BY transdate DESC
+            ORDER BY aa.id DESC
         ";
         $query = $this->db->query($sql);
         
         foreach($query->result() as $key => $row){
             $data[] = array(
-                'num' => $key,
+                'num' => $key + 1,
                 'customer' => "{$row->lastname}, {$row->firstname}",
                 'reference_no' => $row->receipt_no,
                 'services' => $row->services,
