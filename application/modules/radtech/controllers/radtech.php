@@ -18,17 +18,84 @@ class Radtech extends MX_Controller {
         $this->load->view('list_transaction/index', $retval);
     }
 
-    public function service($service_id = 0){
-    	$params = array('service_id' => $service_id);
-    	$module = "radtech";
-    	$action = "_service";
-    	echo modules::run('base/base/index', $module, $action, $params);
+    public function service($service_id = ""){
+        $param = array('service_id' => $service_id);
+        $module = "radtech";
+        $action = "_service";
+        echo modules::run('base/base/index', $module, $action, $param);
     }
 
     public function _service($params = array()){
-    	$retval = array();
-    	
-    	$this->load->view('ultrasound/index', $retval);
+        $service_id = $params['service_id'];
+        
+        $sql = "
+            SELECT * FROM customer_service aa
+            LEFT JOIN customer_transaction bb
+                ON bb.id=aa.trans_id
+            LEFT JOIN cust_list cc
+                ON cc.service_id=bb.cust_id
+            LEFT JOIN subcat dd
+                ON dd.sub_test_id=aa.subcat_id
+            WHERE aa.id=$service_id
+        ";
+
+        $query = $this->db
+                    ->query($sql);
+
+        
+        if(!$query)
+            redirect('/');
+        $query = $query->result()[0];
+        $customer_info = array(
+            'customer_id' => $query->cust_id,
+            'fullname' => "{$query->lastname}, {$query->firstname}",
+            'age_sex' => $this->_calculateAge($query->bday)."/".$query->sex,
+            'bday' => date('m-d-Y', strtotime($query->bday))
+        );
+      
+       
+        $retval = array(
+            'customer' => $customer_info,
+            'code' => $query->template_code,
+            'service_id' => $service_id
+        );
+        $this->load->view('toolbar/index', $retval);
+        $this->load->view('radiology/index', $retval);
+        $this->load->view('ultrasound/index', $retval);
+        $this->load->view('toolbar/lower', $retval);
+    }
+
+    public function exportData(){
+        $post = $this->input->post();
+        $code = $post['code'];
+        // echo '<pre>';
+        // print_r($post);
+        // die();
+        // ob_start();
+        $err_info = "";
+        $msg_info = "";
+        $filename = "EXPORT_$code-".date('Y-m-d h:i:s').".pdf";
+        try {
+            foreach ($post as $key => $value) {
+                $$key = $value;
+            }
+            switch ($code) {
+                case 'UTZ':
+                    $template = new ServiceTemplate();
+                    $template->set_name($fullname);
+                    $template->set_age_sex($age_sex);
+                    $template->set_date($date_released);
+                    $template->set_physician($physician);
+                    $template->set_barangay('test');
+                    $template->build();
+                    ob_end_clean();
+                    $template->to_file($filename);
+                    break;
+            }
+
+        } catch(Exception $e){
+            die($e->getMessage());
+        }
     }
 
     public function loadSingleTransaction(){
@@ -83,12 +150,12 @@ class Radtech extends MX_Controller {
                 WHERE aa.trans_id='$trans_id'
             ";
             $query = $this->db->query($sql);
-
+            $allowed = array('UTZ', 'RD');
             foreach($query->result() as $key => $row){
                 $services[] = array(
                     'category' => $row->category,
                     'service' => $row->subcateg,
-                    'update' => "<a href='#'>Update</a>"
+                    'update' => (in_array($row->template_code, $allowed)) ? "<a href='#'>Update</a>" : ""
                 );
             }
             $msg_info = "Successfully fetched";
@@ -135,5 +202,14 @@ class Radtech extends MX_Controller {
         $retval = array('data' => $data);
         echo json_encode($retval);
         return;
+    }
+
+    private function _calculateAge($date){
+        $today = new Datetime();
+        $bday = new Datetime($date);
+        $interval = $today->diff($bday);
+        $partial_age = $interval->format('%y');
+        $age = floor($partial_age);
+        return $age;
     }
 }

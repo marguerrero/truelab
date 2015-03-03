@@ -1,21 +1,18 @@
-<div class="row">
-    <a href="#" class="pull-right btn btn-default" id="export" style="margin:15px;">Print</a>
-    <a href="#" class="pull-right btn btn-default" id="save" style="margin:15px;">Save</a>
-</div>
-<div class="row">
+<div class="row template" id="UTZ" style="display:none">
     <h1 class="text-center">Ultrasound</h1>
-    <form>
+    <form action="<?=site_url('/index.php/radtech/exportData');?>" method="POST">
         <input type="hidden" name="cust-id" />
         <input type="hidden" name="service-id" />
+        <input type="hidden" name="code" class="tpl-code" value="UTZ"/>
         <table class="table" id="customer-service">
             <tbody>
                 <tr>
                     <td>Name</td>
                     <td>:</td>
-                    <td colspan="4"><input type="text" class="form-control" value="<?=$customer['fullname'];?>" readonly/></td>
+                    <td colspan="4"><input type="text" class="form-control" name="fullname" value="<?=$customer['fullname'];?>" readonly/></td>
                     <td>Case No</td>
                     <td>:</td>
-                    <td><input type="text" class="form-control" value="" name="case-no" /></td>
+                    <td><input type="text" class="form-control" value="" name="case_no" /></td>
                 </tr>
                 <tr>
                     <td></td>
@@ -28,13 +25,13 @@
                 <tr>
                     <td>Age/Sex</td>
                     <td>:</td>
-                    <td><input type="text" class="form-control" value="<?=$customer['age_sex'];?>" readonly/></td>
+                    <td><input type="text" class="form-control"  name="age_sex" value="<?=$customer['age_sex'];?>" readonly/></td>
                     <td>DOB</td>
                     <td>:</td>
-                    <td><input type="text" class="form-control" value="<?=$customer['bday'];?>" readonly/></td>
+                    <td><input type="text" class="form-control" name="bday" value="<?=$customer['bday'];?>" readonly/></td>
                     <td>Date received</td>
                     <td>:</td>
-                    <td><input type="text" class="form-control" value="" name="date-recv" /></td>
+                    <td><input type="text" class="form-control" value="" name="date_recv" /></td>
                 </tr>
                 <tr>
                     <td>Physician</td>
@@ -42,7 +39,7 @@
                     <td colspan="4"><input placeholder="Physician Name" type="text" class="form-control" value="" name="physician" /></td>
                     <td>Date Released</td>
                     <td>:</td>
-                    <td><input type="text" class="form-control" value="" name="date-released" /></td>
+                    <td><input type="text" class="form-control" value="" name="date_released" /></td>
                 </tr>
             </tbody>
         </table>

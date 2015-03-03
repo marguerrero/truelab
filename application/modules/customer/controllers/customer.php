@@ -83,8 +83,9 @@ class Customer extends MX_Controller {
         foreach ($query->result() as $row){
             $reg_price = $row->reg_price;
             $disc_price = (!$row->disc_price) ? $reg_price : $row->disc_price;
-            $sub_options .= "<option hidden data-reg-price='{$row->reg_price}' data-disc-price='$disc_price' class='child-options child-{$row->main_test_id}' data-price='{$row->reg_price}' data-discount-price='$row->disc_price' data-parent='{$row->main_test_id}' value={$row->sub_test_id}>{$row->subcateg}</option>";
+            $sub_options .= "<option style='display:none;' data-reg-price='{$row->reg_price}' data-disc-price='$disc_price' class='child-options child-{$row->main_test_id}' data-price='{$row->reg_price}' data-discount-price='$row->disc_price' data-parent='{$row->main_test_id}' value={$row->sub_test_id}>{$row->subcateg}</option>";
         }
+        
         
        
         
@@ -295,7 +296,7 @@ class Customer extends MX_Controller {
 
         $raw_data = $this->db->get()->result_array();
         $response_data = array();
-        $num = 0;
+        $num = 1;
 
         foreach ($raw_data as $key => $value) 
         {
@@ -344,7 +345,8 @@ class Customer extends MX_Controller {
 
             if($this->hasRecord($customer))
             {
-                $msg_info = $err_msg = "Customer already exist";
+                // $msg_info = $err_msg = "Customer already exist";
+                $this->db->update('cust_list', $customer);
             }
             else
             {

@@ -8,7 +8,8 @@ class Base extends MX_Controller {
         $access_type = $session_data['access_type'];
         $access = array();
         switch ($access_type) {
-            case 'superamdin':
+            case 'superadmin':
+                $role = "Supar Admin";
                 $access = array(
                     'add_customer' => "",
                     'edit_customer' => "",
@@ -17,6 +18,7 @@ class Base extends MX_Controller {
                 );
                 break;
             case 'user':
+                $role = "User";
                 $access = array(
                     'add_customer' => "",
                     'edit_customer' => "",
@@ -25,6 +27,7 @@ class Base extends MX_Controller {
                 );
                 break;
             case 'rad_tech':
+                $role = "Rad Tech";
                 $access = array(
                     'add_customer' => "hidden",
                     'edit_customer' => "hidden",
@@ -33,6 +36,7 @@ class Base extends MX_Controller {
                 );
                 break;
             case 'med_tech':
+                $role = "Med Tech";
                 $access = array(
                     'add_customer' => "hidden",
                     'edit_customer' => "hidden",
@@ -50,8 +54,10 @@ class Base extends MX_Controller {
             'location' => $dir,
             'param' => $param,
             'username' => $username,
-            'access' => $access
+            'access' => $access,
+            'role' => $role
         );
+        
         $this->load->view('base', $retval);
     }
 }

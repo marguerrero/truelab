@@ -57,6 +57,7 @@ class ServiceTemplate extends PDF
     public function Header()
     {
         $this->Image('http://localhost/truelab/web/images/logo.png', 10, 10, 60, '', 'PNG', '', 'T', true, 300, 'C', false, false, 0, false, false, false);
+        // $this->Image('/var/www/html/truelab/web/images/logo.png', 10, 10, 60, '', 'PNG', '', 'T', true, 300, 'C', false, false, 0, false, false, false);
         $this->ln(15);
 
         $this->SetFont('helvetica', 'I', 9);

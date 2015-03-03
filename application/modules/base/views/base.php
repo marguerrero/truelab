@@ -120,7 +120,7 @@
     <div class="sidebar">
         <div class="logged-in-details">
           <p class="user"><?=$username;?></p>
-          <span class="user-type">Radtech</span>
+          <span class="user-type"><?=$role;?></span>
           <a class="user-logout" href="<?php echo base_url('index.php/login/logout');?>">logout</a>
         </div>
       

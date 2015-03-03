@@ -121,7 +121,7 @@ function clearDetails(){
 function viewDetails(){
     var rn = $(this).attr('data-rn');
     $.ajax({
-        url: '/loadSingleTransaction',
+        url: '<?=site_url("index.php/medtech/loadSingleTransaction");?>',
         data: {'receipt_no': rn},
         success: function(response){
             var response = $.parseJSON(response),
