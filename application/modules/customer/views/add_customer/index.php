@@ -14,13 +14,13 @@
                 <div class="form-group">
                     <label for="last-name" class="col-sm-2 control-label">First Name</label>
                     <div class="col-sm-10">
-                        <input type="text" name="first-name" class="form-control" id="cust-firstname" placeholder="Enter Customer's First Name">
+                        <input type="text" name="last-name" class="form-control" id="cust-firstname" placeholder="Enter Customer's First Name">
                     </div>
                 </div><!--.form-group-->
                 <div class="form-group" data-service-order="1">
                     <label for="first-name" class="col-sm-2 control-label">Last Name</label>
                     <div class="col-sm-10">
-                        <input type="text"  name="last-name"  class="form-control" id="cust-lastname" placeholder="Enter Customer's Last Name">
+                        <input type="text" name="first-name" class="form-control" id="cust-lastname" placeholder="Enter Customer's Last Name">
                     </div>
                 </div><!--.form-group-->
                 <div class="form-group">
@@ -171,7 +171,10 @@
     <div class="form-group">
         <label for="service-1" class="col-sm-2 control-label">Sub-Category</label>
         <div class="col-sm-10">
-            <select class="form-control service-sub-cat" name="subcat-id[]" id="service-child-1">
+            <select class="form-control service-sub-cat" name="subcat-id[]" id="service-child-1-dummy">
+                <option class="service-null" value="0" selected="selected">-- SELECT SERVICE --</option>
+            </select>
+            <select class="form-control service-sub-cat" name="" id="service-child-1" style="display: none">
                 <?php echo $sub_options; ?>
             </select>
         </div><!--.col-sm-10-->

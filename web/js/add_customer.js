@@ -231,7 +231,10 @@ function displaySubCategory(){
     service_id = $(this).find(':selected').attr('data-id');
 
     container.find('#service-child-1-dummy').html('<option class="service-null" value="0" selected="selected">-- SELECT SERVICE --</option>');
-    container.find('#service-child-1-dummy').append($(subcat).find('.child-'+ service_id));
+
+    var subcatOptions = $(subcat).find('.child-'+ service_id).clone();
+
+    container.find('#service-child-1-dummy').append(subcatOptions);
 
     $(subcat).find('.service-null').attr('selected', true);
     $(subcat).find('.child-options').hide();

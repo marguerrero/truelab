@@ -204,6 +204,12 @@ class Medtech extends MX_Controller {
                     $template->set_age_sex($age_sex);
                     $template->set_date($date_released);
                     $template->set_physician($physician);
+                    $template->set_color($result_1);
+                    $template->set_consistency($result_2);
+                    $template->set_while_blood_cells($result_3);
+                    $template->set_red_blood_cells($result_4);
+                    $template->set_occult_blood($result_5);
+                    $template->set_amoeba_result($result_6);
                     $template->build();
                     ob_end_clean();
                     $template->to_file($filename);

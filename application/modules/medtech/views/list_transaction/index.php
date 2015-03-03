@@ -36,7 +36,7 @@
       <div class="row margin-left-sm" id="customer-details" style="display:none;">
         <!-- start of #customer-info-container -->
         <div id="customer-info-container" class="row">
-            <div id="customer-information" class="col-sm-10 info-panel">
+            <div id="customer-information" class="col-sm-offset-1 col-sm-10 info-panel">
                 <table class="table">
                     <tbody>
                         <tr>

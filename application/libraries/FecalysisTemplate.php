@@ -7,6 +7,7 @@ class FecalysisTemplate extends ServiceTemplate
     private $_while_blood_cells;
     private $_red_blood_cells;
     private $_occult_blood;
+    private $_amoeba_result;
 
     public function set_color($v)
     {
@@ -39,6 +40,13 @@ class FecalysisTemplate extends ServiceTemplate
     public function set_occult_blood($v)
     {
         $this->_occult_blood = $v;
+
+        return $this;
+    }
+
+    public function set_amoeba_result($v)
+    {
+        $this->_amoeba_result = $v;
 
         return $this;
     }
@@ -114,6 +122,10 @@ class FecalysisTemplate extends ServiceTemplate
             array(
                 array('text' => 'Occult blood:'),
                 array('text' => '    ' . $this->_occult_blood)
+            ),
+            array(
+                array('text' => ''),
+                array('text' => $this->_amoeba_result)
             ),
         );
 

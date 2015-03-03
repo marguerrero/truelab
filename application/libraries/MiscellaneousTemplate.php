@@ -63,7 +63,7 @@ class MiscellaneousTemplate extends ServiceTemplate
                     'style' => $data_style,
                 ),
                 array(
-                    'text' => $this->_test_result,
+                    'text' => "\n" . $this->_test_result,
                     'style' => $data_style,
                 ),
                 array('text' => '')
