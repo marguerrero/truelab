@@ -84,7 +84,7 @@ class Medtech extends MX_Controller {
             }
             switch ($code) {
                  case 'HE':
-                     $template = new HematologyTemplate("TEST", "TEST");
+                     $template = new HematologyTemplate();
                     $template->set_name($fullname);
                     $template->set_age_sex($age_sex);
                     $template->set_date($date_released);
@@ -158,7 +158,7 @@ class Medtech extends MX_Controller {
                     break;
                 case 'CH':
                  
-                  $template = new ClinicalChemistryTemplate("TEST", "TEST");
+                  $template = new ClinicalChemistryTemplate();
                   $template->set_name($fullname);
                     $template->set_age_sex($age_sex);
                     $template->set_date($date_released);
@@ -199,7 +199,7 @@ class Medtech extends MX_Controller {
                     // $this->load->view('miscellaneous/index', $retval);
                 break;
                 case 'SE':
-                    $template = new FecalysisTemplate("TEST", "TEST");
+                    $template = new FecalysisTemplate();
                     $template->set_name($fullname);
                     $template->set_age_sex($age_sex);
                     $template->set_date($date_released);

@@ -118,7 +118,7 @@
     </div>
 </div><!--.row-->
 <div id="button-footer" class="row margin-bottom">
-    <button class="btn btn-default">Reset</button>
+    <button id="reset-fields" class="btn btn-default">Reset</button>
     <button class="btn btn-default" id="add-more-services">Add More Services</button>
     <!-- <button class="pull-right btn btn-success">Save Transaction</button> -->
     <a href="#" class="pull-right btn btn-success" id="save-trans-btn" >Save Transaction</a>
@@ -145,89 +145,9 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>1</td>
-                    <td>Guerrero</td>
-                    <td>Reymar</td>
-                    <td>January 11, 1992</td>
-                    <td>&nbsp;</td>
+                    <td colspan="5">Please refresh the page</td>
                 </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Guerrero</td>
-                    <td>Reymar</td>
-                    <td>January 11, 1992</td>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Guerrero</td>
-                    <td>Reymar</td>
-                    <td>January 11, 1992</td>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Guerrero</td>
-                    <td>Reymar</td>
-                    <td>January 11, 1992</td>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Guerrero</td>
-                    <td>Reymar</td>
-                    <td>January 11, 1992</td>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Guerrero</td>
-                    <td>Reymar</td>
-                    <td>January 11, 1992</td>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Guerrero</td>
-                    <td>Reymar</td>
-                    <td>January 11, 1992</td>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Guerrero</td>
-                    <td>Reymar</td>
-                    <td>January 11, 1992</td>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Guerrero</td>
-                    <td>Reymar</td>
-                    <td>January 11, 1992</td>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Guerrero</td>
-                    <td>Reymar</td>
-                    <td>January 11, 1992</td>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Guerrero</td>
-                    <td>Reymar</td>
-                    <td>January 11, 1992</td>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Guerrero</td>
-                    <td>Reymar</td>
-                    <td>January 11, 1992</td>
-                    <td>&nbsp;</td>
-                </tr>
+                
             </tbody>
         </table>
       </div>

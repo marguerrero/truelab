@@ -37,7 +37,7 @@ class Customer extends MX_Controller {
         foreach($query->result() as $key => $row){
             
             $data[] = array(
-                'num' => $key,
+                'num' => $key + 1,
                 'customer' => "{$row->firstname} {$row->lastname}",
                 'reference_no' => $row->receipt_no,
                 'date_of_transaction' => $row->transdate,
@@ -51,13 +51,85 @@ class Customer extends MX_Controller {
     }
 
 
-    public function export()
+    public function export($receipt_no = "")
     {
-        $this->load->library('CustomerTransactionExport');
+        if(!$receipt_no)
+            redirect('index.php/customer/add');
+        
+        $sql = "
+            SELECT *
+            FROM customer_transaction aa
+            LEFT JOIN cust_list bb 
+                ON aa.cust_id = bb.service_id
+            LEFT JOIN customer_service cc
+                ON cc.trans_id=aa.id
+            LEFT JOIN subcat dd
+                ON dd.sub_test_id=cc.subcat_id
+            LEFT JOIN categ_main ee
+                ON ee.main_test_id = dd.main_test_id
+            WHERE aa.receipt_no='$receipt_no'
+        ";
+        $r = $this->db->query($sql);
+        if(!$r)
+            redirect('index.php/customer/add');
+        $result = array();
+        foreach ($r->result() as $key => $value) 
+            $result[] = $value;
+        
+        $customer = array(
+            'cust_id' => $result[0]->service_id,
+            'firstname' => $result[0]->firstname,
+            'lastname' => $result[0]->lastname,
+            'gender' => ($result[0]->sex == 'M') ? 'Male' : 'Female',
+            'birthday' => date('F d, Y', strtotime($result[0]->bday)),
+            'age' => $this->_calculateAge($result[0]->bday),
+            'reference_no' => $result[0]->receipt_no,
+            'transaction_date' => date('F d, Y', strtotime($result[0]->transdate))
+        );
+        
+        
+        $services = array();
+        $total = 0;
+        foreach ($result as $key => $value) {
+            $price = ($value->has_discount) ? $value->disc_price : $value->reg_price ;
+            $price = (!$price) ? $value->reg_price : $price;
+            $total += $price;
+            $services[] = array(
+                'count' => $key + 1,
+                'category' => $value->category,
+                'service' => $value->subcateg,
+                'price' => number_format($price, 2, '.', '')
+            );
+        }
+        $total = number_format($total, 2, '.', '');
+        $retval = array(
+            'customer' => $customer,
+            'services' => $services,
+            'total' => $total
+        );
+        
+        $filename = "EXPORT_TRANS-".date('Y-m-d h:i:s').".pdf";
+        $template = new CustomerTransactionExport();
+        $template->set_last_name($customer['lastname']);
+        $template->set_first_name($customer['firstname']);
+        $template->set_age($customer['age']);
+        $template->set_gender($customer['gender']);
+        $template->set_birthday($customer['birthday']);
+        $template->set_reference_no($customer['reference_no']);
+        $template->set_date(date('Y-m-d', strtotime($result[0]->transdate)) );
 
-        $exporter = new CustomerTransactionExport('P', 'in', array(11, 8.5), true, 'UTF-8', false);
-        $exporter->build();
-        $exporter->to_file('vrymel_Test.pdf');
+        $data = array();
+        foreach($services as $key => $value){
+            $data[] = array(
+                'category' => $value['category'],
+                'sub_category' => $value['service'],
+                'amount' => $value['price']
+            );
+        }
+        
+        $template->set_data($data);
+        $template->build();
+        $template->to_file('vrymel_Test.pdf');
     }
 
     /**************************************************
@@ -83,8 +155,8 @@ class Customer extends MX_Controller {
         foreach ($query->result() as $row){
             $reg_price = $row->reg_price;
             $disc_price = (!$row->disc_price) ? $reg_price : $row->disc_price;
-            $sub_options .= "<option  data-reg-price='{$row->reg_price}' data-disc-price='$disc_price' class='child-options child-{$row->main_test_id}' data-price='{$row->reg_price}' data-discount-price='$row->disc_price' data-parent='{$row->main_test_id}' value='{$row->sub_test_id}'>{$row->subcateg}</option>";
-            // $sub_options .= "<option style='display:none;' data-reg-price='{$row->reg_price}' data-disc-price='$disc_price' class='child-options child-{$row->main_test_id}' data-price='{$row->reg_price}' data-discount-price='$row->disc_price' data-parent='{$row->main_test_id}' value={$row->sub_test_id}>{$row->subcateg}</option>";
+            // $sub_options .= "<option  data-reg-price='{$row->reg_price}' data-disc-price='$disc_price' class='child-options child-{$row->main_test_id}' data-price='{$row->reg_price}' data-discount-price='$row->disc_price' data-parent='{$row->main_test_id}' value='{$row->sub_test_id}'>{$row->subcateg}</option>";
+            $sub_options .= "<option style='display:none;' data-reg-price='{$row->reg_price}' data-disc-price='$disc_price' class='child-options child-{$row->main_test_id}' data-price='{$row->reg_price}' data-discount-price='$row->disc_price' data-parent='{$row->main_test_id}' value={$row->sub_test_id}>{$row->subcateg}</option>";
         }
         
         
@@ -248,6 +320,7 @@ class Customer extends MX_Controller {
                 ON ee.main_test_id = dd.main_test_id
             WHERE aa.receipt_no='$receipt_no'
         ";
+
         $r = $this->db->query($sql);
         if(!$r)
             redirect('index.php/customer/add');
@@ -257,11 +330,13 @@ class Customer extends MX_Controller {
         
 
         $customer = array(
+            'cust_id' => $result[0]->service_id,
             'firstname' => $result[0]->firstname,
             'lastname' => $result[0]->lastname,
             'gender' => ($result[0]->sex == 'M') ? 'Male' : 'Female',
             'birthday' => date('F d, Y', strtotime($result[0]->bday)),
             'reference_no' => $result[0]->receipt_no,
+            'age' => $this->_calculateAge($result[0]->bday),
             'transaction_date' => date('F d, Y', strtotime($result[0]->transdate))
         );
         
@@ -397,6 +472,7 @@ class Customer extends MX_Controller {
 
         try {
             $input = $this->input;
+            
             $session_data = $this->session->all_userdata();
             $services = $input->post('subcat-id');
             $cust_id = $input->post('cust-id');
@@ -440,7 +516,7 @@ class Customer extends MX_Controller {
                 );
                 if($this->hasRecord($customer))
                    throw new Exception("Customer already exists", 1);
-                else{;
+                else{
                     $this->db->insert('cust_list', $customer);
                     }
             }
@@ -473,11 +549,13 @@ class Customer extends MX_Controller {
                 $service_entry = array(
                     'subcat_id' => $s_id,
                     'has_discount' => $discount,
-                    'created_by' => $session_data['username'],
                     'trans_id' => $trans_id
                 );
+                
                 $this->db->insert('customer_service', $service_entry);
+                    
             }
+            
             
             $msg_info = "Successfully saved";
             
@@ -512,6 +590,15 @@ class Customer extends MX_Controller {
         $stmt->execute();
         $value = $stmt->fetch();
         return $value['AUTO_INCREMENT'];
+    }
+
+    private function _calculateAge($date){
+        $today = new Datetime();
+        $bday = new Datetime($date);
+        $interval = $today->diff($bday);
+        $partial_age = $interval->format('%y');
+        $age = floor($partial_age);
+        return $age;
     }
 }
  

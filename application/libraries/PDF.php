@@ -5,6 +5,7 @@ require_once dirname(__FILE__) . '/tcpdf/tcpdf.php';
 class PDF extends TCPDF
 {
     private $_font_size;
+    private $_header_location;
 
     function __construct($custom = array())
     {
@@ -23,6 +24,7 @@ class PDF extends TCPDF
         $this->SetFont('helvetica', '', $this->_font_size);
         $this->SetAutoPageBreak(TRUE, 10);
         $this->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+        $this->_header_location = "http://localhost/truelab/web/images/logo_gray.png";
 
         // initial page
         $this->AddPage();
@@ -35,7 +37,7 @@ class PDF extends TCPDF
 
     public function Header()
     {
-        $this->Image('http://localhost/truelab/web/images/logo.png', 10, 10, 60, '', 'PNG', '', 'T', true, 300, '', false, false, 0, false, false, false);
+        $this->Image($this->_header_location, 10, 10, 60, '', 'PNG', '', 'T', true, 300, '', false, false, 0, false, false, false);
     }
 
     public function create_table($rows, $column_styles = array())

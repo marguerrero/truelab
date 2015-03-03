@@ -1,3 +1,4 @@
+$('#reset-fields').on('click', resetFields);
 $('.customer-select').on('click', selectCustomer);
 $('#cust-bday').on('change', calculateAge);
 $('#customer-transaction').on('click', '.service-discount',displayDiscount);
@@ -229,8 +230,8 @@ function displaySubCategory(){
         subcat = container.find('.service-sub-cat');
     service_id = $(this).find(':selected').attr('data-id');
 
-    $('#service-child-1-dummy').html('<option class="service-null" value="0" selected="selected">-- SELECT SERVICE --</option>');
-    $('#service-child-1-dummy').append($(subcat).find('.child-'+ service_id));
+    container.find('#service-child-1-dummy').html('<option class="service-null" value="0" selected="selected">-- SELECT SERVICE --</option>');
+    container.find('#service-child-1-dummy').append($(subcat).find('.child-'+ service_id));
 
     $(subcat).find('.service-null').attr('selected', true);
     $(subcat).find('.child-options').hide();
@@ -279,3 +280,9 @@ function saveTransaction(event){
     });
 }
 
+function resetFields() {
+    $('#cust-firstname, #cust-lastname, #cust-id, #cust-bday').val('');
+    $('#gender-male').prop('checked', true);
+    $('#cust-age').val('0');
+    $('.remove-panel').trigger('click');
+}

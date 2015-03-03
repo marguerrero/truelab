@@ -50,7 +50,7 @@
                     </tr>
                     <tr>
                         <td>Age</td>
-                        <td>23</td>
+                        <td><?=$customer['age'];?></td>
                         <td colspan="2">&nbsp;</td>
                     </tr>
                     <tr>
@@ -69,7 +69,7 @@
         </div>
     </div>
     <!-- end of #customer-info-container -->
-
+    
     <!-- start of #services-container -->
     <div id="services-container" class="row">
         <div id="services" class="col-md-12 info-panel">
@@ -109,9 +109,9 @@
 
             <a href="/truelab/index.php/customer/add/" class="btn btn-default">Add New Customer</a>
             <a href="/truelab/index.php/customer/edit/<?=$customer['reference_no']; ?>"class="btn btn-default">Edit Transaction</a>
-            <p class="btn btn-success pull-right">Export to PDF</p>
+            <a href="<?=site_url('/index.php/customer/export/'.$customer['reference_no']); ?>" class="btn btn-success pull-right">Export to PDF</a>
 
         </div>
     </div>
-    <!-- end of #services-container -->
+    <!-- hidden form used for exporting data -->
 </div>

@@ -10,6 +10,13 @@ $(function(){
             { "data": "show" }
         ]
     });
+    setTimeout(reloadTable, 5000);
+
+    function reloadTable(){
+        console.log('reloading');
+        customerTransactionTable.ajax.reload();
+        setTimeout(reloadTable, 5000);
+    }
 })
 
 

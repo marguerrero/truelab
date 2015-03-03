@@ -8,15 +8,25 @@ class ServiceTemplate extends PDF
     protected $_physician;
     protected $_barangay;
 
-    public function __construct($template)
+    public function __construct($custom = array())
     {
-        $custom = array(
+        $default_layout = array(
             'orietation' => 'L',
             'unit' => 'mm',
             'size' => array(216, 160) 
         );
 
-        parent::__construct($custom);
+        $layout = $default_layout;
+
+        if(!empty($custom))
+        {
+            $layout = $custom;
+        }
+
+        $this->_header_location ='http://localhost/truelab/web/images/logo_gray.png';
+
+
+        parent::__construct($layout);
     }
 
     public function set_name($v)
@@ -56,8 +66,7 @@ class ServiceTemplate extends PDF
 
     public function Header()
     {
-        $this->Image('http://localhost/truelab/web/images/logo.png', 10, 10, 60, '', 'PNG', '', 'T', true, 300, 'C', false, false, 0, false, false, false);
-        // $this->Image('/var/www/html/truelab/web/images/logo.png', 10, 10, 60, '', 'PNG', '', 'T', true, 300, 'C', false, false, 0, false, false, false);
+        $this->Image($this->_header_location, 10, 10, 60, '', 'PNG', '', 'T', true, 300, 'C', false, false, 0, false, false, false);
         $this->ln(15);
 
         $this->SetFont('helvetica', 'I', 9);

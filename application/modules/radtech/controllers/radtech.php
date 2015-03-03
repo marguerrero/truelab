@@ -110,7 +110,7 @@ class Radtech extends MX_Controller {
                     break;
                  case 'UTZ':
                     $html = "<br />
-                        <h1>OK NA? :)</h1>
+                     
                     ";
                     $template = new RadiologyTemplate("Ultrasound", $html);
                     $template->set_name($fullname);

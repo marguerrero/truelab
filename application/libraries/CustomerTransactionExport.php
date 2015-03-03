@@ -3,11 +3,73 @@
 class CustomerTransactionExport extends PDF
 {
     private $_reference_number;
+    private $_first_name;
+    private $_last_name;
+    private $_age;
+    private $_gender;
+    private $_birthday;
+    private $_reference_no;
+    private $_date;
+    private $_data;
 
     public function __construct()
     {
         parent::__construct();
     }
+
+    public function set_first_name($v)
+    {
+        $this->_first_name = $v;
+
+        return $this;
+    }
+
+    public function set_last_name($v)
+    {
+        $this->_last_name = $v;
+
+        return $this;
+    }
+
+    public function set_age($v)
+    {
+        $this->_age = $v;
+
+        return $this;
+    }
+
+    public function set_gender($v)
+    {
+        $this->_gender = $v;
+
+        return $this;
+    }
+
+    public function set_birthday($v)
+    {
+        $this->_birthday = $v;
+
+        return $this;
+    }
+
+    public function set_reference_no($v)
+    {
+        $this->_reference_no = $v;
+
+        return $this;
+    }
+
+    public function set_date($v)
+    {
+        $this->_date = $v;
+
+        return $this;
+    }
+
+    public function set_data($v)
+    {
+        $this->_data = $v;
+    }  
 
     public function build()
     {
@@ -43,31 +105,31 @@ class CustomerTransactionExport extends PDF
         $rows = array(
             array(
                 array('text' => 'First Name'),
-                array('text' => 'Reymar'),
+                array('text' => $this->_first_name),
                 array('text' => 'Reference No.'),
-                array('text' => 'TLCADC72R12RMABC')
+                array('text' => $this->_reference_no)
             ),
             array(
                 array('text' => 'Last Name'),
-                array('text' => 'Guerrero'),
+                array('text' => $this->_last_name),
                 array('text' => 'Date'),
-                array('text' => 'February 21, 2015')
+                array('text' => $this->_date)
             ),
             array(
                 array('text' => 'Age'),
-                array('text' => '23'),
+                array('text' => $this->_age),
                 array('text' => ''),
                 array('text' => '')
             ),
             array(
                 array('text' => 'Gender'),
-                array('text' => 'Male'),
+                array('text' => $this->_gender),
                 array('text' => ''),
                 array('text' => '')
             ),
             array(
                 array('text' => 'Birthday'),
-                array('text' => 'January 11, 1992'),
+                array('text' => $this->_birthday),
                 array('text' => ''),
                 array('text' => '')
             )
@@ -144,63 +206,48 @@ class CustomerTransactionExport extends PDF
                         'height' => $header_row_height
                     )
                 )
-            ),
+            )
+        );
+
+        $total = 0;
+
+        foreach ($this->_data as $key => $value) 
+        {
+            $rows[] = array(
+                array('text' => ($key + 1) . '  ', 'style' => $data_row_style),
+                array('text' => $value['category'], 'style' => $data_row_style),
+                array('text' => $value['sub_category'], 'style' => $data_row_style),
+                array('text' => 'P ' . number_format($value['amount'], 2), 'style' => $data_row_style)
+            );
+
+            $total += $value['amount'];
+        }
+            
+        $rows[] = array(
             array(
-                array(
-                    'text' => '1  ',
-                    'style' => $data_row_style
-                ),
-                array(
-                    'text' => 'Clinical Mocroscopy',
-                    'style' => $data_row_style
-                ),
-                array(
-                    'text' => 'Urinalysis',
-                    'style' => $data_row_style
-                ),
-                array(
-                    'text' => 'P 50.00',
-                    'style' => $data_row_style
+                'text' => '', 
+                'style' => array(
+                    'border' => ''
                 )
             ),
             array(
-                array('text' => '2  ', 'style' => $data_row_style),
-                array('text' => 'Clinical Microscopy', 'style' => $data_row_style),
-                array('text' => 'Fecalysis', 'style' => $data_row_style),
-                array('text' => 'P 50.00', 'style' => $data_row_style)
+                'text' => '', 
+                'style' => array(
+                    'border' => ''
+                )
             ),
             array(
-                array('text' => '3  ', 'style' => $data_row_style),
-                array('text' => 'Clinical Chemistry', 'style' => $data_row_style),
-                array('text' => 'Foobar', 'style' => $data_row_style),
-                array('text' => 'P 110.00', 'style' => $data_row_style)
+                'text' => 'Total:',
+                'style' => array(
+                    'font_style' => 'B',
+                    'text_align' => 'R',
+                    'border' => ''
+                )
             ),
             array(
-                array(
-                    'text' => '', 
-                    'style' => array(
-                        'border' => ''
-                    )
-                ),
-                array(
-                    'text' => '', 
-                    'style' => array(
-                        'border' => ''
-                    )
-                ),
-                array(
-                    'text' => 'Total:',
-                    'style' => array(
-                        'font_style' => 'B',
-                        'text_align' => 'R',
-                        'border' => ''
-                    )
-                ),
-                array(
-                    'text' => 'P 210.00', 
-                    'style' => array(
-                        'border' => ''
-                    )
+                'text' => 'P ' . number_format($total, 2), 
+                'style' => array(
+                    'border' => ''
                 )
             )
         );
