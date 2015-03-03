@@ -133,7 +133,7 @@ function viewDetails(){
                 $('.trans-bday').html(customer_info.bday);
                 $('.trans-date').html(customer_info.transdate);
                 $('.trans-referenceno').html(customer_info.reference_no);
-
+            $('.service-tbody').html('');
             var services = response.services;
                 $(services).each(function(key, value){
                     var html = "";
