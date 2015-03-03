@@ -88,6 +88,7 @@ class Radtech extends MX_Controller {
                         <p>$result_2</p>
                         <p>$result_3</p>
                         <p>$result_4</p>
+                        <h2>Impression</h2>
                         <h2>$result_5</h2>
                     ";
                     $template = new RadiologyTemplate("Radiology", $html);
