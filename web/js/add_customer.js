@@ -228,7 +228,7 @@ function displaySubCategory(){
         container = selection.parent().parent().parent(),
         subcat = container.find('.service-sub-cat');
     service_id = $(this).find(':selected').attr('data-id');
-    console.log(subcat);
+    console.log($(subcat).find('.child-'+ service_id));
     $(subcat).find('.service-null').attr('selected', true);
     $(subcat).find('.child-options').hide();
     container.find('.service-price').val("");

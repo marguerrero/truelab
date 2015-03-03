@@ -83,7 +83,8 @@ class Customer extends MX_Controller {
         foreach ($query->result() as $row){
             $reg_price = $row->reg_price;
             $disc_price = (!$row->disc_price) ? $reg_price : $row->disc_price;
-            $sub_options .= "<option style='display:none;' data-reg-price='{$row->reg_price}' data-disc-price='$disc_price' class='child-options child-{$row->main_test_id}' data-price='{$row->reg_price}' data-discount-price='$row->disc_price' data-parent='{$row->main_test_id}' value={$row->sub_test_id}>{$row->subcateg}</option>";
+            $sub_options .= "<option  data-reg-price='{$row->reg_price}' data-disc-price='$disc_price' class='child-options child-{$row->main_test_id}' data-price='{$row->reg_price}' data-discount-price='$row->disc_price' data-parent='{$row->main_test_id}' value='{$row->sub_test_id}'>{$row->subcateg}</option>";
+            // $sub_options .= "<option style='display:none;' data-reg-price='{$row->reg_price}' data-disc-price='$disc_price' class='child-options child-{$row->main_test_id}' data-price='{$row->reg_price}' data-discount-price='$row->disc_price' data-parent='{$row->main_test_id}' value={$row->sub_test_id}>{$row->subcateg}</option>";
         }
         
         
@@ -331,6 +332,7 @@ class Customer extends MX_Controller {
 
         try {
             $input = $this->input;
+            $cust_id = $input->post('cust-id');
             $firstname = $input->post('first-name');
             $lastname = $input->post('last-name');
             $gender = $input->post('gender');
@@ -343,15 +345,24 @@ class Customer extends MX_Controller {
                 'bday' => $birthday
             );
 
-            if($this->hasRecord($customer))
-            {
-                // $msg_info = $err_msg = "Customer already exist";
+            if($cust_id){
+                $this->db->where('service_id', $cust_id);
                 $this->db->update('cust_list', $customer);
             }
-            else
-            {
-                $this->db->insert('cust_list', $customer);
-                $msg_info = "Successfully saved";
+            else{
+                if($this->hasRecord($customer))
+                {
+                    $msg_info = $err_msg = "Customer already exist";
+
+                    // $this->db->where('service_id', $id);
+                    // $this->db->update('cust_list', $customer);
+                }
+                else
+                {
+                    $this->db->insert('cust_list', $customer);
+                    $msg_info = "Successfully saved";
+                }
+                
             }
         } catch(Exception $e){
             $err_msg = $e->getMessage();
@@ -431,7 +442,17 @@ class Customer extends MX_Controller {
                     $this->db->insert('cust_list', $customer);
                     }
             }
-
+            else {
+                $customer = array(
+                    'service_id' => $cust_id,
+                    'firstname' => trim($firstname),
+                    'lastname' => trim($lastname),
+                    'sex' => $gender,
+                    'bday' => date('Y-m-d', strtotime($birthday))
+                );
+                $this->db->where('service_id', $cust_id);
+                $this->db->update('cust_list', $customer);
+            }
             //-- Save entry to custoemer transaction
             $trans_id = $this->_fetchPK('customer_transaction');
             $unique = date('YmdHis');
