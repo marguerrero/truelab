@@ -18,6 +18,7 @@
  * NOTE: If you change these, also change the error_reporting() code below
  *
  */
+	define('RECEIPT_INIT', 'TLCD');
 	define('ENVIRONMENT', 'development');
 /*
  *---------------------------------------------------------------

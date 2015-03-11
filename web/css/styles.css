@@ -4,6 +4,7 @@
     background: rgb(52,152,219);
     position: fixed;
     height: 100%;
+    box-shadow: 7px 7px 5px #888888;
 }
 .nav-bar {
     background: rgb(52,152,219);
