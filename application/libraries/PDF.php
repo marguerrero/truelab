@@ -4,17 +4,33 @@ require_once dirname(__FILE__) . '/tcpdf/tcpdf.php';
 
 class PDF extends TCPDF
 {
-    function __construct()
+    private $_font_size;
+
+    function __construct($custom = array())
     {
-        parent::__construct();
+        if($custom) 
+        {
+            parent::__construct($custom['orientation'], $custom['unit'], $custom['size'], true, 'UTF-8', false);
+        }
+        else 
+        {
+            parent::__construct();
+        }
+
+        $this->_font_size = 10;
 
         // defaults
-        $this->SetFont('helvetica', '', 10);
-        $this->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+        $this->SetFont('helvetica', '', $this->_font_size);
+        $this->SetAutoPageBreak(TRUE, 10);
         $this->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
 
         // initial page
         $this->AddPage();
+    }
+
+    public function set_font_size($size)
+    {
+        $this->_font_size = $size;
     }
 
     public function Header()
@@ -31,7 +47,7 @@ class PDF extends TCPDF
                 // column level style
                 $column_width = (isset($column_styles[$column_index]['width'])) ? $column_styles[$column_index]['width'] : 30;
 
-                $this->SetFont('helvetica', (isset($column_styles[$column_index]['font_style'])) ? $column_styles[$column_index]['font_style'] : '', 10);
+                $this->SetFont('helvetica', (isset($column_styles[$column_index]['font_style'])) ? $column_styles[$column_index]['font_style'] : '', $this->_font_size);
 
                 $text_align = (isset($column_styles[$column_index]['text_align'])) ? $column_styles[$column_index]['text_align'] : 'L';
 
@@ -45,7 +61,7 @@ class PDF extends TCPDF
                     $style = $column_data['style'];
                     // $column_width = (isset($style['width'])) ? $style['width'] : $column_width;
 
-                    $this->SetFont('helvetica', (isset($style['font_style'])) ? $style['font_style'] : '', 10);
+                    $this->SetFont('helvetica', (isset($style['font_style'])) ? $style['font_style'] : '', $this->_font_size);
 
                     $text_align = (isset($style['text_align'])) ? $style['text_align'] : $text_align;
 

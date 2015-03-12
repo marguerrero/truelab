@@ -8,7 +8,7 @@ class Medtech extends MX_Controller {
 
     public function index()
     {
-        $module = "radtech";
+        $module = "medtech";
         $action = "_index";
         echo modules::run('base/base/index', $module, $action);
     }
