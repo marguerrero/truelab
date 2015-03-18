@@ -55,6 +55,12 @@
                         <input name="age"  type="text" readonly class="form-control" id="cust-age" placeholder="Customer's Age" value="<?=$customer['age'];?>"/>
                     </div>
                 </div><!--.form-group-->
+                <div class="form-group">
+                    <label for="physician" class="col-sm-2 control-label">Physician</label>
+                    <div class="col-sm-3">
+                        <input name="physician" id="physician" type="text" value="<?=$customer['physician'];?>" class="form-control" placeholder="Customer's Physician" />
+                    </div>
+                </div><!--.form-group-->
                 <!-- <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
                       <button type="button" class="btn btn-default pull-right" id="save-customer-btn">Save Customer</button>
@@ -121,6 +127,20 @@
         </div>
     </fieldset>
     </form><!--.main-form-->
+    <fieldset class="">
+        <legend>Others</legend>
+        <div class="row">
+            <form class="photo-upload form-horizontal"  action="<?=site_url('/index.php/customer/upload');?>" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="photo" class="col-sm-2 control-label">Customer Photo</label>
+                    <div class="col-sm-3">
+                        <input name="userfile"  type="file" class="form-control" id="photo" placeholder="Customer's Photo" />
+                    </div>
+                    <input name="receipt-no" type="hidden" value="" id="receipt-no"/>
+                </div><!--.form-group-->
+            </form><!--.photo-upload-->
+        </div>
+    </fieldset>
     <div id="add-service-alert" class="alert alert-success col-sm-10" role="alert" style="display: none; float: left;">
         <strong></strong><p></p>
     </div>

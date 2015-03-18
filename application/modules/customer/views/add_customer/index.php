@@ -1,6 +1,6 @@
 <div class="row"><h2> Add Customer Information</h2></div>
 <div class="row margin-left-sm">
-    <form id="customer-transaction" class="form-horizontal form-1">
+    <form id="customer-transaction" class="form-horizontal form-1" enctype="multipart/form-data">
     <fieldset class="main-form">
         <legend>Customer Information</legend>
         <div class="row" style="margin-bottom: 30px;"><a href="#" data-toggle="modal" data-target="#existing-customer-dialog"  id="#existing-customer-btn" class="btn btn-default">Existing Customer</a></div>
@@ -46,6 +46,12 @@
                     <label for="birthday" class="col-sm-2 control-label">Age</label>
                     <div class="col-sm-3">
                         <input name="age"  type="text" readonly class="form-control" id="cust-age" placeholder="Customer's Age" />
+                    </div>
+                </div><!--.form-group-->
+                 <div class="form-group">
+                    <label for="physician" class="col-sm-2 control-label">Physician</label>
+                    <div class="col-sm-3">
+                        <input name="physician" id="physician" type="text" class="form-control" placeholder="Customer's Physician" />
                     </div>
                 </div><!--.form-group-->
                 <!-- <div class="form-group">
@@ -113,6 +119,20 @@
         </div>
     </fieldset>
     </form><!--.main-form-->
+    <fieldset class="">
+        <legend>Others</legend>
+        <div class="row">
+            <form class="photo-upload form-horizontal"  action="<?=site_url('/index.php/customer/upload');?>" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="photo" class="col-sm-2 control-label">Customer Photo</label>
+                    <div class="col-sm-3">
+                        <input name="userfile"  type="file" class="form-control" id="photo" placeholder="Customer's Photo" />
+                    </div>
+                    <input name="receipt-no" type="hidden" value="" id="receipt-no"/>
+                </div><!--.form-group-->
+            </form><!--.photo-upload-->
+        </div>
+    </fieldset>
     <div id="add-service-alert" class="alert alert-success col-sm-10" role="alert" style="display: none; float: left;">
         <strong></strong><p></p>
     </div>

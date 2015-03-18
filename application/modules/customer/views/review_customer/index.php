@@ -1,7 +1,7 @@
 
 <style type="text/css">
     .container {
-        margin-bottom: 50px;
+        margin-bottom: 15px;
     }
 
     h2.page-title {

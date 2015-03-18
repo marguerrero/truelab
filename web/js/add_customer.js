@@ -5,7 +5,6 @@ $('#customer-transaction').on('click', '.service-discount',displayDiscount);
 $('#customer-transaction').on('change', '.service-sub-cat',displayPrice);
 $('#customer-transaction').on('change', '.service-cat',displaySubCategory);
 $('#existing-customer-dialog').on('click', '.customer-select', selectCustomer);
-$('#save-customer-btn').on('click', saveCustomer);
 $('#save-trans-btn').on('click', saveTransaction);
 $(function(){
     var existingCustomerTable = null;
@@ -28,12 +27,6 @@ $(function(){
     $('#existing-customer-btn').click(function(event) {
         event.preventDefault();
         existingCustomerTable.ajax.reload();
-        // $('#existing-customer-dialog').modal();
-        // setTimeout(function(){
-        //     console.log('pressed');
-        //     $('.customer-select').on('click', selectCustomer);
-        // }, 1000);
-
     });
 
     $('#add-more-services').on('click', addMoreService);
@@ -146,32 +139,6 @@ function addMoreService(){
     
 }
 
-function saveCustomer() {
-
-    if(validate('#customer-form')) {
-        var datastring = $('.form-1').serialize();
-
-        $.ajax({
-            type: "POST",
-            url: "/truelab/index.php/users/saveCustomer",
-            data: datastring,
-            dataType: "json",
-            success: function(data) {
-                handleResult(data);
-            },
-            error: function(){
-                alert('error handing here');
-            }
-        });
-    } else {
-        handleResult({
-            success: false,
-            msg: 'Please fill the highlighted fields'
-        });
-    }
-    
-}   
-
 function handleResult(data) {
     var el = $('#save-customer-alert');
     var addClass = (data.success) ? 'alert-success' : 'alert-danger';
@@ -200,9 +167,6 @@ function handleResultById(data, id){
             el.slideUp();
         }, 5000);
     });
-}
-function addService(){
-
 }
 
 function calculateAge(){
@@ -275,12 +239,23 @@ function saveTransaction(event){
                     msg: response.msg
                 }, 'add-service-alert');
                 setTimeout(function(){
-                    window.location.href = "/truelab/index.php/customer/review/"+response.trans_id;
+                    // window.location.href = "/truelab/index.php/customer/review/"+response.trans_id;
+                    redirectReview(response.trans_id);
                 }, 1000);
                 return;
             }
         }
     });
+}
+
+function redirectReview(trans_id){
+    var form = $('.photo-upload'),
+        url = form.attr('action') + "/" + trans_id;
+    // form.html(field);
+    form.attr('action', url);
+    form.submit();
+    return;
+
 }
 
 function resetFields() {

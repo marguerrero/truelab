@@ -144,7 +144,7 @@ class Customer extends MX_Controller {
     public function _add($params){
 
         $service_options = "<option value='0'>-- SELECT SERVICE --</option>";
-        $sub_options = "<option class='service-null' value='0'>-- SELECT SERVICE --</option>";
+        $sub_options = "<option class='service-null' value=''>-- SELECT SERVICE --</option>";
 
         $query = $this->db->get('categ_main');
         foreach ($query->result() as $row){
@@ -186,7 +186,7 @@ class Customer extends MX_Controller {
         $receipt_no = $params['receipt_no'];
 
         $service_options = "<option value='0'>-- SELECT SERVICE --</option>";
-        $sub_options = "<option class='service-null' value='0'>-- SELECT SERVICE --</option>";
+        $sub_options = "<option class='service-null' value=''>-- SELECT SERVICE --</option>";
 
         $query = $this->db->get('categ_main');
         foreach ($query->result() as $row){
@@ -205,6 +205,7 @@ class Customer extends MX_Controller {
                 SELECT 
                     bb.*,
                     aa.id as trans_id,
+                    aa.physician,
                     aa.receipt_no
                 FROM
                 customer_transaction aa
@@ -213,6 +214,7 @@ class Customer extends MX_Controller {
                 WHERE aa.receipt_no='$receipt_no'
                 ORDER BY transdate DESC
         ";
+
         $query = $this->db->query($sql);
         $r = $query->result();
         $result = $r[0];
@@ -230,6 +232,7 @@ class Customer extends MX_Controller {
             'lastname' => $result->lastname,
             'birthday' => $birthday,
             'age' => $age,
+            'physician' => $result->physician,
             'gender_male' => ($result->sex == 'M') ? 'checked' : '',
             'gender_female' => ($result->sex == 'F') ? 'checked' : '',
             'reference_no' => $result->receipt_no
@@ -322,6 +325,7 @@ class Customer extends MX_Controller {
         ";
 
         $r = $this->db->query($sql);
+
         if(!$r)
             redirect('index.php/customer/add');
         $result = array();
@@ -399,69 +403,42 @@ class Customer extends MX_Controller {
         die(json_encode(array('data' => $response_data)));
     }
 
-
-    public function saveCustomer() {
-
+    public function upload($receipt_no = ""){
         $msg_info = "";
         $err_msg = "";
-        $data = array();
+        
+        try{
+            $input = $_FILES['userfile'];
+            if($input){
+                $prefix = time();
+                $origname = $_FILES['userfile']['name'];
+                $_FILES['userfile']['name'] = "$prefix-$origname";
 
-        try {
-            $input = $this->input;
-            $cust_id = $input->post('cust-id');
-            $firstname = $input->post('first-name');
-            $lastname = $input->post('last-name');
-            $gender = $input->post('gender');
-            $birthday = $input->post('bday');
-            $birthday = date('Y-m-d', strtotime($birthday));
-            $customer = array(
-                'firstname' => trim($firstname),
-                'lastname' => trim($lastname),
-                'sex' => $gender,
-                'bday' => $birthday
-            );
-
-            if($cust_id){
-                $this->db->where('service_id', $cust_id);
-                $this->db->update('cust_list', $customer);
-            }
-            else{
-                if($this->hasRecord($customer))
-                {
-                    $msg_info = $err_msg = "Customer already exist";
-
-                    // $this->db->where('service_id', $id);
-                    // $this->db->update('cust_list', $customer);
-                }
-                else
-                {
-                    $this->db->insert('cust_list', $customer);
-                    $msg_info = "Successfully saved";
+                
+                $upload = $input['photo'];
+                $this->load->library('upload', $config);
+                
+                $upload_stat = $this->upload->do_upload('userfile',$filename);
+                if($upload_stat){
+                    $uploaded = $this->upload->data();
+                    $filename = $uploaded['file_name'];
+                    $transaction = $this->db->get_where('customer_transaction', array('receipt_no' => $receipt_no));
+                    $cust_id = $transaction->result()[0]->cust_id;
+                    $customer = array(
+                        'image' => $filename
+                    );
+                    $this->db->where('service_id', $cust_id);
+                    $this->db->update('cust_list', $customer);
                 }
                 
             }
-        } catch(Exception $e){
-            $err_msg = $e->getMessage();
+            redirect('index.php/customer/review/'.$receipt_no);
+        } catch (Exception $e) {
+            redirect('index.php/customer/add/');
         }
-
-        $retval = array(
-            'msg' => ($msg_info) ? $msg_info : $err_msg,
-            'success' => (empty($err_msg))
-        ); 
-
-        die(json_encode($retval));
+        return;
     }
-
-    private function hasRecord($data) 
-    {
-        $this->db->from('cust_list');
-        $this->db->where('lastname', $data['lastname']);
-        $this->db->where('firstname', $data['firstname']);
-        //-- include bday?
-        // $this->db->where('bday', $data['bday']);
-
-        return ($this->db->get()->num_rows() > 0);
-    }
+    
 
     public function saveTransaction(){
         $trans_id = "";
@@ -472,16 +449,16 @@ class Customer extends MX_Controller {
 
         try {
             $input = $this->input;
-            
             $session_data = $this->session->all_userdata();
+            $reference_no = $input->post('reference-no');
             $services = $input->post('subcat-id');
             $cust_id = $input->post('cust-id');
             $firstname = $input->post('first-name');
             $lastname = $input->post('last-name');
             $gender = $input->post('gender');
             $birthday = $input->post('bday');
-            // $birthday = date('Y-m-d', strtotime($birthday));
             $services = $input->post('subcat-id');
+            $physician = $input->post('physician');
             $has_discount = $input->post('has-discount');
 
             //-- Validate User Here
@@ -497,11 +474,15 @@ class Customer extends MX_Controller {
                 $field = 'bday';
                 throw new Exception("Birthday is required", 1);
             }
-            
-            
+            if(!$physician){
+                $field = 'physician';
+                throw new Exception("Physician is required", 1);
+            }
             if(!$services){
                 throw new Exception("Please select at least one service", 1);
-                
+            }
+            if(!$services[0]){
+                throw new Exception("Please select at least one service", 1);
             }
 
             //-- Save entry to customer database
@@ -514,7 +495,7 @@ class Customer extends MX_Controller {
                     'sex' => $gender,
                     'bday' => date('Y-m-d', strtotime($birthday))
                 );
-                if($this->hasRecord($customer))
+                if($this->_hasRecord($customer))
                    throw new Exception("Customer already exists", 1);
                 else{
                     $this->db->insert('cust_list', $customer);
@@ -531,13 +512,15 @@ class Customer extends MX_Controller {
                 $this->db->where('service_id', $cust_id);
                 $this->db->update('cust_list', $customer);
             }
-            //-- Save entry to custoemer transaction
+            //-- Save entry to customer transaction
+
             $trans_id = $this->_fetchPK('customer_transaction');
             $unique = date('YmdHis');
-            $receipt_no = RECEIPT_INIT."-$trans_id$unique";
+            $receipt_no = ($reference_no) ? $reference_no : RECEIPT_INIT."-$trans_id$unique";
             $transaction = array(
                 'receipt_no' => $receipt_no,
-                'cust_id' => $cust_id
+                'cust_id' => $cust_id,
+                'physician' => $physician
             );
             $this->db->insert('customer_transaction', $transaction);
 
@@ -551,7 +534,6 @@ class Customer extends MX_Controller {
                     'has_discount' => $discount,
                     'trans_id' => $trans_id
                 );
-                
                 $this->db->insert('customer_service', $service_entry);
                     
             }
@@ -575,6 +557,15 @@ class Customer extends MX_Controller {
     }
 
 
+    private function _hasRecord($data) {
+        $this->db->from('cust_list');
+        $this->db->where('lastname', $data['lastname']);
+        $this->db->where('firstname', $data['firstname']);
+        //-- include bday?
+        // $this->db->where('bday', $data['bday']);
+
+        return ($this->db->get()->num_rows() > 0);
+    }
 
     private function _fetchPK($tablename){
         $sql = "
