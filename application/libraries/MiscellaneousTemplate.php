@@ -18,30 +18,29 @@ class MiscellaneousTemplate extends ServiceTemplate
         $this->Ln(5);
 
         $this->SetFont('helvetica', 'B', 9);
-
-        $this->SetFillColor(205, 200, 192);
         
-        $this->MultiCell(55, 0, '', '', 'C', false, 0, $this->GetX(), '', false, 0);
-        $this->MultiCell(80, 0, 'MISCELLANEOUS', 'TLBR', 'C', true, 0, $this->GetX(), '', true, 0);
-        $this->MultiCell(50, 0, '', '', 'C', false, 1, $this->GetX(), '', false, 0);
-        
-        $this->SetFillColor(224, 235, 255);
+        $this->build_template_header('MISCELLANEOUS');
 
-        $style_border = array(
-            'width' => 55,
-            'height' => 2
-        );
-        $style2 = array(
-            'width' => 40,
-            'height' => 2,
-            'border' => 'LBRB',
-            'text_align' => 'C'
-        );
+        $this->Ln(10);
+
         $column_styles = array(
-            0 => $style_border,
-            1 => $style2,
-            2 => $style2,
-            3 => $style_border,
+            array(
+                'width' => 90,
+                'height' => 2,
+                'border' => 'LBRB',
+                'text_align' => 'C'
+            ), 
+            array(
+                'width' => 5,
+                'height' => 2,
+                'border' => 'LBRB',
+            ), 
+            array(
+                'width' => 91,
+                'height' => 2,
+                'border' => 'LBRB',
+                'text_align' => 'C'
+            )
         );
 
         $data_style = array(
@@ -51,29 +50,33 @@ class MiscellaneousTemplate extends ServiceTemplate
 
         $rows = array(
             array(
-                array('text' => ''),
                 array('text' => 'TEST'),
+                array('text' => ' '),
                 array('text' => 'RESULT'),
-                array('text' => ''),
             ),
             array(
-                array('text' => ''),
                 array(
-                    'text' => "\n" . $this->_miscellaneous_type,
+                    'text' => $this->_miscellaneous_type,
                     'style' => $data_style,
                 ),
                 array(
-                    'text' => "\n" . $this->_test_result,
-                    'style' => $data_style,
+                    'text' => ':',
+                    'style' => array(
+                        'height' => 12,
+                        'text_align' => 'C'
+                    )
                 ),
-                array('text' => '')
+                array(
+                    'text' => $this->_test_result,
+                    'style' => $data_style,
+                )
             )
         );
 
-        $this->set_font_size(9);
+        $this->set_font_size(12);
         $this->create_table($rows, $column_styles);
+        $this->set_font_size(9);
 
-        $this->Ln(10);
-
+        $this->build_template_note();
     }
 }

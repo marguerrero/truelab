@@ -155,8 +155,9 @@ class Customer extends MX_Controller {
         foreach ($query->result() as $row){
             $reg_price = $row->reg_price;
             $disc_price = (!$row->disc_price) ? $reg_price : $row->disc_price;
+            $disc_price_2 = (!$row->disc_price_2) ? $reg_price : $row->disc_price_2;
             // $sub_options .= "<option  data-reg-price='{$row->reg_price}' data-disc-price='$disc_price' class='child-options child-{$row->main_test_id}' data-price='{$row->reg_price}' data-discount-price='$row->disc_price' data-parent='{$row->main_test_id}' value='{$row->sub_test_id}'>{$row->subcateg}</option>";
-            $sub_options .= "<option style='display:none;' data-reg-price='{$row->reg_price}' data-disc-price='$disc_price' class='child-options child-{$row->main_test_id}' data-price='{$row->reg_price}' data-discount-price='$row->disc_price' data-parent='{$row->main_test_id}' value={$row->sub_test_id}>{$row->subcateg}</option>";
+            $sub_options .= "<option style='display:none;' data-reg-price='{$row->reg_price}' data-disc-price='$disc_price' data-disc-price-2='$disc_price_2' class='child-options child-{$row->main_test_id}' data-price='{$row->reg_price}' data-discount-price='$row->disc_price' data-parent='{$row->main_test_id}' value={$row->sub_test_id}>{$row->subcateg}</option>";
         }
         
         
@@ -347,8 +348,20 @@ class Customer extends MX_Controller {
         $services = array();
         $total = 0;
         foreach ($result as $key => $value) {
-            $price = ($value->has_discount) ? $value->disc_price : $value->reg_price ;
-            $price = (!$price) ? $value->reg_price : $price;
+            $price = 0;
+            switch ($value->disc_type) {
+                case 0:
+                    $price = $value->reg_price;
+                    break;
+                case 1:
+                    $price = $value->disc_price;
+                    break;
+                case 2:
+                    $price = $value->disc_price_2;
+                    break;
+            }
+            // $price = ($value->has_discount) ? $value->disc_price : $value->reg_price ;
+            // $price = (!$price) ? $value->reg_price : $price;
             $total += $price;
             $services[] = array(
                 'count' => $key + 1,
@@ -450,6 +463,8 @@ class Customer extends MX_Controller {
         try {
             $input = $this->input;
             $session_data = $this->session->all_userdata();
+            $t_id = $input->post('trans-id');
+            $disc_type = $input->post('discount-type');
             $reference_no = $input->post('reference-no');
             $services = $input->post('subcat-id');
             $cust_id = $input->post('cust-id');
@@ -514,7 +529,7 @@ class Customer extends MX_Controller {
             }
             //-- Save entry to customer transaction
 
-            $trans_id = $this->_fetchPK('customer_transaction');
+            $trans_id = ($t_id) ? $t_id : $this->_fetchPK('customer_transaction');
             $unique = date('YmdHis');
             $receipt_no = ($reference_no) ? $reference_no : RECEIPT_INIT."-$trans_id$unique";
             $transaction = array(
@@ -522,23 +537,34 @@ class Customer extends MX_Controller {
                 'cust_id' => $cust_id,
                 'physician' => $physician
             );
-            $this->db->insert('customer_transaction', $transaction);
+            if(!$reference_no){
+                $transaction['id'] = $trans_id;
+                $this->db->insert('customer_transaction', $transaction);
+            }
+            else {
+                $this->db->where('trans_id', $trans_id);
+                $this->db->delete('customer_service'); 
+                $this->db->flush_cache();
+                $this->db->where('id', $trans_id);
+                $this->db->update('customer_transaction', $transaction);
+                $this->db->flush_cache();
+            }
 
 
             //-- Save entries to customer service
             foreach ($services as $key => $value) {
                 $s_id = $value;
+                $d_type = $disc_type[$key];
                 $discount = $has_discount[$key];
                 $service_entry = array(
                     'subcat_id' => $s_id,
                     'has_discount' => $discount,
-                    'trans_id' => $trans_id
+                    'trans_id' => $trans_id,
+                    'disc_type' => $d_type
                 );
                 $this->db->insert('customer_service', $service_entry);
                     
             }
-            
-            
             $msg_info = "Successfully saved";
             
         } catch(Exception $e){

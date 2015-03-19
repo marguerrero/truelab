@@ -2,6 +2,7 @@
 <div class="row margin-left-sm">
     <form id="customer-transaction" class="form-horizontal form-1">
     <input type="hidden" id="" name="is_edit" value="<?=$is_edit;?>" />
+    <input type="hidden" name="trans-id" id="trans-id" value="<?=$trans_id;?>" />
     <fieldset class="main-form">
         <legend>Customer Information</legend>
         <!-- <div class="row" style="margin-bottom: 30px;"><a href="#" data-toggle="modal" data-target="#existing-customer-dialog"  id="#existing-customer-btn" class="btn btn-default">Existing Customer</a></div> -->
@@ -11,6 +12,7 @@
                     <div class="col-sm-10">
                         <input type="text" value="<?=$customer['reference_no']; ?>" name="reference-no"  class="form-control disabled" id="cust-id" readonly placeholder="Reference Number">
                     </div>
+
                 </div><!--.form-group-->
                 <div class="form-group" data-service-order="1">
                     <label for="first-name" class="col-sm-2 control-label">Customer ID</label>
@@ -122,7 +124,7 @@
                 </div><!--.form-group-->
                 <div class="hr-line"></div>
             </div><!--.service-form-->
-            <input type="hidden" id="service-id" value="<?=$trans_id;?>" />
+            <input type="hidden" name="service-id" id="service-id" value="<?=$trans_id;?>" />
             <input type="hidden" id="service-count" value="1" />
         </div>
     </fieldset>

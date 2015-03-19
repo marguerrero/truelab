@@ -56,22 +56,21 @@ class FecalysisTemplate extends ServiceTemplate
         $this->Ln(5);
 
         $this->SetFont('helvetica', 'B', 9);
-
-        $this->SetFillColor(205, 200, 192);
         
-        $this->MultiCell(180, 0, 'FECALYSIS', 'TLBR', 'C', true, 1, $this->GetX(), '', true, 0);
-        $this->SetFillColor(224, 235, 255);
+        $this->build_template_header('FECALYSIS');
+
+        $this->Ln(6);
 
         $style1 = array(
             'width' => 60,
             'height' => 2,
-            'border' => 'LB',
+            'border' => '',
             'text_align' => 'R'
         );
         $style2 = array(
-            'width' => 120,
+            'width' => 126,
             'height' => 2,
-            'border' => 'LBR'
+            'border' => ''
         );
         $column_styles = array(
             0 => $style1,
@@ -80,56 +79,56 @@ class FecalysisTemplate extends ServiceTemplate
 
         $rows = array(
             array(
+                array('text' => '', 'style' => array('border' => 'LT')),
                 array(
                     'text' => 'MACROSOPIC EXAMINATION',
                     'style' => array(
-                        'font_style' => 'BI',
-                        'text_align' => 'R'
+                        'font_style' => 'B',
+                        'text_align' => 'L',
+                        'border' => 'TR'
                     )
                 ),
-                array(
-                    'text' => ''
-                ),
             ),
             array(
-                array('text' => 'Color:'),
-                array('text' => '    ' . $this->_color)
+                array('text' => 'Color   :', 'style' => array('border' => 'L')),
+                array('text' => '    ' . $this->_color, 'style' => array('border' => 'R', 'font_style' => 'B'))
             ),
             array(
-                array('text' => 'Consistency:'),
-                array('text' => '    ' . $this->_consistency)
+                array('text' => 'Consistency   :', 'style' => array('border' => 'L')),
+                array('text' => '    ' . $this->_consistency, 'style' => array('border' => 'R', 'font_style' => 'B'))
             ),
             array(
+                array('text' => '', 'style' => array('border' => 'L')),
                 array(
                     'text' => 'MICROSCOPIC EXAMINATION',
                     'style' => array(
-                        'font_style' => 'BI',
-                        'text_align' => 'R'
+                        'font_style' => 'B',
+                        'text_align' => 'L',
+                        'border' => 'R'
                     )
                 ),
-                array(
-                    'text' => ''
-                ),
             ),
             array(
-                array('text' => 'White blood cells:',),
-                array('text' => '    ' . $this->_while_blood_cells)
+                array('text' => 'White blood cells   :', 'style' => array('border' => 'L')),
+                array('text' => '    ' . $this->_while_blood_cells, 'style' => array('border' => 'R', 'font_style' => 'B'))
             ),
             array(
-                array('text' => 'Red blood cells:'),
-                array('text' => '    ' . $this->_red_blood_cells)
+                array('text' => 'Red blood cells   :', 'style' => array('border' => 'L')),
+                array('text' => '    ' . $this->_red_blood_cells, 'style' => array('border' => 'R', 'font_style' => 'B'))
             ),
             array(
-                array('text' => 'Occult blood:'),
-                array('text' => '    ' . $this->_occult_blood)
+                array('text' => 'Occult blood   :', 'style' => array('border' => 'L')),
+                array('text' => '    ' . $this->_occult_blood, 'style' => array('border' => 'R', 'font_style' => 'B'))
             ),
             array(
-                array('text' => ''),
-                array('text' => $this->_amoeba_result)
+                array('text' => '', 'style' => array('border' => 'LB')),
+                array('text' => '    ' . $this->_amoeba_result, 'style' => array('border' => 'BR', 'font_style' => 'B'))
             ),
         );
 
         $this->set_font_size(9);
         $this->create_table($rows, $column_styles);
+
+        $this->build_template_note();
     }
 }

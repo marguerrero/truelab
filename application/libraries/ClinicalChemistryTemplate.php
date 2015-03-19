@@ -18,7 +18,7 @@ class ClinicalChemistryTemplate extends ServiceTemplate
     private $_indirect_bil;
     private $_direct_bil;
     private $_total_protein;
-    private $_albumin;
+    private $_a_g_ratio;
     private $_globulin;
     private $_ag_ratio;
     private $_potassium;
@@ -139,9 +139,9 @@ class ClinicalChemistryTemplate extends ServiceTemplate
         return $this;
     }
 
-    public function set_albumin($v)
+    public function set_a_g_ratio($v)
     {
-        $this->_albumin = $v;
+        $this->_a_g_ratio = $v;
 
         return $this;
     }
@@ -198,31 +198,44 @@ class ClinicalChemistryTemplate extends ServiceTemplate
 
     protected function build_transaction_details()
     {
-        $this->Ln(5);
+        $this->Ln();
 
         $this->SetFont('helvetica', 'B', 9);
-
-        $this->SetFillColor(205, 200, 192);
         
-        $this->MultiCell(180, 0, 'CLINICAL CHEMISTRY', 'TLBR', 'C', true, 1, $this->GetX(), '', true, 0);
-        $this->SetFillColor(224, 235, 255);
+        $this->build_template_header('CLINICAL CHEMISTRY');
+        
+        $this->Ln(5);
+
+        $top_left_style = array(
+            'width' => 30,
+            'height' => 2,
+            'border' => 'TL',
+            'text_align' => 'L'
+        );
 
         $style1 = array(
             'width' => 30,
             'height' => 2,
-            'border' => 'LB',
-            'text_align' => 'L'
+            'border' => '',
+            'text_align' => 'R'
         );
         $style2 = array(
             'width' => 25,
             'height' => 2,
-            'border' => 'LB',
-            'text_align' => 'C'
+            'border' => '',
+            'text_align' => 'C',
+            'font_style' => 'B'
         );
         $style3 = array(
-            'width' => 35,
+            'width' => 39,
             'height' => 2,
-            'border' => 'LBR',
+            'border' => '',
+            'text_align' => 'C'
+        );
+        $style3_2 = array(
+            'width' => 37,
+            'height' => 2,
+            'border' => '',
             'text_align' => 'C'
         );
         $column_styles = array(
@@ -231,7 +244,7 @@ class ClinicalChemistryTemplate extends ServiceTemplate
             2 => $style3,
             3 => $style1,
             4 => $style2,
-            5 => $style3
+            5 => $style3_2
         );
 
         $rows = array(
@@ -239,223 +252,215 @@ class ClinicalChemistryTemplate extends ServiceTemplate
                 array(
                     'text' => 'TEST',
                     'style' => array(
-                        'text_align' => 'C'
+                        'text_align' => 'C',
+                        'border' => 'TL',
+                        'font_style' => 'B'
                     )
                 ),
                 array(
                     'text' => 'RESULT',
                     'style' => array(
-                        'text_align' => 'C'
+                        'text_align' => 'C',
+                        'border' => 'T',
+                        'font_style' => 'B'
                     )
                 ),
                 array(
                     'text' => 'NORMAL VALUES',
                     'style' => array(
-                        'text_align' => 'C'
+                        'text_align' => 'C',
+                        'border' => 'T',
+                        'font_style' => 'B'
                     )
                 ),
                 array(
                     'text' => 'TEST',
                     'style' => array(
-                        'text_align' => 'C'
+                        'text_align' => 'C',
+                        'border' => 'T',
+                        'font_style' => 'B'
                     )
                 ),
                 array(
                     'text' => 'RESULT',
                     'style' => array(
-                        'text_align' => 'C'
+                        'text_align' => 'C',
+                        'border' => 'T',
+                        'font_style' => 'B'
                     )
                 ),
                 array(
                     'text' => 'NORMAL VALUES',
                     'style' => array(
-                        'text_align' => 'C'
+                        'text_align' => 'C',
+                        'border' => 'TR',
+                        'font_style' => 'B'
                     )
                 )
             ),
             array(
-                array('text' => 'FBS'),
+                array('text' => 'FBS/RBS  :', 'style' => array('border' => 'L')),
                 array('text' => $this->_fbs),
-                array('text' => '70-105 mg/dl'),
-                array('text' => 'Total Bilirubin'),
+                array('text' => '75-115 mg/dl'),
+                array('text' => 'Total Bilirubin  :'),
                 array('text' => $this->_total_bilirubin),
-                array('text' => '0.1-1.2 mg/dl')
+                array('text' => '', 'style' => array('border' => 'R'))
             ),
             array(
-                array('text' => 'HbA1c'),
+                array('text' => 'HbA1c  :', 'style' => array('border' => 'L')),
                 array('text' => $this->_hbalc),
                 array('text' => 'Up to 7.0 %'),
-                array('text' => 'Indirect Bil'),
+                array('text' => 'Indirect Bil  :'),
                 array('text' => $this->_indirect_bil),
-                array('text' => '0.2-0.8 mg/dl')
+                array('text' => '', 'style' => array('border' => 'R'))
             ),
             array(
-                array('text' => 'Creatinine'),
+                array('text' => 'Creatinine  :', 'style' => array('border' => 'L')),
                 array('text' => $this->_creatinine),
                 array('text' => '0.6-1.3 mg/dl'),
-                array('text' => 'Direct Bil'),
+                array('text' => 'Direct Bil  :'),
                 array('text' => $this->_direct_bil),
-                array('text' => '0.1-0.4 mg/dl')
+                array('text' => '', 'style' => array('border' => 'R'))
             ),
             array(
-                array('text' => 'BUN'),
+                array('text' => 'BUN  :', 'style' => array('border' => 'L')),
                 array('text' => $this->_bun),
                 array('text' => '13-43 mg/dl'),
-                array('text' => 'Total Protein'),
+                array('text' => 'Total Protein  :'),
                 array('text' => $this->_total_protein),
-                array('text' => '6.6-8.7 g/dl')
+                array('text' => '', 'style' => array('border' => 'R'))
             ),
             array(
                 array(
-                    'text' => 'BUA',
+                    'text' => 'BUA  :',
                     'style' => array(
-                        'height' => 8
+                        'height' => 8,
+                        'border' => 'L'
                     )
                 ),
                 array(
                     'text' => $this->_bua,
                     'style' => array(
-                        'height' => 8
+                        'height' => 8,
+                        'font_style' => 'B'
                     )
                 ),
                 array('text' => "F: 2.4-5.7;\nM: 3.4-7.0 mg/dl"),
                 array(
-                    'text' => 'Albumin',
+                    'text' => 'A: G ratio  :', 'style' => array('border' => 'L'),
                     'style' => array(
                         'height' => 8
                     )
                 ),
                 array(
-                    'text' => $this->_albumin,
+                    'text' => $this->_a_g_ratio,
                     'style' => array(
-                        'height' => 8
-                    )
-                ),
-                array(
-                    'text' => '3.8-5.1 g/dl',
-                    'style' => array(
-                        'height' => 8
-                    )
-                )
-            ),
-            array(
-                array('text' => 'Cholesterol'),
-                array('text' => $this->_cholesterol),
-                array('text' => '< 200 mg/dl'),
-                array('text' => 'Globulin'),
-                array('text' => $this->_globulin),
-                array('text' => '2.3-3.5 g/dl')
-            ),
-            array(
-                array('text' => 'Triglyceride'),
-                array('text' => $this->_triglyceride),
-                array('text' => '< 150 mg/dl'),
-                array('text' => 'A/G ratio'),
-                array('text' => $this->_ag_ratio),
-                array('text' => '')
-            ),
-            array(
-                array('text' => 'HDL'),
-                array('text' => $this->_hdl),
-                array('text' => '< 100 mg/dl'),
-                array('text' => 'Potassium'),
-                array('text' => $this->_potassium),
-                array('text' => '3.3-5.5 mmol/L')
-            ),
-            array(
-                array('text' => 'LDL'),
-                array('text' => $this->_ldl),
-                array('text' => '< 200 mg/dl'),
-                array('text' => 'Sodium'),
-                array('text' => $this->_sodium),
-                array('text' => '135-145 mmol/L')
-            ),
-            array(
-                array('text' => 'SGOT'),
-                array('text' => $this->_sgot),
-                array('text' => 'Up to 45 U/L'),
-                array('text' => 'Total Calcium'),
-                array('text' => $this->_total_calcium),
-                array('text' => '8.1-10.4 mg/dl')
-            ),
-            array(
-                array('text' => 'SGPT'),
-                array('text' => $this->_sgpt),
-                array('text' => 'Up to 41 U/L'),
-                array('text' => 'Chloride'),
-                array('text' => $this->_chloride),
-                array('text' => '')
-            ),
-            array(
-                array(
-                    'text' => 'Alk. Phosphatase',
-                    'style' => array(
-                        'height' => 8
-                    )
-                ),
-                array(
-                    'text' => $this->_alk_phosphatase,
-                    'style' => array(
-                        'height' => 8
-                    )
-                ),
-                array('text' => "Adult: < 258;\nChildren: < 727"),
-                array(
-                    'text' => 'Others',
-                    'style' => array(
-                        'height' => 8
-                    )
-                ),
-                array(
-                    'text' => $this->_others,
-                    'style' => array(
-                        'height' => 8
+                        'height' => 8,
+                        'font_style' => 'B'
                     )
                 ),
                 array(
                     'text' => '',
                     'style' => array(
-                        'height' => 8
+                        'height' => 8,
+                        'border' => 'R'
                     )
                 )
             ),
-        );
-
-        $this->set_font_size(9);
-        $this->create_table($rows, $column_styles);
-    }
-
-    public function build_signatures()
-    {
-        $this->ln(7);
-
-        $style = array(
-            'width' => 90,
-            'height' => 2,
-            'text_align' => 'C'
-        );
-        $style2 = array(
-            'width' => 90,
-            'height' => 2,
-            'text_align' => 'C'
-        );
-        $column_styles = array(
-            0 => $style,
-            1 => $style2
-        );
-
-        $signatures_rows = array(
             array(
-                array('text' => 'RABIA ROSE H. MANUBAY, RMT'),
-                array('text' => 'GERARD L. LAMAYRA, MD,. FPSP')
+                array('text' => 'Cholesterol  :', 'style' => array('border' => 'L')),
+                array('text' => $this->_cholesterol),
+                array('text' => '< 200 mg/dl'),
+                array('text' => 'Potassium  :'),
+                array('text' => $this->_potassium),
+                array('text' => '3.3-5.5 mmol/L', 'style' => array('border' => 'R'))
             ),
             array(
-                array('text' => 'MEDICAL TECHNOLOGIST'),
-                array('text' => 'PATHOLOGIST')
-            )
+                array('text' => 'Triglyceride  :', 'style' => array('border' => 'L')),
+                array('text' => $this->_triglyceride),
+                array('text' => '< 150 mg/dl'),
+                array('text' => 'Sodium  :'),
+                array('text' => $this->_sodium),
+                array('text' => '135-145 mmol/L', 'style' => array('border' => 'R'))
+            ),
+            array(
+                array('text' => 'HDL  :', 'style' => array('border' => 'L')),
+                array('text' => $this->_hdl),
+                array('text' => '< 100 mg/dl'),
+                array('text' => 'Total Calcium  :'),
+                array('text' => $this->_total_calcium),
+                array('text' => '8.1-10.4 mg/dl', 'style' => array('border' => 'R'))
+            ),
+            array(
+                array('text' => 'LDL  :', 'style' => array('border' => 'L')),
+                array('text' => $this->_ldl),
+                array('text' => '< 200 mg/dl'),
+                array('text' => 'Chloride  :'),
+                array('text' => $this->_chloride),
+                array('text' => '', 'style' => array('border' => 'R'))
+            ),
+            array(
+                array('text' => 'SGOT  :', 'style' => array('height' => 8, 'border' => 'L')),
+                array('text' => $this->_sgot),
+                array('text' => 'F: <31u/l; M: <42u/l'),
+                array(
+                    'text' => 'Others  :',
+                    'style' => array(
+                        'height' => 8,
+                        'border' => ''
+                    )
+                ),
+                array(
+                    'text' => $this->_others,
+                    'style' => array(
+                        'height' => 8,
+                        'border' => '',
+                        'font_style' => 'B'
+                    )
+                ),
+                array(
+                    'text' => '',
+                    'style' => array(
+                        'height' => 8,
+                        'border' => 'R'
+                    )
+                )
+
+            ),
+            array(
+                array('text' => 'SGPT  :', 'style' => array('border' => 'L')),
+                array('text' => $this->_sgpt),
+                array('text' => 'F; <34u/l; M: <45u/l'),
+                array('text' => ''),
+                array('text' => ''),
+                array('text' => '', 'style' => array('border' => 'R'))
+            ),
+            array(
+                array(
+                    'text' => 'Alk. Phosphatase  :',
+                    'style' => array(
+                        'height' => 8,
+                        'border' => 'LB'
+                    )
+                ),
+                array(
+                    'text' => $this->_alk_phosphatase,
+                    'style' => array(
+                        'height' => 8,
+                        'border' => 'B',
+                        'font_style' => 'B'
+                    )
+                ),
+                array('text' => "Adult: < 258;\nChildren: < 727", 'style' => array('border' => 'B', 'height' => 8)),
+                array('text' => '', 'style' => array('height' => 8, 'border' => 'B')),
+                array('text' => '', 'style' => array('height' => 8, 'border' => 'B')),
+                array('text' => '', 'style' => array('height' => 8, 'border' => 'BR'))
+            ),
         );
 
-        $this->set_font_size(9);
-        $this->create_table($signatures_rows, $column_styles);
+        $this->set_font_size(8);
+        $this->create_table($rows, $column_styles);
+
+        $this->build_template_note();
     }
 }

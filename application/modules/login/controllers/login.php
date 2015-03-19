@@ -41,7 +41,8 @@ class Login extends MX_Controller {
             // $this->load->library('session');
             $session_data = array(
                 'username' => $username,
-                'access_type' => $check->access_type
+                'access_type' => $check->access_type,
+                'code' => $check->code
             );
             $this->session->set_userdata($session_data);
             $msg_info = "Successfully Logged In";

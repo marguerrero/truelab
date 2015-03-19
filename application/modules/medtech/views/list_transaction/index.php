@@ -82,7 +82,7 @@
                                 <th>&nbsp;</th>
                                 <th>Category</th>
                                 <th>Sub Category</th>
-                                <th>View</th>
+                                <th>Update</th>
                             </tr>
                         </thead>
                         <tbody class="service-tbody">

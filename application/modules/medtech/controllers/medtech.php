@@ -41,24 +41,36 @@ class Medtech extends MX_Controller {
 
         $query = $this->db
                     ->query($sql);
-
+        
+        $session_data = $this->session->all_userdata();
         
         if(!$query)
             redirect('/');
         $query = $query->result()[0];
+        $string = $query->transdate;
+        $date_recv = new Datetime($string);
+
         $customer_info = array(
             'customer_id' => $query->cust_id,
             'fullname' => "{$query->lastname}, {$query->firstname}",
             'age_sex' => $this->_calculateAge($query->bday)."/".$query->sex,
-            'bday' => date('m-d-Y', strtotime($query->bday))
+            'bday' => date('m-d-Y', strtotime($query->bday)),
+            'date_recv' => $date_recv->format('m-d-Y h:i A'),
+            'source' => $session_data['code'],
+            'case_no' => $query->receipt_no,
+            'physician' => $query->physician
         );
-      
-       
+        // echo '<pre>';
+        // print_r($session_data);
+        // die();
         $retval = array(
             'customer' => $customer_info,
             'code' => $query->template_code,
-            'service_id' => $service_id
+            'service_id' => $service_id,
+            'date_recv' => date('')
+
         );
+
         $this->load->view('toolbar/index', $retval);
         $this->load->view('hematology/index', $retval);
         $this->load->view('miscellaneous/index', $retval);
@@ -66,6 +78,7 @@ class Medtech extends MX_Controller {
         $this->load->view('clinical_chemistry/index', $retval);
         $this->load->view('urinalysis/index', $retval);
         $this->load->view('toolbar/lower', $retval);
+        return;
     }
 
     public function exportData(){
@@ -284,7 +297,7 @@ class Medtech extends MX_Controller {
                 $services[] = array(
                     'category' => $row->category,
                     'service' => $row->subcateg,
-                    'update' =>  (in_array($row->template_code, $allowed)) ? "": "<a href='".site_url('index.php/medtech/service/'.$row->id)."'>View</a>"
+                    'update' =>  (in_array($row->template_code, $allowed)) ? "": "<a href='".site_url('index.php/medtech/service/'.$row->id)."'>Update</a>"
                 );
             }
             

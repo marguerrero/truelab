@@ -11,7 +11,7 @@ class UrinalysisTemplate extends ServiceTemplate
     private $_wbc;
     private $_rbc;
     private $_epith_cells;
-    private $_mucous_threads;
+    private $_mucus_threads;
     private $_bacteria;
     private $_a_urates;
     private $_casts;
@@ -83,9 +83,9 @@ class UrinalysisTemplate extends ServiceTemplate
         return $this;
     }
 
-    public function set_mucous_threads($v)
+    public function set_mucus_threads($v)
     {
-        $this->_mucous_threads = $v;
+        $this->_mucus_threads = $v;
 
         return $this;
     }
@@ -144,52 +144,53 @@ class UrinalysisTemplate extends ServiceTemplate
         $this->Ln(5);
 
         $this->SetFont('helvetica', 'B', 9);
-
-        $this->SetFillColor(205, 200, 192);
         
-        $this->MultiCell(180, 0, 'URINALYSIS', 'TLBR', 'C', true, 1, $this->GetX(), '', true, 0);
-        $this->SetFillColor(224, 235, 255);
+        $this->build_template_header('URINALYSIS');
 
-        $this->MultiCell(50, 0, 'Macroscopic', 'LB', 'C', false, 0, $this->GetX(), '', true, 0);
-        $this->MultiCell(130, 0, 'Microscopic', 'LBR', 'C', false, 1, $this->GetX(), '', true, 0);
+        $this->Ln(6);
+
+        $this->MultiCell(56, 0, 'Macroscopic', 'LBT', 'C', false, 0, $this->GetX(), '', true, 0);
+        $this->MultiCell(130, 0, 'Microscopic', 'LBRT', 'C', false, 1, $this->GetX(), '', true, 0);
 
         $style = array(
             'width' => 25,
             'font_style' => 'I',
             'height' => 2,
-            'border' => 'LB'
+            'border' => '',
+            'text_align' => 'R'
         );
         $style2 = array(
-            'width' => 25,
-            'font_style' => 'I',
+            'width' => 31,
+            'font_style' => 'B',
             'height' => 2,
-            'border' => 'LB',
+            'border' => '',
             'text_align' => 'C'
         );
         $style3_1 = array(
             'width' => 40,
-            'font_style' => 'I',
             'height' => 2,
-            'border' => 'LB'
+            'border' => '',
+            'text_align' => 'R'
         );
         $style3_2 = array(
             'width' => 25,
-            'font_style' => 'I',
+            'font_style' => 'B',
             'height' => 2,
-            'border' => 'LB',
+            'border' => '',
             'text_align' => 'C'
         );
         $style3_3 = array(
             'width' => 35,
             'font_style' => 'I',
             'height' => 2,
-            'border' => 'LB'
+            'border' => '',
+            'text_align' => 'R'
         );
         $style3_4 = array(
             'width' => 30,
-            'font_style' => 'I',
+            'font_style' => 'B',
             'height' => 2,
-            'border' => 'LBR',
+            'border' => '',
             'text_align' => 'C'
         );
         $column_styles = array(
@@ -203,56 +204,58 @@ class UrinalysisTemplate extends ServiceTemplate
 
         $rows = array(
             array(
-                array('text' => 'COLOR:'),
+                array('text' => 'Color   :', 'style' => array('border' => 'L')),
                 array('text' => $this->_color),
-                array('text' => 'WBC:'),
+                array('text' => 'White blood cells   :', 'style' => array('border' => 'L')),
                 array('text' => $this->_wbc),
-                array('text' => 'CASTS:'),
-                array('text' => $this->_casts),
+                array('text' => 'CAST    ', 'style' => array('border' => 'L', 'font_style' => 'B')),
+                array('text' => $this->_casts, 'style' => array('border' => 'R', 'font_style' => 'B')),
             ),
             array(
-                array('text' => 'CLARITY:'),
+                array('text' => 'Clarity   :', 'style' => array('border' => 'L')),
                 array('text' => $this->_clarity),
-                array('text' => 'RBC:'),
+                array('text' => 'Red blood cells   :', 'style' => array('border' => 'L')),
                 array('text' => $this->_rbc),
-                array('text' => 'FINE:'),
-                array('text' => $this->_fine),
+                array('text' => 'Hyaline   :', 'style' => array('border' => 'L')),
+                array('text' => $this->_hyaline, 'style' => array('border' => 'R', 'font_style' => 'B')),
             ),
             array(
-                array('text' => 'PROTEIN:'),
+                array('text' => 'Protein   :', 'style' => array('border' => 'L')),
                 array('text' => $this->_protein),
-                array('text' => 'EPITH CELLS:'),
+                array('text' => 'Epithelial cells   :', 'style' => array('border' => 'L')),
                 array('text' => $this->_epith_cells),
-                array('text' => 'COARSE:'),
-                array('text' => $this->_coarse),
+                array('text' => 'Fine   :', 'style' => array('border' => 'L')),
+                array('text' => $this->_fine, 'style' => array('border' => 'R', 'font_style' => 'B')),
             ),
             array(
-                array('text' => 'GLUCOSE:'),
+                array('text' => 'Glucose   :', 'style' => array('border' => 'L')),
                 array('text' => $this->_glucose),
-                array('text' => 'MUCOUS THREADS:'),
-                array('text' => $this->_mucous_threads),
-                array('text' => 'HYALINE:'),
-                array('text' => $this->_hyaline),
+                array('text' => 'Mucus Threads   :', 'style' => array('border' => 'L')),
+                array('text' => $this->_mucus_threads),
+                array('text' => 'Coarse   :', 'style' => array('border' => 'L')),
+                array('text' => $this->_coarse, 'style' => array('border' => 'R', 'font_style' => 'B')),
             ),
             array(
-                array('text' => 'pH:'),
+                array('text' => 'pH   :', 'style' => array('border' => 'L')),
                 array('text' => $this->_ph),
-                array('text' => 'BACTERIA:'),
+                array('text' => 'Bacteria   :', 'style' => array('border' => 'L')),
                 array('text' => $this->_bacteria),
-                array('text' => 'OTHERS:'),
-                array('text' => $this->_others),
+                array('text' => 'Others   :', 'style' => array('border' => 'L')),
+                array('text' => $this->_others, 'style' => array('border' => 'R', 'font_style' => 'B')),
             ),
             array(
-                array('text' => 'Sp GRAVITY:'),
-                array('text' => $this->_sp_gravity),
-                array('text' => 'A. URATES:'),
-                array('text' => $this->_a_urates),
-                array('text' => ''),
-                array('text' => ''),
+                array('text' => 'Sp Gravity   :', 'style' => array('border' => 'LB')),
+                array('text' => $this->_sp_gravity, 'style' => array('border' => 'B', 'font_style' => 'B')),
+                array('text' => 'A. Urates/phosphates   :', 'style' => array('border' => 'BL')),
+                array('text' => $this->_a_urates, 'style' => array('border' => 'B', 'font_style' => 'B')),
+                array('text' => '', 'style' => array('border' => 'BL')),
+                array('text' => '', 'style' => array('border' => 'BR')),
             )
         );
 
         $this->set_font_size(9);
         $this->create_table($rows, $column_styles);
+
+        $this->build_template_note();
     }
 }

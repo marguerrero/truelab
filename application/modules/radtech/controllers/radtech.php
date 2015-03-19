@@ -46,11 +46,18 @@ class Radtech extends MX_Controller {
         if(!$query)
             redirect('/');
         $query = $query->result()[0];
+        $string = $query->transdate;
+        $date_recv = new Datetime($string);
+        $session_data = $this->session->all_userdata();
         $customer_info = array(
             'customer_id' => $query->cust_id,
             'fullname' => "{$query->lastname}, {$query->firstname}",
             'age_sex' => $this->_calculateAge($query->bday)."/".$query->sex,
-            'bday' => date('m-d-Y', strtotime($query->bday))
+            'bday' => date('m-d-Y', strtotime($query->bday)),
+            'date_recv' => $date_recv->format('m-d-Y h:i A'),
+            'source' => $session_data['code'],
+            'case_no' => $query->receipt_no,
+            'physician' => $query->physician
         );
       
        

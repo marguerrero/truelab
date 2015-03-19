@@ -4,7 +4,7 @@
         <input type="hidden" name="cust-id" />
         <input type="hidden" name="service-id" />
         <input type="hidden" name="code" class="tpl-code" value="RD"/>
-        <table class="table" id="customer-service">
+       <table class="table" id="customer-service">
             <tbody>
                 <tr>
                     <td>Name</td>
@@ -12,7 +12,7 @@
                     <td colspan="4"><input type="text" class="form-control" name="fullname" value="<?=$customer['fullname'];?>" readonly/></td>
                     <td>Case No</td>
                     <td>:</td>
-                    <td><input type="text" class="form-control" value="" name="case_no" /></td>
+                    <td><input type="text" class="form-control" value="<?=$customer['case_no'];?>" readonly name="case_no" /></td>
                 </tr>
                 <tr>
                     <td></td>
@@ -20,26 +20,24 @@
                     <td colspan="4" style="text-align:center;">Surname/First Name/Middle Name</td>
                     <td>Source</td>
                     <td>:</td>
-                    <td><input type="text" class="form-control" value="" name="source" /></td>
+                    <td><input type="text" class="form-control" value="<?=$customer['source'];?>" readonly name="source" /></td>
                 </tr>
                 <tr>
                     <td>Age/Sex</td>
                     <td>:</td>
-                    <td><input type="text" class="form-control"  name="age_sex" value="<?=$customer['age_sex'];?>" readonly/></td>
+                    <td><input type="text" class="form-control" name="age_sex" value="<?=$customer['age_sex'];?>" readonly/></td>
                     <td>DOB</td>
                     <td>:</td>
                     <td><input type="text" class="form-control" name="bday" value="<?=$customer['bday'];?>" readonly/></td>
                     <td>Date received</td>
                     <td>:</td>
-                    <td><input type="text" class="form-control" value="" name="date_recv" /></td>
+                    <td><input type="text" readonly class="form-control" value="<?=$customer['date_recv'];?>" name="date_recv" /></td>
                 </tr>
                 <tr>
                     <td>Physician</td>
                     <td>:</td>
-                    <td colspan="4"><input placeholder="Physician Name" type="text" class="form-control" value="" name="physician" /></td>
-                    <td>Date Released</td>
-                    <td>:</td>
-                    <td><input type="text" class="form-control" value="" name="date_released" /></td>
+                    <td colspan="4"><input readonly placeholder="Physician Name" type="text" class="form-control" value="<?=$customer['physician'];?>" name="physician" /></td>
+                    <td colspan="3"></td>
                 </tr>
             </tbody>
         </table>
@@ -63,7 +61,7 @@
         </div><!--.row-->
         <br /><br />
         <div class="row text-center">
-            <div class="col-md-offset-4 col-md-4"><input type="text" class="form-control" name="radiologist" placeholder="Radiologist Name"/></div><!--col-md-6-->
+            <div class="col-md-offset-4 col-md-4"><input type="text" value="ERIC NORMAN BRUA, MD " class="form-control" name="radiologist" placeholder="Radiologist Name"/></div><!--col-md-6-->
         </div><!--.row-->
         <div class="row text-center">
             <div class="col-md-offset-4 col-md-4 text-center">Radiologist</div><!--col-md-6-->

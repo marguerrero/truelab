@@ -90,17 +90,29 @@ function displayDiscount(){
         container = selection.parent().parent().parent().parent().parent(),
         discount_checker = container.find('.service-discount-null');
         subcat = container.find('.service-sub-cat').find(':selected'),
+        disc_container = container.find('.discount-type');
         reg_price = subcat.attr('data-reg-price'),
         disc_price = subcat.attr('data-disc-price'),
         price_display = container.find('.service-price'),
+        disc_container = container.find('.discount-type');
         has_discount = selection.is(':checked');
+
         if(has_discount){
             price_display.val(disc_price);
             discount_checker.prop('checked', false);
+            disc_container.attr('disabled', false);
+            disc_container.find('.discount-null').hide();
+            disc_container.find('.discount-info').show();
+            
+            $(disc_container.find('option')[1]).prop('selected', true);
         }
         else{
+            disc_container.find('.discount-null').show();
+            disc_container.find('.discount-info').hide();
+            disc_container.attr('disabled', true);
             price_display.val(reg_price);
             discount_checker.prop('checked', true);
+            $(disc_container.find('option')[0]).prop('selected', true);
         }
         return;
 }
@@ -110,8 +122,25 @@ function displayPrice(){
         container = selection.parent().parent().parent(),
         reg_price = selection.find(':selected').attr('data-reg-price'),
         disc_price = selection.find(':selected').attr('data-disc-price'),
+        disc_price_2 = selection.find(':selected').attr('data-disc-price-2'),
         has_discount = container.find('.service-discount').is(':checked'),
         service_price = container.find('.service-price');
+        disc_container = container.find('.discount-type');
+
+        container.find('.service-discount').prop('checked', false);
+        disc_container.find('.discount-type').attr('disabled', true);
+        disc_container.find('.discount-null').show();
+        disc_container.find('.discount-info').remove();
+        if($(this).val() != 0){
+            var less = reg_price - disc_price,
+                less_2 = reg_price - disc_price_2,
+                d_html = "<option data-price='" + disc_price + "' class='discount-info' value='1'> Less than " + less + " PHP ";
+            
+            if(less_2 != 0){
+                d_html += "<option data-price='" + disc_price_2 + "' class='discount-info' value='2'> Less than " + less_2 + " PHP ";
+            }
+            disc_container.append(d_html);
+        }
 
         service_price.attr('data-reg-price', reg_price);
         service_price.attr('data-disc-price', disc_price);
@@ -181,7 +210,6 @@ function calculateAge(){
 function removeForm(event){
     event.preventDefault();
     var panel = $(this).parent().parent();
-    console.log(panel);
         panel.slideUp();
     setTimeout(function(){
         panel.remove()

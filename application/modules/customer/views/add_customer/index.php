@@ -107,6 +107,15 @@
                     </div>
                 </div><!--.form-group-->
                 <div class="form-group">
+                    <label for="birthday" class="col-sm-2 control-label">Discount Price</label>
+                    <div class="col-sm-3">
+                        <select name="discount-type" class="form-control discount-type" id="" placeholder="No Discount" disabled>
+                            <option class="discount-null" value="0">Discount disabled</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-3"></div>
+                </div><!--.form-group-->
+                <div class="form-group">
                     <label for="birthday" class="col-sm-2 control-label">Price</label>
                     <div class="col-sm-3">
                         <input disabled type="text" name="service-price" class="form-control service-price" id="" placeholder="Amount"/>
@@ -210,6 +219,15 @@
               
             </div><!--.radio-->
         </div>
+    </div><!--.form-group-->
+    <div class="form-group">
+        <label for="birthday" class="col-sm-2 control-label">Discount Price</label>
+        <div class="col-sm-3">
+            <select name="discount-type[]" class="form-control discount-type" id="" placeholder="No Discount" disabled>
+                <option class="discount-null" value="0">Discount disabled</option>
+            </select>
+        </div>
+        <div class="col-sm-3"></div>
     </div><!--.form-group-->
     <div class="form-group">
         <label for="birthday" class="col-sm-2 control-label">Price</label>
