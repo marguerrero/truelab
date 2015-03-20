@@ -367,7 +367,7 @@ class ServiceTemplate extends PDF
         $this->set_font_size(9);
         $this->create_table($signatures_rows, $column_styles);
         
-        $this->writeHTMLCell(32, 32, 137, ($this->GetY() - 14), '<img src="' . base_url() . '/web/images/pathologist_signature.png" />');
+        $this->writeHTMLCell(32, 32, 137, ($this->GetY() - 14), '<img src="http://localhost/truelab/web/images/pathologist_signature.png" />');
     }
 
     protected function build_template_header($template_type)

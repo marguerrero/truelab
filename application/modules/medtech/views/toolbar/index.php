@@ -9,7 +9,7 @@
 			<option value="SE" data-template="SE">Fecalysis</option>
 			<option value="HB" data-template="MX">HBSAG</option>
 			<option value="HE" data-template="HE">Hematology</option>
-			<option value="UA" data-template="MX">Miscellaneus</option>
+			<option value="UA" data-template="MX">Miscellaneous</option>
 			<option value="PT" data-template="MX">Pregnancy Test</option>
 			<option value="UA" data-template="UA">Urinalysis</option>
 		</select>

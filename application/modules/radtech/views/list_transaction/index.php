@@ -7,7 +7,7 @@
                 <th>Customer</th>
                 <th>Reference No.</th>
                 <th>Services</th>
-                <th>View</th>
+                <th>Update</th>
             </tr>
         </thead>
         <tbody>

@@ -103,6 +103,11 @@ class Radtech extends MX_Controller {
                     $template->set_age_sex($age_sex);
                     $template->set_date($date_released);
                     $template->set_physician($physician);
+                    $template->set_dob($bday);
+                    $template->set_case_no($case_no);
+                    $template->set_source($source);
+                    $template->set_date_received($date_recv);
+                    $template->set_date_released(date('m-d-Y h:i A'));
                     $template->build();
                     ob_end_clean();
                     $template->to_file($filename);
@@ -112,6 +117,11 @@ class Radtech extends MX_Controller {
                     $template->set_age_sex($age_sex);
                     $template->set_date($date_released);
                     $template->set_physician($physician);
+                    $template->set_case_no($case_no);
+                    $template->set_dob($bday);
+                    $template->set_source($source);
+                    $template->set_date_received($date_recv);
+                    $template->set_date_released(date('m-d-Y h:i A'));
                     $template->build();
                     ob_end_clean();
                     $template->to_file($filename);
@@ -125,6 +135,11 @@ class Radtech extends MX_Controller {
                     $template->set_age_sex($age_sex);
                     $template->set_date($date_released);
                     $template->set_physician($physician);
+                    $template->set_case_no($case_no);
+                    $template->set_dob($bday);
+                    $template->set_source($source);
+                    $template->set_date_received($date_recv);
+                    $template->set_date_released(date('m-d-Y h:i A'));
                     $template->build();
                     ob_end_clean();
                     $template->to_file($filename);

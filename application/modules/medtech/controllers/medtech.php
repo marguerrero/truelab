@@ -49,7 +49,7 @@ class Medtech extends MX_Controller {
         $query = $query->result()[0];
         $string = $query->transdate;
         $date_recv = new Datetime($string);
-
+        
         $customer_info = array(
             'customer_id' => $query->cust_id,
             'fullname' => "{$query->lastname}, {$query->firstname}",
@@ -58,15 +58,18 @@ class Medtech extends MX_Controller {
             'date_recv' => $date_recv->format('m-d-Y h:i A'),
             'source' => $session_data['code'],
             'case_no' => $query->receipt_no,
+            'prof-pic' => $query->image,
             'physician' => $query->physician
         );
-        // echo '<pre>';
-        // print_r($session_data);
-        // die();
+        
+        $result = array(
+            'test' => $query->subcateg
+        );
         $retval = array(
             'customer' => $customer_info,
             'code' => $query->template_code,
             'service_id' => $service_id,
+            'result' => $result,
             'date_recv' => date('')
 
         );
@@ -91,6 +94,7 @@ class Medtech extends MX_Controller {
         $err_info = "";
         $msg_info = "";
         $filename = "EXPORT_$code-".date('Y-m-d h:i:s').".pdf";
+        $session_data = $this->session->all_userdata();
         try {
             foreach ($post as $key => $value) {
                 $$key = $value;
@@ -102,17 +106,27 @@ class Medtech extends MX_Controller {
                     $template->set_age_sex($age_sex);
                     $template->set_date($date_released);
                     $template->set_physician($physician);
+                    $template->set_dob($bday);
+                    $template->set_case_no($case_no);
+                    $template->set_source($source);
+                    $template->set_date_received($date_recv);
+                    $template->set_date_released(date('m-d-Y h:i A'));
                     $template->set_wbc($result_1);
+                    $template->set_neutrophils($result_11);
                     $template->set_hemoglobin($result_2);
+                    $template->set_lymphocytes($result_12);
                     $template->set_hematocrit($result_3);
+                    $template->set_monocytes($result_13);
                     $template->set_rbc($result_4);
-                    $template->set_platelet_count($result_5);
-                    $template->set_neutrophils($result_6);
-                    $template->set_lymphocytes($result_7);
-                    $template->set_monocytes($result_8);
-                    $template->set_eosinophils($result_9);
-                    $template->set_stabs($result_10);
-                    $template->set_remarks($result_11);
+                    $template->set_eosinophils($result_14);
+                    $template->set_mcv($result_5);
+                    $template->set_stabs($result_15);
+                    $template->set_mch($result_6);
+                    $template->set_mchc($result_7);
+                    $template->set_rdws($result_8);
+                    $template->set_mpv($result_9);
+                    $template->set_platelet_count($result_10);
+                    $template->set_remarks($result_16);
                     $template->build();
                     ob_end_clean();
                     $template->to_file($filename);
@@ -122,22 +136,19 @@ class Medtech extends MX_Controller {
                     $this->load->view('miscellaneous/index', $retval);
                     break;
                 case 'MX':
-                    // $retval['result'] = array('test' => $query->subcateg);
-                    // echo '<pre>';
-                    // print_r($query);
-                    // die();
-                    // $test = "TEST";
-                    // $result = "TEST";
-                    // $fullname = "TEST";
-                    // $physician = "TEST";
-                    // $age = "TEST";
-                    // $date = "TEST";
                     $template = new MiscellaneousTemplate($test, $result);
                     $template->set_name($fullname);
                     $template->set_age_sex($age_sex);
                     $template->set_date($date_released);
+                    $template->set_dob($bday);
                     $template->set_physician($physician);
-                    
+                    $template->set_case_no($case_no);
+                    $template->set_source($source);
+                    $template->set_date_received($date_recv);
+                    $template->set_date_released(date('m-d-Y h:i A'));
+                    // if($service == "HBSAG")
+                    // $template->set_user_pic();
+
                     $template->build();
                     ob_end_clean();
                     $template->to_file($filename);
@@ -148,7 +159,12 @@ class Medtech extends MX_Controller {
                     $template->set_name($fullname);
                     $template->set_age_sex($age_sex);
                     $template->set_date($date_released);
+                    $template->set_dob($bday);
                     $template->set_physician($physician);
+                    $template->set_case_no($case_no);
+                    $template->set_source($source);
+                    $template->set_date_received($date_recv);
+                    $template->set_date_released(date('m-d-Y h:i A'));
                     $template->set_color($result_1);
                     $template->set_clarity($result_2);
                     $template->set_protein($result_3);
@@ -158,7 +174,7 @@ class Medtech extends MX_Controller {
                     $template->set_wbc($result_7);
                     $template->set_rbc($result_8);
                     $template->set_epith_cells($result_9);
-                    $template->set_mucous_threads($result_10);
+                    $template->set_mucus_threads($result_10);
                     $template->set_bacteria($result_11);
                     $template->set_a_urates($result_12);
                     $template->set_fine($result_13);
@@ -170,13 +186,17 @@ class Medtech extends MX_Controller {
                     $template->to_file($filename);
                     break;
                 case 'CH':
-                 
-                  $template = new ClinicalChemistryTemplate();
-                  $template->set_name($fullname);
+                    $template = new ClinicalChemistryTemplate();
+                    $template->set_name($fullname);
                     $template->set_age_sex($age_sex);
                     $template->set_date($date_released);
+                    $template->set_dob($bday);
                     $template->set_physician($physician);
-                  $template->set_fbs($result_1);
+                    $template->set_case_no($case_no);
+                    $template->set_source($source);
+                    $template->set_date_received($date_recv);
+                    $template->set_date_released(date('m-d-Y h:i A'));
+                    $template->set_fbs($result_1);
                     $template->set_hbalc($result_2);
                     $template->set_creatinine($result_3);
                     $template->set_bun($result_4);
@@ -188,20 +208,17 @@ class Medtech extends MX_Controller {
                     $template->set_sgot($result_10);
                     $template->set_sgpt($result_11);
                     $template->set_alk_phosphatase($result_12);
-
                     $template->set_total_bilirubin($result_13);
                     $template->set_indirect_bil($result_14);
                     $template->set_direct_bil($result_15);
                     $template->set_total_protein($result_16);
-                    // $template->set_albumin($result_);
-                    // $template->set_globulin($result_);
-                    $template->set_ag_ratio($result_17);
+                    $template->set_a_g_ratio($result_17);
                     $template->set_potassium($result_18);
                     $template->set_sodium($result_19);
                     $template->set_total_calcium($result_20);
                     $template->set_chloride($result_21);
                     $template->set_others($result_22);
-
+                    
                     $template->build();
                     ob_end_clean();
                     $template->to_file($filename);
@@ -216,7 +233,12 @@ class Medtech extends MX_Controller {
                     $template->set_name($fullname);
                     $template->set_age_sex($age_sex);
                     $template->set_date($date_released);
+                    $template->set_dob($bday);
                     $template->set_physician($physician);
+                    $template->set_case_no($case_no);
+                    $template->set_source($source);
+                    $template->set_date_received($date_recv);
+                    $template->set_date_released(date('m-d-Y h:i A'));
                     $template->set_color($result_1);
                     $template->set_consistency($result_2);
                     $template->set_while_blood_cells($result_3);

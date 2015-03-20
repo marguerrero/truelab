@@ -91,7 +91,7 @@
                     <td><input type="text" class="form-control" value="" name="result_5" placeholder="Result"/></td>
                     <td>F: 2.4-5.7; M: 3.4-7 mg/dl</td>
                     <td>A: G ratio</td>
-                    <td><input type="text" class="form-control" value="" name="result_16" placeholder="Result"/></td>
+                    <td><input type="text" class="form-control" value="" name="result_17" placeholder="Result"/></td>
                     <td></td>
                 </tr>
                 <tr>
@@ -99,7 +99,7 @@
                     <td><input type="text" class="form-control" value="" name="result_6" placeholder="Result"/></td>
                     <td><200mg/dl</td>
                     <td>Potassium</td>
-                    <td><input type="text" class="form-control" value="" name="result_17" placeholder="Result"/></td>
+                    <td><input type="text" class="form-control" value="" name="result_18" placeholder="Result"/></td>
                     <td>3.3-5.5mmol/L</td>
                 </tr>
                 <tr>
@@ -107,7 +107,7 @@
                     <td><input type="text" class="form-control" value="" name="result_7" placeholder="Result"/></td>
                     <td><150mg/dl</td>
                     <td>Sodium</td>
-                    <td><input type="text" class="form-control" value="" name="result_18" placeholder="Result"/></td>
+                    <td><input type="text" class="form-control" value="" name="result_19" placeholder="Result"/></td>
                     <td>135-145mmol/L</td>
                 </tr>
                 <tr>
@@ -115,7 +115,7 @@
                     <td><input type="text" class="form-control" value="" name="result_8" placeholder="Result"/></td>
                     <td>20-42fl</td>
                     <td>Total Calcium</td>
-                    <td><input type="text" class="form-control" value="" name="result_18" placeholder="Result"/></td>
+                    <td><input type="text" class="form-control" value="" name="result_20" placeholder="Result"/></td>
                     <td>8.1-10.4 mg/dl</td>
                 </tr>
                 <tr>
@@ -123,7 +123,7 @@
                     <td><input type="text" class="form-control" value="" name="result_9" placeholder="Result"/></td>
                     <td><200mg/dl</td>
                     <td>Chloride</td>
-                    <td><input type="text" class="form-control" value="" name="result_19" placeholder="Result"/></td>
+                    <td><input type="text" class="form-control" value="" name="result_21" placeholder="Result"/></td>
                     <td></td>
                 </tr>
                 <tr>
@@ -131,17 +131,17 @@
                     <td><input type="text" class="form-control" value="" name="result_10" placeholder="Result"/></td>
                     <td>F: <31u/l; M: <42u/l</td>
                     <td>Others</td>
-                    <td colspan="2"><input type="text" class="form-control" value="" name="result_20" placeholder="Result"/></td>
+                    <td colspan="2"><input type="text" class="form-control" value="" name="result_22" placeholder="Result"/></td>
                 </tr>
                 <tr>
                     <td>SGPT</td>
-                    <td><input type="text" class="form-control" value="" name="result_10" placeholder="Result"/></td>
+                    <td><input type="text" class="form-control" value="" name="result_11" placeholder="Result"/></td>
                     <td>F: <31u/l; M: <42u/l</td>
                     <td colspan="3"></td>
                 </tr>
                 <tr>
                     <td>Alk.Phosphatase</td>
-                    <td><input type="text" class="form-control" value="" name="result_11" placeholder="Result"/></td>
+                    <td><input type="text" class="form-control" value="" name="result_12" placeholder="Result"/></td>
                     <td>Adult: <258; Children: <727</td>
                     <td colspan="3"></td>
                 </tr>

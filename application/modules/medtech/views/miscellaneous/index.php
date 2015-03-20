@@ -16,7 +16,8 @@
         <input type="hidden" name="cust_id" value="<?=$customer['customer_id'];?>" />
         <input type="hidden" name="service_id" value="<?=$service_id;?>" />
         <input type="hidden" class="tpl-code" name="code" value="MX" />
-        
+        <input type="hidden" class="prof-pic" name="prof_pic" value="<?=$customer['prof_pic'];?>" />
+        <input type="hidden" class="service" name="service" value="<?=$result['test'];?>" />
         <table class="table" id="customer-service">
             <tbody>
                 <tr>
