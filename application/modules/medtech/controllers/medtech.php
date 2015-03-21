@@ -65,15 +65,17 @@ class Medtech extends MX_Controller {
         $result = array(
             'test' => $query->subcateg
         );
+        $MX_temp = array('HB', 'PT', 'BT', 'AFB');
+        $code = (in_array($query->template_code, $MX_temp)) ? "MX" : $query->template_code;
         $retval = array(
             'customer' => $customer_info,
-            'code' => $query->template_code,
+            'code' => $code,
             'service_id' => $service_id,
             'result' => $result,
             'date_recv' => date('')
 
         );
-
+        
         $this->load->view('toolbar/index', $retval);
         $this->load->view('hematology/index', $retval);
         $this->load->view('miscellaneous/index', $retval);
@@ -87,9 +89,7 @@ class Medtech extends MX_Controller {
     public function exportData(){
         $post = $this->input->post();
         $code = $post['code'];
-        // echo '<pre>';
-        // print_r($post);
-        // die();
+        
         // ob_start();
         $err_info = "";
         $msg_info = "";
@@ -146,8 +146,9 @@ class Medtech extends MX_Controller {
                     $template->set_source($source);
                     $template->set_date_received($date_recv);
                     $template->set_date_released(date('m-d-Y h:i A'));
-                    // if($service == "HBSAG")
-                    // $template->set_user_pic();
+                    if(strtolower($service) == "hbsag"){
+                        $template->set_user_pic($prof_pic);
+                    }
 
                     $template->build();
                     ob_end_clean();

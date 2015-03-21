@@ -1,0 +1,6 @@
+Put php_smtp.dll to PHP ext directory
+Apache: Enable SSL module (ssl_module)
+PHP: Enable extensions
+    - php_openssl
+    - php_smtp
+    - php_sockets

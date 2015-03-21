@@ -56,6 +56,7 @@ class Radtech extends MX_Controller {
             'bday' => date('m-d-Y', strtotime($query->bday)),
             'date_recv' => $date_recv->format('m-d-Y h:i A'),
             'source' => $session_data['code'],
+            'prof-pic' => $query->image,
             'case_no' => $query->receipt_no,
             'physician' => $query->physician
         );
@@ -108,24 +109,25 @@ class Radtech extends MX_Controller {
                     $template->set_source($source);
                     $template->set_date_received($date_recv);
                     $template->set_date_released(date('m-d-Y h:i A'));
+                    $template->set_user_pic($prof_pic);
                     $template->build();
                     ob_end_clean();
                     $template->to_file($filename);
                     break;
-                    $template = new RadiologyTemplate("Radiology", $html);
-                    $template->set_name($fullname);
-                    $template->set_age_sex($age_sex);
-                    $template->set_date($date_released);
-                    $template->set_physician($physician);
-                    $template->set_case_no($case_no);
-                    $template->set_dob($bday);
-                    $template->set_source($source);
-                    $template->set_date_received($date_recv);
-                    $template->set_date_released(date('m-d-Y h:i A'));
-                    $template->build();
-                    ob_end_clean();
-                    $template->to_file($filename);
-                    break;
+                    // $template = new RadiologyTemplate("Radiology", $html);
+                    // $template->set_name($fullname);
+                    // $template->set_age_sex($age_sex);
+                    // $template->set_date($date_released);
+                    // $template->set_physician($physician);
+                    // $template->set_case_no($case_no);
+                    // $template->set_dob($bday);
+                    // $template->set_source($source);
+                    // $template->set_date_received($date_recv);
+                    // $template->set_date_released(date('m-d-Y h:i A'));
+                    // $template->build();
+                    // ob_end_clean();
+                    // $template->to_file($filename);
+                    // break;
                  case 'UTZ':
                     $html = "<br />
                      

@@ -4,6 +4,7 @@
         <input type="hidden" name="cust-id" />
         <input type="hidden" name="service-id" />
         <input type="hidden" name="code" class="tpl-code" value="RD"/>
+        <input type="hidden" name="prof_pic" class="prof_pic" value="<?=$customer['prof-pic'];?>"/>
        <table class="table" id="customer-service">
             <tbody>
                 <tr>
