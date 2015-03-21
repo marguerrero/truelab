@@ -51,7 +51,7 @@
                  <div class="form-group">
                     <label for="physician" class="col-sm-2 control-label">Physician</label>
                     <div class="col-sm-3">
-                        <input name="physician" id="physician" type="text" class="form-control" placeholder="Customer's Physician" />
+                        <input name="physician" value="Dr. Anna Janine B. Gamulo, MD" id="physician" type="text" class="form-control" placeholder="Customer's Physician" />
                     </div>
                 </div><!--.form-group-->
                 <!-- <div class="form-group">
