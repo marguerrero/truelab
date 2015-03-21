@@ -530,8 +530,8 @@ class Customer extends MX_Controller {
             //-- Save entry to customer transaction
 
             $trans_id = ($t_id) ? $t_id : $this->_fetchPK('customer_transaction');
-            $unique = date('YmdHis');
-            $receipt_no = ($reference_no) ? $reference_no : RECEIPT_INIT."-$trans_id$unique";
+            $unique = date('Ymd-His');
+            $receipt_no = ($reference_no) ? $reference_no : RECEIPT_INIT."-$unique";
             $transaction = array(
                 'receipt_no' => $receipt_no,
                 'cust_id' => $cust_id,
