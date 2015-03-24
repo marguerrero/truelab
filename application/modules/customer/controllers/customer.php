@@ -198,7 +198,9 @@ class Customer extends MX_Controller {
         foreach ($query->result() as $row){
             $reg_price = $row->reg_price;
             $disc_price = (!$row->disc_price) ? $reg_price : $row->disc_price;
-            $sub_options .= "<option hidden data-reg-price='{$row->reg_price}' data-disc-price='$disc_price' class='child-options child-{$row->main_test_id}' data-price='{$row->reg_price}' data-discount-price='$row->disc_price' data-parent='{$row->main_test_id}' value={$row->sub_test_id}>{$row->subcateg}</option>";
+            $disc_price_2 = (!$row->disc_price_2) ? $reg_price : $row->disc_price_2;
+            // $sub_options .= "<option  data-reg-price='{$row->reg_price}' data-disc-price='$disc_price' class='child-options child-{$row->main_test_id}' data-price='{$row->reg_price}' data-discount-price='$row->disc_price' data-parent='{$row->main_test_id}' value='{$row->sub_test_id}'>{$row->subcateg}</option>";
+            $sub_options .= "<option style='display:none;' data-reg-price='{$row->reg_price}' data-disc-price='$disc_price' data-disc-price-2='$disc_price_2' class='child-options child-{$row->main_test_id}' data-price='{$row->reg_price}' data-discount-price='$row->disc_price' data-parent='{$row->main_test_id}' value={$row->sub_test_id}>{$row->subcateg}</option>";
         }
         
         //-- get customer information 

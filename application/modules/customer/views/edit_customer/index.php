@@ -116,6 +116,16 @@
                     </div>
                 </div><!--.form-group-->
                 <div class="form-group">
+		 <label for="birthday" class="col-sm-2 control-label">Discount Price</label>
+                    <div class="col-sm-3">
+                        <select name="discount-type" class="form-control discount-type" id="" placeholder="No Discount" disabled>
+                            <option class="discount-null" value="0">Discount disabled</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-3"></div>
+                </div><!--.form-group-->
+                <div class="form-group">
+	
                     <label for="birthday" class="col-sm-2 control-label">Price</label>
                     <div class="col-sm-3">
                         <input disabled type="text" name="service-price" class="form-control service-price" id="" placeholder="Amount"/>
@@ -175,89 +185,9 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>1</td>
-                    <td>Guerrero</td>
-                    <td>Reymar</td>
-                    <td>January 11, 1992</td>
-                    <td>&nbsp;</td>
+                    <td colspan="5">Please refresh the page</td>
                 </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Guerrero</td>
-                    <td>Reymar</td>
-                    <td>January 11, 1992</td>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Guerrero</td>
-                    <td>Reymar</td>
-                    <td>January 11, 1992</td>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Guerrero</td>
-                    <td>Reymar</td>
-                    <td>January 11, 1992</td>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Guerrero</td>
-                    <td>Reymar</td>
-                    <td>January 11, 1992</td>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Guerrero</td>
-                    <td>Reymar</td>
-                    <td>January 11, 1992</td>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Guerrero</td>
-                    <td>Reymar</td>
-                    <td>January 11, 1992</td>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Guerrero</td>
-                    <td>Reymar</td>
-                    <td>January 11, 1992</td>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Guerrero</td>
-                    <td>Reymar</td>
-                    <td>January 11, 1992</td>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Guerrero</td>
-                    <td>Reymar</td>
-                    <td>January 11, 1992</td>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Guerrero</td>
-                    <td>Reymar</td>
-                    <td>January 11, 1992</td>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Guerrero</td>
-                    <td>Reymar</td>
-                    <td>January 11, 1992</td>
-                    <td>&nbsp;</td>
-                </tr>
+                
             </tbody>
         </table>
       </div>
@@ -281,7 +211,10 @@
     <div class="form-group">
         <label for="service-1" class="col-sm-2 control-label">Sub-Category</label>
         <div class="col-sm-10">
-            <select class="form-control service-sub-cat" name="subcat-id[]" id="service-child-1">
+            <select class="form-control service-sub-cat" name="subcat-id[]" id="service-child-1-dummy">
+                <option class="service-null" value="0" selected="selected">-- SELECT SERVICE --</option>
+            </select>
+            <select class="form-control service-sub-cat" name="" id="service-child-1" style="display: none">
                 <?php echo $sub_options; ?>
             </select>
         </div><!--.col-sm-10-->
@@ -297,6 +230,15 @@
               
             </div><!--.radio-->
         </div>
+    </div><!--.form-group-->
+    <div class="form-group">
+        <label for="birthday" class="col-sm-2 control-label">Discount Price</label>
+        <div class="col-sm-3">
+            <select name="discount-type[]" class="form-control discount-type" id="" placeholder="No Discount" disabled>
+                <option class="discount-null" value="0">Discount disabled</option>
+            </select>
+        </div>
+        <div class="col-sm-3"></div>
     </div><!--.form-group-->
     <div class="form-group">
         <label for="birthday" class="col-sm-2 control-label">Price</label>
