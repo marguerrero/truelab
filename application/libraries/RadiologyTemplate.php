@@ -46,7 +46,7 @@ class RadiologyTemplate extends ServiceTemplate
     public function build_signatures()
     {
         $html_lines = explode("\n", $this->_html);
-        $this->ln(170 - ($this->_last_y));
+        $this->ln(70 - ($this->_last_y));
         $column_styles = array(
             0 => array(
                 'width' => 180,

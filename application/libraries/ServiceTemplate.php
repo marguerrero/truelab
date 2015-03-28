@@ -336,7 +336,7 @@ class ServiceTemplate extends PDF
 
     public function build_signatures()
     {
-        $this->ln(18);
+        $this->ln(1);
 
         $style = array(
             'width' => 90,
