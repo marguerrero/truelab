@@ -1,0 +1,2 @@
+ALTER TABLE cust_list ADD COLUMN middlename VARCHAR(150);
+
