@@ -9,7 +9,7 @@ class Base extends MX_Controller {
         $access = array();
         switch ($access_type) {
             case 'superadmin':
-                $role = "Supar Admin";
+                $role = "Super Admin";
                 $access = array(
                     'add_customer' => "",
                     'edit_customer' => "",

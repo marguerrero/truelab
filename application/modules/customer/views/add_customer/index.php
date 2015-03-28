@@ -14,13 +14,13 @@
                 <div class="form-group">
                     <label for="last-name" class="col-sm-2 control-label">First Name</label>
                     <div class="col-sm-10">
-                        <input type="text" name="last-name" class="form-control" id="cust-firstname" placeholder="Enter Customer's First Name">
+                        <input type="text" name="first-name" class="form-control" id="cust-firstname" placeholder="Enter Customer's First Name">
                     </div>
                 </div><!--.form-group-->
                 <div class="form-group" data-service-order="1">
                     <label for="first-name" class="col-sm-2 control-label">Last Name</label>
                     <div class="col-sm-10">
-                        <input type="text" name="first-name" class="form-control" id="cust-lastname" placeholder="Enter Customer's Last Name">
+                        <input type="text" name="last-name" class="form-control" id="cust-lastname" placeholder="Enter Customer's Last Name">
                     </div>
                 </div><!--.form-group-->
                 <div class="form-group">

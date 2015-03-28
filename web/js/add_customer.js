@@ -3,6 +3,7 @@ $('.customer-select').on('click', selectCustomer);
 $('#cust-bday').on('change', calculateAge);
 $('#customer-transaction').on('click', '.service-discount',displayDiscount);
 $('#customer-transaction').on('change', '.service-sub-cat',displayPrice);
+$('#customer-transaction').on('change', '.discount-type',displayPrice);
 $('#customer-transaction').on('change', '.service-cat',displaySubCategory);
 $('#existing-customer-dialog').on('click', '.customer-select', selectCustomer);
 $('#save-trans-btn').on('click', saveTransaction);
@@ -126,7 +127,7 @@ function displayPrice(){
         has_discount = container.find('.service-discount').is(':checked'),
         service_price = container.find('.service-price');
         disc_container = container.find('.discount-type');
-
+        console.log(disc_price_2);
         container.find('.service-discount').prop('checked', false);
         disc_container.find('.discount-type').attr('disabled', true);
         disc_container.find('.discount-null').show();
