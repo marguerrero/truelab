@@ -17,6 +17,12 @@
                         <input type="text" name="first-name" class="form-control" id="cust-firstname" placeholder="Enter Customer's First Name">
                     </div>
                 </div><!--.form-group-->
+                <div class="form-group">
+                    <label for="middle-name" class="col-sm-2 control-label">Middle Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" name="middle-name" class="form-control" id="cust-firstname" placeholder="Enter Customer's Middle Name">
+                    </div>
+                </div><!--.form-group-->
                 <div class="form-group" data-service-order="1">
                     <label for="first-name" class="col-sm-2 control-label">Last Name</label>
                     <div class="col-sm-10">

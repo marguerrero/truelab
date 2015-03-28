@@ -3,7 +3,6 @@ $('.customer-select').on('click', selectCustomer);
 $('#cust-bday').on('change', calculateAge);
 $('#customer-transaction').on('click', '.service-discount',displayDiscount);
 $('#customer-transaction').on('change', '.service-sub-cat',displayPrice);
-$('#customer-transaction').on('change', '.discount-type',displayPrice);
 $('#customer-transaction').on('change', '.service-cat',displaySubCategory);
 $('#existing-customer-dialog').on('click', '.customer-select', selectCustomer);
 $('#save-trans-btn').on('click', saveTransaction);

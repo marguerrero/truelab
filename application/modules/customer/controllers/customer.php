@@ -79,6 +79,7 @@ class Customer extends MX_Controller {
         $customer = array(
             'cust_id' => $result[0]->service_id,
             'firstname' => $result[0]->firstname,
+            'middlename' => $result[0]->middlename,
             'lastname' => $result[0]->lastname,
             'gender' => ($result[0]->sex == 'M') ? 'Male' : 'Female',
             'birthday' => date('F d, Y', strtotime($result[0]->bday)),
@@ -112,6 +113,7 @@ class Customer extends MX_Controller {
         $template = new CustomerTransactionExport();
         $template->set_last_name($customer['lastname']);
         $template->set_first_name($customer['firstname']);
+        $template->set_middle_name($customer['middlename']);
         $template->set_age($customer['age']);
         $template->set_gender($customer['gender']);
         $template->set_birthday($customer['birthday']);
@@ -232,6 +234,7 @@ class Customer extends MX_Controller {
         $customer = array(
             'cust_id' => $result->service_id,
             'firstname' => $result->firstname,
+            'middlename' => $result->middlename,
             'lastname' => $result->lastname,
             'birthday' => $birthday,
             'age' => $age,
@@ -340,6 +343,7 @@ class Customer extends MX_Controller {
             'cust_id' => $result[0]->service_id,
             'firstname' => $result[0]->firstname,
             'lastname' => $result[0]->lastname,
+            'middlename' => $result[0]->middlename,
             'gender' => ($result[0]->sex == 'M') ? 'Male' : 'Female',
             'birthday' => date('F d, Y', strtotime($result[0]->bday)),
             'reference_no' => $result[0]->receipt_no,
@@ -472,6 +476,7 @@ class Customer extends MX_Controller {
             $cust_id = $input->post('cust-id');
             $firstname = $input->post('first-name');
             $lastname = $input->post('last-name');
+            $middlename = $input->post('middle-name');
             $gender = $input->post('gender');
             $birthday = $input->post('bday');
             $services = $input->post('subcat-id');
@@ -482,6 +487,10 @@ class Customer extends MX_Controller {
             if(!$firstname){
                 $field = 'firstname';
                 throw new Exception("First Name is required", 1);
+            }
+            if(!$middlename){
+                $field = 'middlename';
+                throw new Exception("Middle Name is required", 1);
             }
             if(!$lastname){
                 $field = 'lastname';
@@ -509,6 +518,7 @@ class Customer extends MX_Controller {
                     'service_id' => $cust_id,
                     'firstname' => trim($firstname),
                     'lastname' => trim($lastname),
+                    'middlename' => trim($middlename),
                     'sex' => $gender,
                     'bday' => date('Y-m-d', strtotime($birthday))
                 );
@@ -523,6 +533,7 @@ class Customer extends MX_Controller {
                     'service_id' => $cust_id,
                     'firstname' => trim($firstname),
                     'lastname' => trim($lastname),
+                    'middlename' => trim($middlename),
                     'sex' => $gender,
                     'bday' => date('Y-m-d', strtotime($birthday))
                 );

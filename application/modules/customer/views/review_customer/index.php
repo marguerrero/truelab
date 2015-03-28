@@ -43,10 +43,15 @@
                         <td><?=$customer['reference_no']; ?></td>
                     </tr>
                     <tr>
-                        <td>Last Name</td>
-                        <td><?=$customer['lastname']; ?></td>
+                        <td>Middle Name</td>
+                        <td><?=$customer['middlename']; ?></td>
                         <td>Date</td>
                         <td><?=$customer['transaction_date']; ?></td>
+                    </tr>
+                    <tr>
+                        <td>Last Name</td>
+                        <td><?=$customer['lastname']; ?></td>
+                        <td colspan="2">&nbsp;</td>
                     </tr>
                     <tr>
                         <td>Age</td>

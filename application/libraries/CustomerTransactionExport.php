@@ -4,6 +4,7 @@ class CustomerTransactionExport extends PDF
 {
     private $_reference_number;
     private $_first_name;
+    private $_middlename_name;
     private $_last_name;
     private $_age;
     private $_gender;
@@ -20,6 +21,13 @@ class CustomerTransactionExport extends PDF
     public function set_first_name($v)
     {
         $this->_first_name = $v;
+
+        return $this;
+    }
+
+    public function set_middle_name($v)
+    {
+        $this->_middle_name = $v;
 
         return $this;
     }
@@ -110,10 +118,16 @@ class CustomerTransactionExport extends PDF
                 array('text' => $this->_reference_no)
             ),
             array(
-                array('text' => 'Last Name'),
-                array('text' => $this->_last_name),
+                array('text' => 'Middle Name'),
+                array('text' => $this->_middle_name),
                 array('text' => 'Date'),
                 array('text' => $this->_date)
+            ),
+            array(
+                array('text' => 'Last Name'),
+                array('text' => $this->_last_name),
+                array('text' => ''),
+                array('text' => '')
             ),
             array(
                 array('text' => 'Age'),
