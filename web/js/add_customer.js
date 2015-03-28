@@ -2,7 +2,8 @@ $('#reset-fields').on('click', resetFields);
 $('.customer-select').on('click', selectCustomer);
 $('#cust-bday').on('change', calculateAge);
 $('#customer-transaction').on('click', '.service-discount',displayDiscount);
-$('#customer-transaction').on('change', '.service-sub-cat',displayPrice);
+$('#customer-transaction').on('change', '.service-sub-cat',initPrice);
+$('#customer-transaction').on('change', '.discount-type',displayPrice);
 $('#customer-transaction').on('change', '.service-cat',displaySubCategory);
 $('#existing-customer-dialog').on('click', '.customer-select', selectCustomer);
 $('#save-trans-btn').on('click', saveTransaction);
@@ -117,7 +118,9 @@ function displayDiscount(){
         return;
 }
 
-function displayPrice(){
+
+
+function initPrice(){
     var selection = $(this),
         container = selection.parent().parent().parent(),
         reg_price = selection.find(':selected').attr('data-reg-price'),
@@ -126,7 +129,6 @@ function displayPrice(){
         has_discount = container.find('.service-discount').is(':checked'),
         service_price = container.find('.service-price');
         disc_container = container.find('.discount-type');
-        console.log(disc_price_2);
         container.find('.service-discount').prop('checked', false);
         disc_container.find('.discount-type').attr('disabled', true);
         disc_container.find('.discount-null').show();
@@ -148,6 +150,19 @@ function displayPrice(){
         if(has_discount)
             service_price.val(disc_price);
 }
+
+function displayPrice(){
+    var selection = $(this),
+        container = selection.parent().parent().parent(),
+        selected = selection.find(':selected');
+        price = selected.attr('data-price'),
+        service_price = container.find('.service-price');
+    service_price.val(price);
+    return;
+}
+
+
+
 
 function addMoreService(){
     $('.remove-panel').off('click', '**');
