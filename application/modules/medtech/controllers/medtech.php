@@ -52,13 +52,15 @@ class Medtech extends MX_Controller {
         
         $customer_info = array(
             'customer_id' => $query->cust_id,
-            'fullname' => "{$query->lastname}, {$query->firstname}",
+            'fullname' => "{$query->lastname}, {$query->firstname} {$query->middlename} ",
             'age_sex' => $this->_calculateAge($query->bday)."/".$query->sex,
             'bday' => date('m-d-Y', strtotime($query->bday)),
             'date_recv' => $date_recv->format('m-d-Y h:i A'),
             'source' => $session_data['code'],
-            'case_no' => $query->receipt_no,
             'prof-pic' => $query->image,
+            'exported' => $query->exported,
+            'case_no' => $query->receipt_no,
+            'require-pic' => $query->require_pic,
             'physician' => $query->physician
         );
         
@@ -89,8 +91,11 @@ class Medtech extends MX_Controller {
     public function exportData(){
         $post = $this->input->post();
         $code = $post['code'];
+        $check_exported = $this->db->get_where('customer_service', array('id' => $post['service_id'], 'exported' => true));
         
-        // ob_start();
+        if($check_exported->num_rows)
+            redirect('/index.php/medtech/service/'.$post['service_id']);
+
         $err_info = "";
         $msg_info = "";
         $filename = "EXPORT_$code-".date('Y-m-d h:i:s').".pdf";
@@ -259,8 +264,11 @@ class Medtech extends MX_Controller {
                     break;
             }
         } catch (Exception $e) {
-            $err_info = $e->getMessage();
+            die($e->getMessage());
         }
+        $this->db->where('id', $post['service_id']);
+        $this->db->update('customer_service', array('exported' => true));
+        return true;
     }
 
      public function loadSingleTransaction(){
@@ -366,6 +374,16 @@ class Medtech extends MX_Controller {
         }
        
         $retval = array('data' => $data);
+        echo json_encode($retval);
+        return;
+    }
+
+    public function getTimestamp(){
+        $retval = array(
+            'success' => true,
+            'status' => 'success',
+            'timestamp' => date('m-d-Y h:i A')
+        );
         echo json_encode($retval);
         return;
     }

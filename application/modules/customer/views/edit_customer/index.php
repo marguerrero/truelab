@@ -124,7 +124,7 @@
                 <div class="form-group">
 		 <label for="birthday" class="col-sm-2 control-label">Discount Price</label>
                     <div class="col-sm-3">
-                        <select name="discount-type" class="form-control discount-type" id="" placeholder="No Discount" disabled>
+                        <select name="discount-type[]" class="form-control discount-type" id="" placeholder="No Discount" disabled>
                             <option class="discount-null" value="0">Discount disabled</option>
                         </select>
                     </div>

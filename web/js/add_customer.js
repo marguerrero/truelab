@@ -88,7 +88,7 @@ function selectCustomer(){
 
 function displayDiscount(){
     var selection = $(this),
-        container = selection.parent().parent().parent().parent().parent(),
+        container = selection.parents('.service-form'),
         discount_checker = container.find('.service-discount-null');
         subcat = container.find('.service-sub-cat').find(':selected'),
         disc_container = container.find('.discount-type');
@@ -122,7 +122,7 @@ function displayDiscount(){
 
 function initPrice(){
     var selection = $(this),
-        container = selection.parent().parent().parent(),
+        container = selection.parents('.service-form'),
         reg_price = selection.find(':selected').attr('data-reg-price'),
         disc_price = selection.find(':selected').attr('data-disc-price'),
         disc_price_2 = selection.find(':selected').attr('data-disc-price-2'),
@@ -133,6 +133,7 @@ function initPrice(){
         disc_container.find('.discount-type').attr('disabled', true);
         disc_container.find('.discount-null').show();
         disc_container.find('.discount-info').remove();
+        
         if($(this).val() != 0){
             var less = reg_price - disc_price,
                 less_2 = reg_price - disc_price_2,
@@ -153,7 +154,7 @@ function initPrice(){
 
 function displayPrice(){
     var selection = $(this),
-        container = selection.parent().parent().parent(),
+        container = selection.parents('.service-form'),
         selected = selection.find(':selected');
         price = selected.attr('data-price'),
         service_price = container.find('.service-price');

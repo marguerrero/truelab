@@ -153,19 +153,21 @@ class ServiceTemplate extends PDF
 
     protected function build_user_pic()
     {
-        $period_index = strrpos($this->_user_pic, '.');
-        $extension = substr($this->_user_pic, ($period_index + 1));
+        if($this->_user_pic != 'default_user_image.png'){
+            $period_index = strrpos($this->_user_pic, '.');
+            $extension = substr($this->_user_pic, ($period_index + 1));
 
-        $this->SetLineStyle(array('width' => 0.5, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(215, 230, 246)));
-        $this->Image('http://localhost/truelab/web/uploads/' . $this->_user_pic, 10, 10, 30, 30, strtoupper($extension), '', 'T', true, 300, 'R', false, false, 'TLBR', false, false, false);
-        $this->SetLineStyle(array('width' => 0.1, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)));
+            $this->SetLineStyle(array('width' => 0.5, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(215, 230, 246)));
+            $this->Image('http://localhost/truelab/web/uploads/' . $this->_user_pic, 10, 10, 30, 30, strtoupper($extension), '', 'T', true, 300, 'R', false, false, 'TLBR', false, false, false);
+            $this->SetLineStyle(array('width' => 0.1, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)));
 
-        $this->Ln(15);
+            $this->Ln(20);
+        }
     }    
 
     protected function build_transaction_info()
     {
-        $this->Ln(12);
+        $this->Ln(7);
 
         $this->SetFont('helvetica', '', 9);
 

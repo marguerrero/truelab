@@ -3,7 +3,7 @@
     <h1 class="text-center">Urinalysis</h1>
     <form action="<?=site_url('/index.php/medtech/exportData');?>" method="POST">
         <input type="hidden" name="cust-id" />
-        <input type="hidden" name="service-id" />
+        <input type="hidden" name="service_id" value="<?=$service_id;?>" />
         <input type="hidden" class="tpl-code" name="code" value="UA" />
          <table class="table" id="customer-service">
             <tbody>

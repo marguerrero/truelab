@@ -1,2 +1,4 @@
 ALTER TABLE cust_list ADD COLUMN middlename VARCHAR(150);
-
+ALTER TABLE subcat ADD COLUMN require_pic BOOLEAN;
+UPDATE subcat SET require_pic=TRUE WHERE sub_test_id IN (42,23,56);
+ALTER TABLE customer_service ADD COLUMN exported BOOLEAN DEFAULT FALSE;

@@ -39,9 +39,7 @@ class Radtech extends MX_Controller {
             WHERE aa.id=$service_id
         ";
 
-        $query = $this->db
-                    ->query($sql);
-
+        $query = $this->db->query($sql);
         
         if(!$query)
             redirect('/');
@@ -49,19 +47,22 @@ class Radtech extends MX_Controller {
         $string = $query->transdate;
         $date_recv = new Datetime($string);
         $session_data = $this->session->all_userdata();
+        
         $customer_info = array(
             'customer_id' => $query->cust_id,
-            'fullname' => "{$query->lastname}, {$query->firstname}",
+            'fullname' => "{$query->lastname}, {$query->firstname} {$query->middlename}",
             'age_sex' => $this->_calculateAge($query->bday)."/".$query->sex,
             'bday' => date('m-d-Y', strtotime($query->bday)),
             'date_recv' => $date_recv->format('m-d-Y h:i A'),
             'source' => $session_data['code'],
             'prof-pic' => $query->image,
+            'exported' => $query->exported,
             'case_no' => $query->receipt_no,
+            'require-pic' => $query->require_pic,
             'physician' => $query->physician
         );
       
-       
+        
         $retval = array(
             'customer' => $customer_info,
             'code' => $query->template_code,
@@ -76,10 +77,11 @@ class Radtech extends MX_Controller {
     public function exportData(){
         $post = $this->input->post();
         $code = $post['code'];
-        // echo '<pre>';
-        // print_r($post);
-        // die();
-        // ob_start();
+        $check_exported = $this->db->get_where('customer_service', array('id' => $post['service_id'], 'exported' => 1));
+        
+        if($check_exported->num_rows)
+            redirect('/index.php/radtech/service/'.$post['service_id']);
+
         $err_info = "";
         $msg_info = "";
         $filename = "EXPORT_$code-".date('Y-m-d h:i:s').".pdf";
@@ -151,6 +153,9 @@ class Radtech extends MX_Controller {
         } catch(Exception $e){
             die($e->getMessage());
         }
+        $this->db->where('id', $post['service_id']);
+        $this->db->update('customer_service', array('exported' => true));
+        return true;
     }
 
     public function loadSingleTransaction(){
@@ -255,6 +260,16 @@ class Radtech extends MX_Controller {
         }
        
         $retval = array('data' => $data);
+        echo json_encode($retval);
+        return;
+    }
+
+    public function getTimestamp(){
+        $retval = array(
+            'success' => true,
+            'status' => 'success',
+            'timestamp' => date('m-d-Y h:i A')
+        );
         echo json_encode($retval);
         return;
     }

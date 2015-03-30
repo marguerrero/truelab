@@ -281,12 +281,22 @@ class Customer extends MX_Controller {
         
         $customer_services = array();
         foreach ($query->result() as $key => $value) {
-            $price = ($value->has_discount)  ? $value->disc_price : $value->reg_price;
-            $price = (!$price) ? $value->reg_price : $price;
+            // $price = ($value->has_discount)  ? $value->disc_price : $value->reg_price;
+            // $price = (!$price) ? $value->reg_price : $price;
+            $price = $value->reg_price;
+            switch ($value->disc_type) {
+                case 1:
+                    $price = $value->disc_price;
+                    break;
+                case 2:
+                    $price = $value->disc_price_2;
+                    break;
+            }
             $customer_services[] = array(
                 'category_id' => $value->main_test_id,
                 'subcat_id' => $value->subcat_id,
                 'has_discount' => ($value->has_discount) ? true : false,
+                'disc_type' => $value->disc_type,
                 'price' => $price
             );
         }
@@ -482,7 +492,7 @@ class Customer extends MX_Controller {
             $services = $input->post('subcat-id');
             $physician = $input->post('physician');
             $has_discount = $input->post('has-discount');
-
+            
             //-- Validate User Here
             if(!$firstname){
                 $field = 'firstname';
@@ -565,10 +575,15 @@ class Customer extends MX_Controller {
 
 
             //-- Save entries to customer service
+            $d_count = 0;
             foreach ($services as $key => $value) {
                 $s_id = $value;
-                $d_type = $disc_type[$key];
+                $d_type = 0;
                 $discount = $has_discount[$key];
+                if($discount){
+                     $d_type = $disc_type[$d_count];
+                     $d_count++;
+                }
                 $service_entry = array(
                     'subcat_id' => $s_id,
                     'has_discount' => $discount,
