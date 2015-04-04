@@ -2,7 +2,7 @@
     <h1 class="text-center">Radiology/X-Ray</h1>
     <form action="<?=site_url('/index.php/radtech/exportData');?>" method="POST">
         <input type="hidden" name="cust-id" />
-        <input type="hidden" name="service-id" />
+        <input type="hidden" name="service-id" value="<?=$service_id; ?>" />
         <input type="hidden" name="code" class="tpl-code" value="RD"/>
         <input type="hidden" name="prof_pic" class="prof_pic" value="<?=$customer['prof-pic'];?>"/>
        <table class="table" id="customer-service">
@@ -44,28 +44,31 @@
         </table>
         <h2>Chest PA View</h2>
         <div class="row" style="margin-top:20px; margin-bottom: 20px;">
-            <div class="col-md-6"><input type="text" class="form-control" name="result_1" value="There is no evidence of active parenchymal Inflitrates" placeholder="There is no evidence of active parenchymal Inflitrates"/></div><!--col-md-6-->
+            <div class="col-md-12"><input type="text" class="form-control" name="result_1" value="There is no evidence of active parenchymal Inflitrates" placeholder="There is no evidence of active parenchymal Inflitrates"/></div><!--col-md-12-->
         </div><!--.row-->
         <div class="row">
-            <div class="col-md-6"><input type="text" class="form-control" name="result_2" value="Heart is not enlarged" placeholder="Heart is not enlarged"/></div><!--col-md-6-->
+            <div class="col-md-12"><input type="text" class="form-control" name="result_2" value="Heart is not enlarged" placeholder="Heart is not enlarged"/></div><!--col-md-12-->
         </div><!--.row-->
         <div class="row" style="margin-top:20px; margin-bottom: 20px;">
-            <div class="col-md-6"><input type="text" class="form-control" name="result_3" value="Aorta is not enlarged" placeholder="Aorta is not enlarged"/></div><!--col-md-6-->
+            <div class="col-md-12"><input type="text" class="form-control" name="result_3" value="Aorta is not enlarged" placeholder="Aorta is not enlarged"/></div><!--col-md-12-->
         </div><!--.row-->
         <div class="row" style="margin-top:20px; margin-bottom: 20px;">
-            <div class="col-md-6"><input type="text" class="form-control" name="result_4" value="Trachea, diaphragm and sulci are intact." placeholder="Trachea, diaphragm and sulci are intact."/></div><!--col-md-6-->
+            <div class="col-md-12"><input type="text" class="form-control" name="result_4" value="Trachea, diaphragm and sulci are intact." placeholder="Trachea, diaphragm and sulci are intact."/></div><!--col-md-12-->
         </div><!--.row-->
         <br />
         <h2>Impression</h2>
         <div class="row">
-            <div class="col-md-6"><input type="text" class="form-control" name="result_5" value="NO SIGNIFICANT CHEST FINDINGS " placeholder="NO SIGNIFICANT CHEST FINDINGS "/></div><!--col-md-6-->
+            <div class="col-md-12">
+                <!-- <input type="text" class="form-control" name="result_5" value="NO SIGNIFICANT CHEST FINDINGS " placeholder="NO SIGNIFICANT CHEST FINDINGS "/> -->
+                <textarea style="resize: none;" class="form-control" name="result_5" placeholder="NO SIGNIFICANT CHEST FINDINGS">NO SIGNIFICANT CHEST FINDINGS</textarea>
+            </div><!--col-md-12-->
         </div><!--.row-->
         <br /><br />
         <div class="row text-center">
-            <div class="col-md-offset-4 col-md-4"><input type="text" value="ERIC NORMAN BRUA, MD " class="form-control" name="radiologist" placeholder="Radiologist Name"/></div><!--col-md-6-->
+            <div class="col-md-offset-4 col-md-4"><input type="text" value="ERIC NORMAN BRUA, MD " class="form-control" name="radiologist" placeholder="Radiologist Name"/></div><!--col-md-12-->
         </div><!--.row-->
         <div class="row text-center">
-            <div class="col-md-offset-4 col-md-4 text-center">Radiologist</div><!--col-md-6-->
+            <div class="col-md-offset-4 col-md-4 text-center">Radiologist</div><!--col-md-12-->
         </div><!--.row-->
     </form>
 </div>

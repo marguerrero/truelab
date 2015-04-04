@@ -238,6 +238,7 @@ class Customer extends MX_Controller {
             'lastname' => $result->lastname,
             'birthday' => $birthday,
             'age' => $age,
+            'prof-pic' => $result->image,
             'physician' => $result->physician,
             'gender_male' => ($result->sex == 'M') ? 'checked' : '',
             'gender_female' => ($result->sex == 'F') ? 'checked' : '',
@@ -488,7 +489,7 @@ class Customer extends MX_Controller {
             $lastname = $input->post('last-name');
             $middlename = $input->post('middle-name');
             $gender = $input->post('gender');
-            $birthday = $input->post('bday');
+            $birthday = str_replace('-', '/', $input->post('bday'));
             $services = $input->post('subcat-id');
             $physician = $input->post('physician');
             $has_discount = $input->post('has-discount');

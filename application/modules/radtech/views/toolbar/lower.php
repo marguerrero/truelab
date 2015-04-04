@@ -63,17 +63,27 @@
         $('#print-preview').find('h1').css('background', '#fff').css('font-size', '14px').css('font-weight', 'bold').css('background', 'rgb(47,99, 161)').css('color','#fff');
         $('#print-preview').find('td').css('border', 'none');
         $('#print-preview').find('input').prop('disabled', 'true').attr('placeholder', '');
+        $('#print-preview').find('textarea').prop('disabled', 'true').attr('placeholder', '').css({'background': 'none', 'border':'none', 'box-shadow':'none'});
         $('#print-preview').find('input[name=fullname]').css('text-align', 'center');
         $('#print-preview').find('input[name=radiologist]').css('text-align', 'center');
         var date_released_container = $('#print-preview').find('#customer-service').find('tr:eq(3)');
         date_released_container.find('td[colspan=3]').remove();
+
+        //-- Update the values from the templates
+        var main_template = $('.active-template').find('input');
+        $(main_template).each(function(key, val){
+            var name = $(val).attr('name'),
+                i_val = $(val).val(),
+                review_container = $('.template-container');
+            review_container.find('input[name='+ name +']').val(i_val).css('box-shadow', 'none');
+        });
+
         $.ajax({
             url:'/truelab/index.php/medtech/getTimestamp', 
             success:function(response){ 
                 var data = $.parseJSON(response),
                     date_released = data.timestamp,
-                    html = "<td style='border:none'>Date released</td><td style='border:none'>:</td><td style='border:none'>"+ '<input type="text" readonly="" class="form-control" value="'+ date_released +'" name="date_recv" disabled="" placeholder="">' +  "</td>" ;
-                    console.log(data);
+                    html = "<td style='border:none'>Date released</td><td style='border:none'>:</td><td style='border:none'>"+ '<input style="box-shadow:none;" type="text" readonly="" class="form-control" value="'+ date_released +'" name="date_recv" disabled="" placeholder="">' +  "</td>" ;
                     date_released_container.append(html);
             } 
         });

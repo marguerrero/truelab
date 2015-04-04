@@ -46,10 +46,15 @@
                             <td><span class="trans-info trans-referenceno"></span></td>
                         </tr>
                         <tr>
-                            <td>Last Name</td>
-                            <td><span class="trans-info trans-lastname"></span></td>
+                            <td>Middle Name</td>
+                            <td><span class="trans-info trans-middlename"></span></td>
                             <td>Date</td>
                             <td><span class="trans-info trans-date"></span></td>
+                        </tr>
+                        <tr>
+                            <td>Last Name</td>
+                            <td><span class="trans-info trans-lastname"></span></td>
+                            <td colspan="2">&nbsp;</td>
                         </tr>
                         <tr>
                             <td>Age</td>
@@ -127,6 +132,7 @@ function viewDetails(){
             var response = $.parseJSON(response),
                 customer_info = response.customer_info;
                 $('.trans-firstname').html(customer_info.firstname);
+                $('.trans-middlename').html(customer_info.middlename);
                 $('.trans-lastname').html(customer_info.lastname);
                 $('.trans-age').html(customer_info.age);
                 $('.trans-gender').html(customer_info.gender);

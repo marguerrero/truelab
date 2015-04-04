@@ -3,10 +3,9 @@
     <h1 class="text-center">Hematology</h1>
     <form action="<?=site_url('/index.php/medtech/exportData');?>" method="POST">
         <input type="hidden" name="cust-id" />
-        <input type="hidden" name="service-id" />
+        <input type="hidden" name="service-id" value="<?=$service_id; ?>" />
         <input type="hidden" class="tpl-code" name="code" value="HE" />
         <table class="table" id="customer-service">
-            <table class="table" id="customer-service">
             <tbody>
                 <tr>
                     <td>Name</td>
@@ -50,6 +49,7 @@
                     <th>Test</th>
                     <th>Result</th>
                     <th>Normal Values</th>
+                    <th colspan="3"></th>
                     <!-- <th>Test</th>
                     <th>Result</th>
                     <th>Normal Values</th> -->
@@ -134,7 +134,7 @@
         <span><i>Note: this result is electronically transmitted</i></span>
         <br />
         <div class="row text-center" style="margin-top:40px;">
-            <div class="col-md-4"><input readonly type="text" class="form-control" value="RABIA ROSE MANUBAY, RMT" name="medical-technologist" placeholder="Medical Technologist Name"/></div><!--col-md-6-->
+            <div class="col-md-4"><input type="text" class="form-control" value="RABIA ROSE MANUBAY, RMT" name="medical-technologist" placeholder="Medical Technologist Name"/></div><!--col-md-6-->
             <div class="col-md-offset-4 col-md-4"><input readonly type="text" class="form-control" value="GERARD L. LAMAYRA, MD. FPSP" name="pathologist" placeholder="Pathologist Name"/></div><!--col-md-6-->
         </div><!--.row-->
         <div class="row text-center">

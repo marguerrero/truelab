@@ -63,6 +63,15 @@
         $('#print-preview').find('input[name=fullname]').css('text-align', 'center');
         $('#print-preview').find('input[name=pathologist]').css('text-align', 'center');
         $('#print-preview').find('input[name=medical-technologist]').css('text-align', 'center');
+
+        //-- Update the values from the templates
+        var main_template = $('.active-template').find('input');
+        $(main_template).each(function(key, val){
+            var name = $(val).attr('name'),
+                i_val = $(val).val(),
+                review_container = $('.template-container');
+            review_container.find('input[name='+ name +']').val(i_val).css('box-shadow', 'none');
+        });
         var date_released_container = $('#print-preview').find('#customer-service').find('tr:eq(3)');
         date_released_container.find('td[colspan=3]').remove();
         $.ajax({
@@ -70,7 +79,7 @@
             success:function(response){ 
                 var data = $.parseJSON(response),
                     date_released = data.timestamp,
-                    html = "<td style='border:none'>Date released</td><td style='border:none'>:</td><td style='border:none'>"+ '<input type="text" readonly="" class="form-control" value="'+ date_released +'" name="date_recv" disabled="" placeholder="">' +  "</td>" ;
+                    html = "<td style='border:none'>Date released</td><td style='border:none'>:</td><td style='border:none'>"+ '<input style="box-shadow:none;" type="text" readonly="" class="form-control" value="'+ date_released +'" name="date_recv" disabled="" placeholder="">' +  "</td>" ;
                     console.log(data);
                     date_released_container.append(html);
             } 

@@ -2,7 +2,7 @@
     <h1 class="text-center">Ultrasound</h1>
     <form action="<?=site_url('/index.php/radtech/exportData');?>" method="POST">
         <input type="hidden" name="cust-id" />
-        <input type="hidden" name="service-id" />
+        <input type="hidden" name="service-id" value="<?=$service_id; ?>" />
         <input type="hidden" name="code" class="tpl-code" value="UTZ"/>
         <table class="table" id="customer-service">
             <tbody>

@@ -77,10 +77,10 @@ class Radtech extends MX_Controller {
     public function exportData(){
         $post = $this->input->post();
         $code = $post['code'];
-        $check_exported = $this->db->get_where('customer_service', array('id' => $post['service_id'], 'exported' => 1));
+        $check_exported = $this->db->get_where('customer_service', array('id' => $post['service-id'], 'exported' => 1));
         
         if($check_exported->num_rows)
-            redirect('/index.php/radtech/service/'.$post['service_id']);
+            redirect('/index.php/radtech/service/'.$post['service-id']);
 
         $err_info = "";
         $msg_info = "";
@@ -153,7 +153,7 @@ class Radtech extends MX_Controller {
         } catch(Exception $e){
             die($e->getMessage());
         }
-        $this->db->where('id', $post['service_id']);
+        $this->db->where('id', $post['service-id']);
         $this->db->update('customer_service', array('exported' => true));
         return true;
     }
@@ -169,6 +169,7 @@ class Radtech extends MX_Controller {
             $sql = "
                 SELECT 
                     bb.firstname,
+                    bb.middlename,
                     bb.lastname,
                     bb.sex,
                     bb.bday,
@@ -192,6 +193,7 @@ class Radtech extends MX_Controller {
             $age = floor($partial_age);
             $customer_info = array(
                 'firstname' => $cust_info->firstname,
+                'middlename' => $cust_info->middlename,
                 'lastname' => $cust_info->lastname,
                 'gender' => $cust_info->sex,
                 'bday' => date('F d, Y', strtotime($cust_info->bday)),

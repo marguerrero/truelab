@@ -90,23 +90,27 @@ class Medtech extends MX_Controller {
 
     public function exportData(){
         $post = $this->input->post();
+        $post['medtech'] = $post['medical-technologist'];
         $code = $post['code'];
-        $check_exported = $this->db->get_where('customer_service', array('id' => $post['service_id'], 'exported' => true));
+        $check_exported = $this->db->get_where('customer_service', array('id' => $post['service-id'], 'exported' => true));
         
         if($check_exported->num_rows)
-            redirect('/index.php/medtech/service/'.$post['service_id']);
+            redirect('/index.php/medtech/service/'.$post['service-id']);
+
+        // $this->db->where('id', $post['service_id']);
+        // $this->db->update('customer_service', array('exported' => true));
 
         $err_info = "";
         $msg_info = "";
         $filename = "EXPORT_$code-".date('Y-m-d h:i:s').".pdf";
         $session_data = $this->session->all_userdata();
         try {
-            foreach ($post as $key => $value) {
+            foreach ($post as $key => $value)
                 $$key = $value;
-            }
+            
             switch ($code) {
                  case 'HE':
-                     $template = new HematologyTemplate();
+                    $template = new HematologyTemplate();
                     $template->set_name($fullname);
                     $template->set_age_sex($age_sex);
                     $template->set_date($date_released);
@@ -132,6 +136,7 @@ class Medtech extends MX_Controller {
                     $template->set_mpv($result_9);
                     $template->set_platelet_count($result_10);
                     $template->set_remarks($result_16);
+                    $template->set_left_signature($medtech, 'Medical technologist');
                     $template->build();
                     ob_end_clean();
                     $template->to_file($filename);
@@ -154,7 +159,7 @@ class Medtech extends MX_Controller {
                     if(strtolower($service) == "hbsag"){
                         $template->set_user_pic($prof_pic);
                     }
-
+                    $template->set_left_signature($medtech, 'Medical technologist');
                     $template->build();
                     ob_end_clean();
                     $template->to_file($filename);
@@ -187,6 +192,7 @@ class Medtech extends MX_Controller {
                     $template->set_coarse($result_14);
                     $template->set_hyaline($result_15);
                     $template->set_others($result_16);
+                    $template->set_left_signature($medtech, 'Medical technologist');
                     $template->build();
                     ob_end_clean();
                     $template->to_file($filename);
@@ -224,7 +230,7 @@ class Medtech extends MX_Controller {
                     $template->set_total_calcium($result_20);
                     $template->set_chloride($result_21);
                     $template->set_others($result_22);
-                    
+                    $template->set_left_signature($medtech, 'Medical technologist');
                     $template->build();
                     ob_end_clean();
                     $template->to_file($filename);
@@ -251,6 +257,7 @@ class Medtech extends MX_Controller {
                     $template->set_red_blood_cells($result_4);
                     $template->set_occult_blood($result_5);
                     $template->set_amoeba_result($result_6);
+                    $template->set_left_signature($medtech, 'Medical technologist');
                     $template->build();
                     ob_end_clean();
                     $template->to_file($filename);
@@ -266,7 +273,7 @@ class Medtech extends MX_Controller {
         } catch (Exception $e) {
             die($e->getMessage());
         }
-        $this->db->where('id', $post['service_id']);
+        $this->db->where('id', $post['service-id']);
         $this->db->update('customer_service', array('exported' => true));
         return true;
     }
@@ -282,6 +289,7 @@ class Medtech extends MX_Controller {
             $sql = "
                 SELECT 
                     bb.firstname,
+                    bb.middlename,
                     bb.lastname,
                     bb.sex,
                     bb.bday,
@@ -297,14 +305,17 @@ class Medtech extends MX_Controller {
             ";
             $query = $this->db->query($sql);
             $cust_info = $query->result()[0];
+
             $trans_id = $cust_info->id;
             $today = new Datetime();
             $bday = new Datetime($cust_info->bday);
+            
             $interval = $today->diff($bday);
             $partial_age = $interval->format('%y');
             $age = floor($partial_age);
             $customer_info = array(
                 'firstname' => $cust_info->firstname,
+                'middlename' => $cust_info ->middlename,
                 'lastname' => $cust_info->lastname,
                 'gender' => $cust_info->sex,
                 'bday' => date('F d, Y', strtotime($cust_info->bday)),

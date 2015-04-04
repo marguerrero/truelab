@@ -10,6 +10,7 @@ $('#save-trans-btn').on('click', saveTransaction);
 $(function(){
     var existingCustomerTable = null;
     $('.datepicker').datepicker({
+      format: 'mm-dd-yyyy',
       autoclose: true,
       endDate: new Date()
     });

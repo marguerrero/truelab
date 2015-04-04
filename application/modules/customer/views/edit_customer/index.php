@@ -149,6 +149,14 @@
         <legend>Others</legend>
         <div class="row">
             <form class="photo-upload form-horizontal"  action="<?=site_url('/index.php/customer/upload');?>" method="POST" enctype="multipart/form-data">
+                <?php if($customer['prof-pic']):?>
+                <div class="form-group">
+                    <label for="photo" class="col-sm-2 control-label">Current Photo</label>
+                    <div class="col-sm-3">
+                        <img src="/truelab/web/uploads/<?=$customer['prof-pic'];?>" width="140" />
+                    </div>
+                </div>
+                <?php endif; ?>
                 <div class="form-group">
                     <label for="photo" class="col-sm-2 control-label">Customer Photo</label>
                     <div class="col-sm-3">

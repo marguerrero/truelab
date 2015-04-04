@@ -12,6 +12,7 @@ class ServiceTemplate extends PDF
     protected $_dob;
     protected $_date_received;
     protected $_date_released;
+    protected $_medtech;
 
     protected $_left_signature_name;
     protected $_left_signature_title;
@@ -36,7 +37,7 @@ class ServiceTemplate extends PDF
         $this->_header_location = 'http://localhost/truelab/web/images/logo_gray.png';
         $this->_user_pic = 'default_user_image.png';
 
-        $this->_left_signature_name = 'RABIA ROSE MANUBAY, RMT';
+        $this->_left_signature_name = $this->_medtech;
         $this->_left_signature_title = 'Medical technologist';
 
         parent::__construct($layout);
