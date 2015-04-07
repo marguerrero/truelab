@@ -19,9 +19,15 @@ $(function(){
 					container.find('.service-discount').trigger('click');
 					container.find('.discount-type').trigger('change');
 					container.find('.discount-type').val(value.disc_type);
-					console.log(value);
 				}
 				container.find('.service-price').val(value.price)
+				if(value.exported == '1'){
+					container.find('input').attr('readonly', true);
+					container.find('select').attr('readonly', true);
+					container.find('.remove-icon ').hide();
+					// container.find('input').prop('disabled', true);
+					// container.find('select').prop('disabled', true);
+				}
 			});
 		} 
 	});

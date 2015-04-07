@@ -66,6 +66,7 @@
         $('#print-preview').find('textarea').prop('disabled', 'true').attr('placeholder', '').css({'background': 'none', 'border':'none', 'box-shadow':'none'});
         $('#print-preview').find('input[name=fullname]').css('text-align', 'center');
         $('#print-preview').find('input[name=radiologist]').css('text-align', 'center');
+        $('.template-container').find('div').css('margin-top','0px').css('margin-bottom','0px');
         var date_released_container = $('#print-preview').find('#customer-service').find('tr:eq(3)');
         date_released_container.find('td[colspan=3]').remove();
 

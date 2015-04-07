@@ -11,6 +11,10 @@
         text-align: center;
         margin: 0px;
     }
+    .template-header div {
+        margin-bottom: 0px!important;
+        margin-top: 0px!important;
+    }
     #print-preview .table>tbody>tr>td {
         padding: 0px !important;
     }
@@ -56,15 +60,15 @@
       </div>
       <div class="modal-body">
         <div class="row template-header">
-            <div class="col-md-offset-4 col-md-4">
-                <img src="/truelab/web/images/logo_gray.png" style="width: 325px" /><br />
+             <div class="col-md-offset-3 col-md-6 text-center">
+                <img src="/truelab/web/images/truelab-logo.png" style="width: 255px;" /><br />
                 <p>2nd - 3rd St. Nazareth, Barangay 40, Cagayan de Oro City</p>
                 <p>(infront of City Health Office)</p>
                 <p>Tel# 3231521 / 09177188942</p>
                 <p>Email: truelab.clinicdiagnostic@gmail.com</p>
             </div>
             <div class="review-profile" style="display:none" class="col-md-4">
-                <img width="140" class="pull-right" src="/truelab/web/uploads/<?=$customer['prof-pic'];?>" />
+                <img style="margin-right: 20px; " width="140" height="120" class="pull-right" src="/truelab/web/uploads/<?=$customer['prof-pic'];?>" />
             </div>
         </div>
         <div class="template-container"></div>

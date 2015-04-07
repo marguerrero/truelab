@@ -336,10 +336,12 @@ class Medtech extends MX_Controller {
             $query = $this->db->query($sql);
             $allowed = array('UTZ', 'RD');
             foreach($query->result() as $key => $row){
+                $display = in_array($row->template_code, $allowed);
+                $display = ($row->exported) ? true : $display;
                 $services[] = array(
                     'category' => $row->category,
                     'service' => $row->subcateg,
-                    'update' =>  (in_array($row->template_code, $allowed)) ? "": "<a href='".site_url('index.php/medtech/service/'.$row->id)."'>Update</a>"
+                    'update' =>  ($display) ? "": "<a href='".site_url('index.php/medtech/service/'.$row->id)."'>Update</a>"
                 );
             }
             

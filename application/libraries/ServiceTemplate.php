@@ -22,9 +22,9 @@ class ServiceTemplate extends PDF
     public function __construct($custom = array())
     {
         $default_layout = array(
-            'orietation' => 'L',
+            'orietation' => '',
             'unit' => 'mm',
-            'size' => array(216, 197) 
+            'size' => array(216, 330) 
         );
 
         $layout = $default_layout;
@@ -34,7 +34,7 @@ class ServiceTemplate extends PDF
             $layout = $custom;
         }
 
-        $this->_header_location = 'http://localhost/truelab/web/images/logo_gray.png';
+        $this->_header_location = 'http://localhost/truelab/web/images/truelab-logo.png';
         $this->_user_pic = 'default_user_image.png';
 
         $this->_left_signature_name = $this->_medtech;

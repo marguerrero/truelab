@@ -20,7 +20,7 @@
                 <div class="form-group">
                     <label for="middle-name" class="col-sm-2 control-label">Middle Name</label>
                     <div class="col-sm-10">
-                        <input type="text" name="middle-name" class="form-control" id="cust-firstname" placeholder="Enter Customer's Middle Name">
+                        <input type="text" name="middle-name" class="form-control" id="cust-middlename" placeholder="Enter Customer's Middle Name">
                     </div>
                 </div><!--.form-group-->
                 <div class="form-group" data-service-order="1">

@@ -24,10 +24,13 @@ class PDF extends TCPDF
         $this->SetFont('helvetica', '', $this->_font_size);
         $this->SetAutoPageBreak(TRUE, 10);
         $this->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-        $this->_header_location = "http://localhost/truelab/web/images/logo_gray.png";
+        // $this->_header_location = "http://localhost/truelab/web/images/logo_gray.png";
+        $this->_header_location = "http://localhost/truelab/web/images/truelab-logo.jpg";
 
         // initial page
         $this->AddPage();
+        $this->SetPrintHeader(false);
+        $this->SetPrintFooter(false);
     }
 
     public function set_font_size($size)

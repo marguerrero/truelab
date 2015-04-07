@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>TrueLab - Clinic and Diagnostic</title>
+    <link rel="icon" type="image/png" href="<?php echo site_url('web/images/favicon.png');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo site_url('web/css/bootstrap/css/bootstrap.min.css');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('web/js/bootstrap-datepicker/css/bootstrap-datepicker.min.css');?>" />
     <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.5/css/jquery.dataTables.min.css" />

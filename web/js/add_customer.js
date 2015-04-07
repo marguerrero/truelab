@@ -68,12 +68,14 @@ function selectCustomer(){
         id = selection.attr('data-id'),
         lastname = selection.attr('data-lastname'),
         firstname = selection.attr('data-firstname'),
+        middlename = selection.attr('data-middlename'),
         bday = selection.attr('data-bday'),
         gender = selection.attr('data-gender');
         age = selection.attr('data-age');
         
         $('#cust-id').val(id);
         $('#cust-lastname').val(lastname);
+        $('#cust-middlename').val(middlename);
         $('#cust-firstname').val(firstname);
         $('#cust-bday').val(bday);
         $('#cust-age').val(age);
@@ -171,7 +173,7 @@ function addMoreService(){
     var service_count = $('#service-count').val(),
         next_count = parseInt(service_count,10) + 1;
     if(service_count < 10){
-        var html = "<div class='service-form'><div class='row margin-bottom'><a href='#' class='remove-panel'><span class='remove-icon pull-right glyphicon glyphicon-remove'  aria-hidden='true'>&nbsp</span></a></div>" + $('.service-form-generator').html() + "</div><!--.service-form-->";
+        var html = "<div class='service-form'><div style='margin-bottom: 10px;' class='row margin-bottom'><a href='#' class='remove-panel'><span class='remove-icon pull-right glyphicon glyphicon-remove'  aria-hidden='true'>&nbsp</span></a></div>" + $('.service-form-generator').html() + "</div><!--.service-form-->";
         $('#service-count').val(next_count);
         $('#service-container').append(html);
         window.location.href = '#add-more-services';

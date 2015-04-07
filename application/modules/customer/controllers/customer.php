@@ -270,37 +270,30 @@ class Customer extends MX_Controller {
                 WHERE aa.trans_id='$trans_id' ";
         $query = $this->db->query($sql);
         
-        // $r = $query->result()[0];
-        // $price = ($r->has_discount) ? $r->disc_price : $r->reg_price;
-        // $price = (!$price) ? $reg_price : $price;
-        // $first_service = array(
-        //     'category_id' => $r->main_test_id,
-        //     'subcat_id' => $r->subcat_id,
-        //     'has_discount' => ($r->has_discount) ? 'checked' : '',
-        //     'price' => $price
-        // );
         
         $customer_services = array();
         foreach ($query->result() as $key => $value) {
-            // $price = ($value->has_discount)  ? $value->disc_price : $value->reg_price;
-            // $price = (!$price) ? $value->reg_price : $price;
+
             $price = $value->reg_price;
             switch ($value->disc_type) {
                 case 1:
-                    $price = $value->disc_price;
+                    $price = ($value->disc_price) ? $value->disc_price : $value->reg_price;
                     break;
                 case 2:
                     $price = $value->disc_price_2;
                     break;
             }
+            
             $customer_services[] = array(
                 'category_id' => $value->main_test_id,
                 'subcat_id' => $value->subcat_id,
                 'has_discount' => ($value->has_discount) ? true : false,
                 'disc_type' => $value->disc_type,
+                'exported' => $value->exported,
                 'price' => $price
             );
         }
+        
         $service_count = $key + 1;
 
         $retval = array(
@@ -371,14 +364,15 @@ class Customer extends MX_Controller {
                     $price = $value->reg_price;
                     break;
                 case 1:
-                    $price = $value->disc_price;
+                    $price = ($value->disc_price) ? $value->disc_price : $value->reg_price;
                     break;
                 case 2:
                     $price = $value->disc_price_2;
                     break;
+                default:
+                	$price = 9999;
+                	break;
             }
-            // $price = ($value->has_discount) ? $value->disc_price : $value->reg_price ;
-            // $price = (!$price) ? $value->reg_price : $price;
             $total += $price;
             $services[] = array(
                 'count' => $key + 1,
@@ -387,6 +381,7 @@ class Customer extends MX_Controller {
                 'price' => number_format($price, 2, '.', '')
             );
         }
+        
         $total = number_format($total, 2, '.', '');
         $retval = array(
             'customer' => $customer,
@@ -424,9 +419,10 @@ class Customer extends MX_Controller {
             $response_data[] = array(
                 'num' => ++$num,
                 'firstname' => $value['firstname'],
+                'middlename' => $value['middlename'],
                 'lastname' => $value['lastname'],
                 'birthday' => $birthday,
-                'select' => "<a data-dismiss='modal' data-age='$age' data-gender='$gender' data-bday='$birthday' data-id='$id' data-firstname='{$value['firstname']}' data-lastname='{$value['lastname']}' data-birthday='{$value['birthday']}' class='customer-select' href='#'> <span class='select-icon glyphicon glyphicon-ok'  aria-hidden='true'>&nbsp</span></a>"
+                'select' => "<a data-dismiss='modal' data-age='$age' data-gender='$gender' data-bday='$birthday' data-id='$id' data-middlename='{$value['middlename']}' data-firstname='{$value['firstname']}' data-lastname='{$value['lastname']}' data-birthday='{$value['birthday']}' class='customer-select' href='#'> <span class='select-icon glyphicon glyphicon-ok'  aria-hidden='true'>&nbsp</span></a>"
             );
         }
 
@@ -616,9 +612,6 @@ class Customer extends MX_Controller {
         $this->db->from('cust_list');
         $this->db->where('lastname', $data['lastname']);
         $this->db->where('firstname', $data['firstname']);
-        //-- include bday?
-        // $this->db->where('bday', $data['bday']);
-
         return ($this->db->get()->num_rows() > 0);
     }
 

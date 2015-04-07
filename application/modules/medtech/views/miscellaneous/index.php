@@ -14,7 +14,7 @@
     <h1 class="text-center">Miscellaneous</h1>
     <form action="<?=site_url('/index.php/medtech/exportData');?>" method="POST">
         <input type="hidden" name="cust_id" value="<?=$customer['customer_id'];?>" />
-        <input type="hidden" name="service_id" value="<?=$service_id;?>" />
+        <input type="hidden" name="service-id" value="<?=$service_id;?>" />
         <input type="hidden" class="tpl-code" name="code" value="MX" />
         <input type="hidden" class="prof-pic" name="prof_pic" value="<?=$customer['prof-pic'];?>" />
         <input type="hidden" class="service" name="service" value="<?=$result['test'];?>" />

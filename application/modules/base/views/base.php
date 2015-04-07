@@ -7,7 +7,7 @@
     <!-- <link rel="stylesheet" type="text/css" href="<?php echo site_url('web/css/styles.css');?>"> -->
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('web/js/bootstrap-datepicker/css/bootstrap-datepicker.min.css');?>" />
     <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.5/css/jquery.dataTables.min.css" />
-
+    <link rel="icon" type="image/png" href="<?php echo site_url('web/images/favicon.png');?>">
     <script type="text/javascript" src="<?php echo site_url('web/js/jquery/jquery-1.11.2.min.js');?>"></script>
     <script type="text/javascript" src="<?php echo site_url('web/css/bootstrap/bootstrap.min.js');?>"></script>
     <script type="text/javascript" src="<?php echo base_url('web/js/bootstrap-datepicker/js/bootstrap-datepicker.min.js');?>"></script>
