@@ -91,6 +91,7 @@ class Customer extends MX_Controller {
         );
         
         
+        
         $services = array();
         $total = 0;
         foreach ($result as $key => $value) {
@@ -120,7 +121,7 @@ class Customer extends MX_Controller {
         $template->set_gender($customer['gender']);
         $template->set_birthday($customer['birthday']);
         $template->set_reference_no($customer['reference_no']);
-        $template->set_source($customer['code']);
+        $template->set_source($customer['source']);
         $template->set_date(date('Y-m-d', strtotime($result[0]->transdate)) );
 
         $data = array();
