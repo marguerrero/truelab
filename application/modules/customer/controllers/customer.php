@@ -76,6 +76,7 @@ class Customer extends MX_Controller {
         foreach ($r->result() as $key => $value) 
             $result[] = $value;
         
+        $session_data = $this->session->all_userdata();
         $customer = array(
             'cust_id' => $result[0]->service_id,
             'firstname' => $result[0]->firstname,
@@ -85,7 +86,8 @@ class Customer extends MX_Controller {
             'birthday' => date('F d, Y', strtotime($result[0]->bday)),
             'age' => $this->_calculateAge($result[0]->bday),
             'reference_no' => $result[0]->receipt_no,
-            'transaction_date' => date('F d, Y', strtotime($result[0]->transdate))
+            'transaction_date' => date('F d, Y', strtotime($result[0]->transdate)),
+            'source' => $session_data['code']
         );
         
         
@@ -118,6 +120,7 @@ class Customer extends MX_Controller {
         $template->set_gender($customer['gender']);
         $template->set_birthday($customer['birthday']);
         $template->set_reference_no($customer['reference_no']);
+        $template->set_source($customer['code']);
         $template->set_date(date('Y-m-d', strtotime($result[0]->transdate)) );
 
         $data = array();
@@ -320,6 +323,8 @@ class Customer extends MX_Controller {
         if(!$param)
             redirect('index.php/customer/add');
         $receipt_no = $param['receipt_no'];
+        $session_data = $this->session->all_userdata();
+
         $sql = "
             SELECT *
             FROM customer_transaction aa
@@ -352,7 +357,8 @@ class Customer extends MX_Controller {
             'birthday' => date('F d, Y', strtotime($result[0]->bday)),
             'reference_no' => $result[0]->receipt_no,
             'age' => $this->_calculateAge($result[0]->bday),
-            'transaction_date' => date('F d, Y', strtotime($result[0]->transdate))
+            'transaction_date' => date('F d, Y', strtotime($result[0]->transdate)),
+            'source' => $session_data['code']
         );
         
         $services = array();

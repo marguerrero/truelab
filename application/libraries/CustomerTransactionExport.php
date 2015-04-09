@@ -13,9 +13,29 @@ class CustomerTransactionExport extends PDF
     private $_date;
     private $_data;
 
+    private $_source;
+
     public function __construct()
     {
-        parent::__construct();
+        // $default_layout = array(
+        //     'orietation' => 'L',
+        //     'unit' => 'mm',
+        //     'size' => array(108, 330) 
+        // );
+        $default_layout = array(
+            'orietation' => '',
+            'unit' => 'mm',
+            'size' => array(216, 330) 
+        );
+
+        $layout = $default_layout;
+
+        if(!empty($custom))
+        {
+            $layout = $custom;
+        }
+        $this->_header_location = 'http://localhost/truelab/web/images/truelab-logo.png';
+        parent::__construct($layout);
     }
 
     public function set_first_name($v)
@@ -79,73 +99,91 @@ class CustomerTransactionExport extends PDF
         $this->_data = $v;
     }  
 
+    public function set_source($v)
+    {
+        $this->_source = $v;
+    }
+
     public function build()
     {
         $this->build_customer_panel();
         $this->build_services_panel();
+        $this->build_disclaimer_footer();
+    }
+
+    public function Header()
+    {
+        // echo '<pre>test';
+        // print_r($this->_header_location);
+        // die();
+        $this->Image($this->_header_location, 20, 10, 60, '', 'PNG', '', 'T', true, 300, '', false, false, 0, false, false, false);
     }
 
     private function build_customer_panel()
     {
-        $this->Ln(5);
-        $this->SetFont('helvetica', 'B', 15);
+        $this->Ln(1);
+        $this->SetFont('helvetica', 'B', 9);
         $this->Write(0, 'Customer Information', '', false, 'L', true);
-        $this->Ln(5);
-        $this->SetFont('helvetica', '', 10);
+        $this->Ln(2);
+        $this->SetFont('helvetica', '', 9);
 
         $first_third_column_style = array(
             'width' => 30,
             'font_style' => 'B',
-            'text_align' => 'R'
+            'text_align' => 'R',
+            'height' => 1
         );
+
         $second_fourth_column_style = array(
-            'width' => 60,
-            'font_style' => 'I'
+            'width' => 40,
+            'text_align' => 'L',
+            'height' => 1
         );
+        
         $column_styles = array(
             0 => $first_third_column_style,
-            1 => $second_fourth_column_style,
-            2 => $first_third_column_style,
-            3 => $second_fourth_column_style
+            1 => $second_fourth_column_style
         );
+
+        $this->set_font_size(8);
 
         // replace this with dynamic data, maybe use reference no?
         $rows = array(
             array(
-                array('text' => 'First Name'),
-                array('text' => $this->_first_name),
-                array('text' => 'Reference No.'),
+                array('text' => 'Reference No.: '),
                 array('text' => $this->_reference_no)
             ),
             array(
-                array('text' => 'Middle Name'),
-                array('text' => $this->_middle_name),
-                array('text' => 'Date'),
+                array('text' => 'Date: '),
                 array('text' => $this->_date)
             ),
             array(
-                array('text' => 'Last Name'),
-                array('text' => $this->_last_name),
-                array('text' => ''),
-                array('text' => '')
+                array('text' => 'Source: '),
+                array('text' => $this->_source)
             ),
             array(
-                array('text' => 'Age'),
-                array('text' => $this->_age),
-                array('text' => ''),
-                array('text' => '')
+                array('text' => 'First Name: '),
+                array('text' => $this->_first_name)
             ),
             array(
-                array('text' => 'Gender'),
-                array('text' => $this->_gender),
-                array('text' => ''),
-                array('text' => '')
+                array('text' => 'Middle Name: '),
+                array('text' => $this->_middle_name)
             ),
             array(
-                array('text' => 'Birthday'),
-                array('text' => $this->_birthday),
-                array('text' => ''),
-                array('text' => '')
+                array('text' => 'Last Name: '),
+                array('text' => $this->_last_name)
+            ),
+            array(
+                array('text' => 'Age: '),
+                array('text' => $this->_age)
+            ),
+            array(
+                array('text' => 'Gender: '),
+                array('text' => $this->_gender)
+            ),
+            array(
+                array('text' => 'Birthday: '),
+                array('text' => $this->_birthday)
             )
         );
 
@@ -155,38 +193,38 @@ class CustomerTransactionExport extends PDF
     private function build_services_panel()
     {
         $this->Ln(5);
-        $this->SetFont('helvetica', 'B', 15);
+        $this->SetFont('helvetica', 'B', 9);
         $this->Write(0, 'Services', '', false, 'L', true);
         $this->Ln(5);
-        $this->SetFont('helvetica', '', 10);
+        $this->SetFont('helvetica', '', 9);
 
         $column_styles = array(
             0 => array(
-                'width' => 10,
+                'width' => 5,
                 'text_align' => 'R',
-                'border' => 'B'
+                'border' => ''
             ),
             1 => array(
-                'width' => 80,
-                'text_align' => 'L',
-                'border' => 'B'
-            ),
-            2 => array(
                 'width' => 50,
                 'text_align' => 'L',
-                'border' => 'B'
+                'border' => ''
             ),
-            3 => array(
-                'width' => 40,
+            2 => array(
+                'width' => 20,
                 'text_align' => 'L',
-                'border' => 'B'
+                'border' => ''
             )
         );
 
         $header_row_height = 7;
         $data_row_height = 5;
         $data_row_style = array(
-            'height' => $data_row_height
+            'height' => $data_row_height,
+            'border' => 'T'
+        );
+        $data_index_row_style = array(
+            'height' => 8,
+            'border' => 'T'
         );
 
         $rows = array(
@@ -200,17 +238,10 @@ class CustomerTransactionExport extends PDF
                     )
                 ),
                 array(
-                    'text' => 'Category',
+                    'text' => "Category\n(Sub category)",
                     'style' => array(
                         'font_style' => 'B',
                         'height' => $header_row_height 
-                    )
-                ),
-                array(
-                    'text' => 'Sub Category',
-                    'style' => array(
-                        'font_style' => 'B',
-                        'height' => $header_row_height
                     )
                 ),
                 array(
@@ -228,9 +259,8 @@ class CustomerTransactionExport extends PDF
         foreach ($this->_data as $key => $value) 
         {
             $rows[] = array(
-                array('text' => ($key + 1) . '  ', 'style' => $data_row_style),
-                array('text' => $value['category'], 'style' => $data_row_style),
-                array('text' => $value['sub_category'], 'style' => $data_row_style),
+                array('text' => ($key + 1) . '  ', 'style' => $data_index_row_style),
+                array('text' => $value['category'] . "\n" . $value['sub_category'], 'style' => $data_row_style),
                 array('text' => 'P ' . number_format($value['amount'], 2), 'style' => $data_row_style)
             );
 
@@ -238,12 +268,6 @@ class CustomerTransactionExport extends PDF
         }
             
         $rows[] = array(
-            array(
-                'text' => '', 
-                'style' => array(
-                    'border' => ''
-                )
-            ),
             array(
                 'text' => '', 
                 'style' => array(
@@ -265,10 +289,20 @@ class CustomerTransactionExport extends PDF
                 )
             )
         );
-
+        
         $this->create_table($rows, $column_styles);
+        
     }
 
+
+    public function build_disclaimer_footer(){
+        $this->Ln(1);
+        $this->SetFont('helvetica', 'I', 9);
+        $this->Write(0, '*Disclaimer: This is not an official receipt', '', false, 'L', true);
+        $this->Ln(2);
+        $this->SetFont('helvetica', '', 9);
+        
+    }
     public function set_reference_number($reference_number)
     {
         $this->_reference_number = $reference_number;

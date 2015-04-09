@@ -51,7 +51,8 @@
                     <tr>
                         <td>Last Name</td>
                         <td><?=$customer['lastname']; ?></td>
-                        <td colspan="2">&nbsp;</td>
+                        <td>Source</td>
+                        <td><?=$customer['source']; ?></td>
                     </tr>
                     <tr>
                         <td>Age</td>
