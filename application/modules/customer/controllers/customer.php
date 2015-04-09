@@ -585,7 +585,8 @@ class Customer extends MX_Controller {
                 $discount = $has_discount[$key];
                 if($discount){
                      $d_type = $disc_type[$d_count];
-                     $d_count++;
+                     if($d_type)
+                        $d_count++;
                 }
                 $service_entry = array(
                     'subcat_id' => $s_id,

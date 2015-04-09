@@ -41,6 +41,7 @@ class Radtech extends MX_Controller {
 
         $query = $this->db->query($sql);
         
+        //-- Loads Customer Information
         if(!$query)
             redirect('/');
         $query = $query->result()[0];
@@ -62,12 +63,24 @@ class Radtech extends MX_Controller {
             'physician' => $query->physician
         );
       
+        //-- Loads service data
+        $q = $this->db->get_where('service_metadata', array('service_id' => $service_id));
+        $s_data = array();
+        foreach ($q->result() as $key => $value) 
+            $s_data[$value->field] = $value->value;
+        
+        $this->config->load('results');
+        $max_result = $this->config->item('max_result');
+        for($i = 1; $i <= $max_result; $i++)
+            $s_data["result_$i"] = (array_key_exists("result_$i", $s_data)) ? $s_data["result_$i"] : "";
         
         $retval = array(
             'customer' => $customer_info,
             'code' => $query->template_code,
+            'result' => $s_data,
             'service_id' => $service_id
         );
+        
         $this->load->view('toolbar/index', $retval);
         $this->load->view('radiology/index', $retval);
         $this->load->view('ultrasound/index', $retval);
@@ -77,18 +90,50 @@ class Radtech extends MX_Controller {
     public function exportData(){
         $post = $this->input->post();
         $code = $post['code'];
-        $check_exported = $this->db->get_where('customer_service', array('id' => $post['service-id'], 'exported' => 1));
+
+        // $check_exported = $this->db->get_where('customer_service', array('id' => $post['service-id'], 'exported' => 1));
         
-        if($check_exported->num_rows)
-            redirect('/index.php/radtech/service/'.$post['service-id']);
+        // if($check_exported->num_rows)
+            // redirect('/index.php/radtech/service/'.$post['service-id']);
 
         $err_info = "";
         $msg_info = "";
         $filename = "EXPORT_$code-".date('Y-m-d h:i:s').".pdf";
         try {
+            $bypass_arr = array(
+                'fullname',
+                'age_sex',
+                'date_released',
+                'physician',
+                'bday',
+                'case_no',
+                'date_recv',
+                'cust-id',
+                'service-id',
+                'code',
+                'source',
+                'radiologist',
+                'prof_pic'
+            );
+
+            $u_checker = 0;
+            $s_metadata = array();
             foreach ($post as $key => $value) {
                 $$key = $value;
+                if(!in_array($key, $bypass_arr)){
+                    $temp_metadata = array(
+                        'service_id' => $post['service-id'],
+                        'field' => $key,
+                        'value' => $value
+                    );
+                    $u_checker = ($this->_hasRecord($temp_metadata)) ? ($u_checker + 1) : $u_checker;
+                    $s_metadata[] = $temp_metadata;
+                }
             }
+            if(($u_checker != 0) && ($u_checker != count($s_metadata)))
+                redirect('/index.php/radtech/service/'.$post['service-id']);
+            $this->db->insert_batch('service_metadata', $s_metadata);
+            
             switch ($code) {
                 case 'RD':
                      case 'RD':
@@ -116,23 +161,8 @@ class Radtech extends MX_Controller {
                     ob_end_clean();
                     $template->to_file($filename);
                     break;
-                    // $template = new RadiologyTemplate("Radiology", $html);
-                    // $template->set_name($fullname);
-                    // $template->set_age_sex($age_sex);
-                    // $template->set_date($date_released);
-                    // $template->set_physician($physician);
-                    // $template->set_case_no($case_no);
-                    // $template->set_dob($bday);
-                    // $template->set_source($source);
-                    // $template->set_date_received($date_recv);
-                    // $template->set_date_released(date('m-d-Y h:i A'));
-                    // $template->build();
-                    // ob_end_clean();
-                    // $template->to_file($filename);
-                    // break;
                  case 'UTZ':
                     $html = "<br />
-                     
                     ";
                     $template = new RadiologyTemplate("Ultrasound", $html);
                     $template->set_name($fullname);
@@ -274,6 +304,13 @@ class Radtech extends MX_Controller {
         );
         echo json_encode($retval);
         return;
+    }
+
+    private function _hasRecord($data) {
+        $this->db->from('service_metadata');
+        $this->db->where('field', $data['field']);
+        $this->db->where('value', $data['value']);
+        return ($this->db->get()->num_rows() > 0);
     }
 
     private function _calculateAge($date){

@@ -61,11 +61,11 @@
                 </tr>
                 <tr>
                     <td class="text-center">Color</td>
-                    <td><input placeholder="Please Enter Color"type="text" name="result_1" class="form-control" value="<?=$result['result-1'];?>"/></td>
+                    <td><input placeholder="Please Enter Color"type="text" name="result_1" class="form-control" value="<?=$s_data['result_1'];?>"/></td>
                 </tr>
                 <tr>
                     <td class="text-center">Consistency</td>
-                    <td><input placeholder="Please Enter Consistency" type="text" name="result_2" class="form-control" value="<?=$result['result-2'];?>"/></td>
+                    <td><input placeholder="Please Enter Consistency" type="text" name="result_2" class="form-control" value="<?=$s_data['result_2'];?>"/></td>
                 </tr>
                 <tr>
                     <td></td>
@@ -73,15 +73,15 @@
                 </tr>
                 <tr>
                     <td class="text-center">White blood cells</td>
-                    <td><input placeholder="Please Enter White blood cells" type="text" name="result_3" class="form-control" value="<?=$result['result-3'];?>"/></td>
+                    <td><input placeholder="Please Enter White blood cells" type="text" name="result_3" class="form-control" value="<?=$s_data['result_3'];?>"/></td>
                 </tr>
                 <tr>
                     <td class="text-center">Red blood cells</td>
-                    <td><input placeholder="RPlease Enter ed blood cells" type="text" name="result_4" class="form-control" value="<?=$result['result-4'];?>"/></td>
+                    <td><input placeholder="RPlease Enter ed blood cells" type="text" name="result_4" class="form-control" value="<?=$s_data['result_4'];?>"/></td>
                 </tr>
                 <tr>
                     <td class="text-center">Occult blood</td>
-                    <td><input placeholder="Please EnterOccult blood" type="text" name="result_5" class="form-control" value="<?=$result['result-5'];?>"/></td>
+                    <td><input placeholder="Please EnterOccult blood" type="text" name="result_5" class="form-control" value="<?=$s_data['result_5'];?>"/></td>
                 </tr>
                 <tr>
                     <td colspan="2"><input placeholder="Negative for amoeba and other inestinal parasitic ova" type="text" name="result_6" class="form-control" value="Negative for amoeba and other inestinal parasitic ova"/></td>

@@ -41,6 +41,8 @@ class RadiologyTemplate extends ServiceTemplate
         $this->writeHTML($this->_html, true, false, true, false, '');
         
         $this->_last_y = ($this->GetY() - 74); // 74 for offset height of header, transaction info and template type
+        $this->Ln(3);
+        $this->build_template_note();
     }
 
     public function build_signatures()

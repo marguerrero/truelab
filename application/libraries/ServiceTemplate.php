@@ -38,7 +38,7 @@ class ServiceTemplate extends PDF
         $this->_user_pic = 'default_user_image.png';
 
         $this->_left_signature_name = $this->_medtech;
-        $this->_left_signature_title = 'Medical technologist';
+        $this->_left_signature_title = 'Medical Technologist';
 
         parent::__construct($layout);
     }
@@ -366,7 +366,7 @@ class ServiceTemplate extends PDF
                 array('text' => 'Pathologist')
             )
         );
-
+        
         $this->set_font_size(9);
         $this->create_table($signatures_rows, $column_styles);
         

@@ -20,6 +20,10 @@
         var is_disabled = $('#export').hasClass('disabled');
         if(!is_disabled)
             $('#template-select').val('');
+        var msg = "The customer service had already been exported. You can not edit any results again.";
+        $('#message-info').removeClass('alert-success').addClass('alert-danger');
+        $('#message-info span').html(msg);
+        $('#export').addClass('disabled')
         $('.active-template').find('form').submit();
     }
     function initializeTemplate(){
@@ -39,15 +43,19 @@
             var msg = "The customer has no picture. Please upload one to proceed.";
             $('#message-info').removeClass('alert-success').addClass('alert-danger');
             $('#message-info span').html(msg);
-            $('#export').addClass('disabled')
+            $('.active-template input').prop('readonly', true);
+            $('.active-template textarea').prop('readonly', true);
+            // $('#export').addClass('disabled')
         }
         if(require_pic == 1)
             $('.review-profile').show();
         if(exported == 1 ){
-            var msg = "The customer service had already been exported. You can not export again.";
+            var msg = "The customer service had already been exported. You can not edit any results again.";
             $('#message-info').removeClass('alert-success').addClass('alert-danger');
             $('#message-info span').html(msg);
-            $('#export').addClass('disabled')
+            $('.active-template input').prop('readonly', true);
+            $('.active-template textarea').prop('readonly', true);
+            // $('#export').addClass('disabled')
         }
 
         $('#message-info').show();

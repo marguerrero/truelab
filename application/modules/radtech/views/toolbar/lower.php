@@ -20,6 +20,10 @@
         var is_disabled = $('#export').hasClass('disabled');
         if(!is_disabled)
             $('#template-select').val('');
+        var msg = "The customer service had already been exported. You can not edit any results again.";
+        $('#message-info').removeClass('alert-success').addClass('alert-danger');
+        $('#message-info span').html(msg);
+        $('#export').addClass('disabled')
         $('.active-template').find('form').submit();
     }
 
@@ -47,10 +51,12 @@
         if(require_pic == 1)
             $('.review-profile').show();
         if(exported == 1 ){
-            var msg = "The customer service had already been exported. You can not export again.";
+            var msg = "The customer service had already been exported. You can not edit any results again.";
             $('#message-info').removeClass('alert-success').addClass('alert-danger');
             $('#message-info span').html(msg);
-            $('#export').addClass('disabled')
+            $('.active-template input').prop('readonly', true);
+            $('.active-template textarea').prop('readonly', true);
+            // $('#export').addClass('disabled')
         }
 
         $('#message-info').show();
@@ -77,6 +83,13 @@
                 i_val = $(val).val(),
                 review_container = $('.template-container');
             review_container.find('input[name='+ name +']').val(i_val).css('box-shadow', 'none');
+        });
+        var main_template_2 = $('.active-template').find('textarea');
+        $(main_template_2).each(function(key, val){
+            var name = $(val).attr('name'),
+                i_val = $(val).val(),
+                review_container = $('.template-container');
+            review_container.find('textarea[name='+ name +']').val(i_val).css('box-shadow', 'none');
         });
 
         $.ajax({

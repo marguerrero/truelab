@@ -44,23 +44,43 @@
         </table>
         <h2>Chest PA View</h2>
         <div class="row" style="margin-top:20px; margin-bottom: 20px;">
-            <div class="col-md-12"><input type="text" class="form-control" name="result_1" value="There is no evidence of active parenchymal Inflitrates" placeholder="There is no evidence of active parenchymal Inflitrates"/></div><!--col-md-12-->
+            <?php if($result['result_1']): ?>
+                <div class="col-md-12"><input type="text" class="form-control" name="result_1" value="<?=$result['result_1'];?>" placeholder="There is no evidence of active parenchymal Inflitrates"/></div><!--col-md-12-->
+            <?php else: ?>
+                <div class="col-md-12"><input type="text" class="form-control" name="result_1" value="There is no evidence of active parenchymal Inflitrates" placeholder="There is no evidence of active parenchymal Inflitrates"/></div><!--col-md-12-->
+            <?php endif; ?>
         </div><!--.row-->
         <div class="row">
-            <div class="col-md-12"><input type="text" class="form-control" name="result_2" value="Heart is not enlarged" placeholder="Heart is not enlarged"/></div><!--col-md-12-->
+            <?php if($result['result_2']): ?>
+                <div class="col-md-12"><input type="text" class="form-control" name="result_2" value="<?=$result['result_2']; ?>" placeholder="Heart is not enlarged"/></div><!--col-md-12-->
+            <?php else: ?>
+                <div class="col-md-12"><input type="text" class="form-control" name="result_2" value="Heart is not enlarged" placeholder="Heart is not enlarged"/></div><!--col-md-12-->
+            <?php endif; ?>
         </div><!--.row-->
         <div class="row" style="margin-top:20px; margin-bottom: 20px;">
-            <div class="col-md-12"><input type="text" class="form-control" name="result_3" value="Aorta is not enlarged" placeholder="Aorta is not enlarged"/></div><!--col-md-12-->
+            <?php if($result['result_3']): ?>
+                <div class="col-md-12"><input type="text" class="form-control" name="result_3" value="<?=$result['result_3']; ?>" placeholder="Aorta is not enlarged"/></div><!--col-md-12-->
+            <?php else : ?>
+                <div class="col-md-12"><input type="text" class="form-control" name="result_3" value="Aorta is not enlarged" placeholder="Aorta is not enlarged"/></div><!--col-md-12-->
+            <?php endif; ?>
         </div><!--.row-->
         <div class="row" style="margin-top:20px; margin-bottom: 20px;">
-            <div class="col-md-12"><input type="text" class="form-control" name="result_4" value="Trachea, diaphragm and sulci are intact." placeholder="Trachea, diaphragm and sulci are intact."/></div><!--col-md-12-->
+            <?php if($result['result_4']): ?>
+                <div class="col-md-12"><input type="text" class="form-control" name="result_4" value="<?=$result['result_4']; ?>" placeholder="Trachea, diaphragm and sulci are intact."/></div><!--col-md-12-->
+            <?php else : ?>
+                <div class="col-md-12"><input type="text" class="form-control" name="result_4" value="Trachea, diaphragm and sulci are intact." placeholder="Trachea, diaphragm and sulci are intact."/></div><!--col-md-12-->
+            <?php endif; ?>
+        
         </div><!--.row-->
         <br />
         <h2>Impression</h2>
         <div class="row">
             <div class="col-md-12">
-                <!-- <input type="text" class="form-control" name="result_5" value="NO SIGNIFICANT CHEST FINDINGS " placeholder="NO SIGNIFICANT CHEST FINDINGS "/> -->
-                <textarea style="resize: none;" class="form-control" name="result_5" placeholder="NO SIGNIFICANT CHEST FINDINGS">NO SIGNIFICANT CHEST FINDINGS</textarea>
+                <?php if($result['result_5']): ?>
+                        <textarea style="resize: none;" class="form-control" name="result_5" placeholder="NO SIGNIFICANT CHEST FINDINGS"> <?=$result["result_5"];?></textarea>
+                <?php else : ?>
+                    <textarea style="resize: none;" class="form-control" name="result_5" placeholder="NO SIGNIFICANT CHEST FINDINGS">NO SIGNIFICANT CHEST FINDINGS</textarea>
+                <?php endif; ?>
             </div><!--col-md-12-->
         </div><!--.row-->
         <br /><br />

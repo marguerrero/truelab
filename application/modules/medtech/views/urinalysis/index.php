@@ -52,48 +52,48 @@
             <tbody>
                 <tr>
                     <td>Color</td>
-                    <td><input type="text" class="form-control" value="" name="result_1" placeholder="Result"/></td>
+                    <td><input type="text" class="form-control" value="<?=$s_data["result_1"]; ?>" name="result_1" placeholder="Result"/></td>
                     <td>White blood cells</td>
-                    <td><input type="text" class="form-control" value="" name="result_7" placeholder="Result"/></td>
+                    <td><input type="text" class="form-control" value="<?=$s_data["result_7"]; ?>" name="result_7" placeholder="Result"/></td>
                     <td colspan="2"><b>CAST</b></td>
                 </tr>
                 <tr>
                     <td>Clarity</td>
-                    <td><input type="text" class="form-control" value="" name="result_2" placeholder="Result"/></td>
+                    <td><input type="text" class="form-control" value="<?=$s_data["result_2"]; ?>" name="result_2" placeholder="Result"/></td>
                     <td>Red Blood cells</td>
-                    <td><input type="text" class="form-control" value="" name="result_8" placeholder="Result"/></td>
+                    <td><input type="text" class="form-control" value="<?=$s_data["result_8"]; ?>" name="result_8" placeholder="Result"/></td>
                     <td>Hyaline</td>
-                    <td><input type="text" class="form-control" value="" name="result_13" placeholder="Result"/></td>
+                    <td><input type="text" class="form-control" value="<?=$s_data["result_13"]; ?>" name="result_13" placeholder="Result"/></td>
                 </tr>
                 <tr>
                     <td>Protein</td>
-                    <td><input type="text" class="form-control" value="" name="result_3" placeholder="Result"/></td>
+                    <td><input type="text" class="form-control" value="<?=$s_data["result_3"]; ?>" name="result_3" placeholder="Result"/></td>
                     <td>Epithelial cells</td>
-                    <td><input type="text" class="form-control" value="" name="result_9" placeholder="Result"/></td>
+                    <td><input type="text" class="form-control" value="<?=$s_data["result_9"]; ?>" name="result_9" placeholder="Result"/></td>
                     <td>Fine </td>
-                    <td><input type="text" class="form-control" value="" name="result_14" placeholder="Result"/></td>
+                    <td><input type="text" class="form-control" value="<?=$s_data["result_14"]; ?>" name="result_14" placeholder="Result"/></td>
                 </tr>
                 <tr>
                     <td>Glucose</td>
-                    <td><input type="text" class="form-control" value="" name="result_4" placeholder="Result"/></td>
+                    <td><input type="text" class="form-control" value="<?=$s_data["result_4"]; ?>" name="result_4" placeholder="Result"/></td>
                     <td>Mucus threads</td>
-                    <td><input type="text" class="form-control" value="" name="result_10" placeholder="Result"/></td>
+                    <td><input type="text" class="form-control" value="<?=$s_data["result_10"]; ?>" name="result_10" placeholder="Result"/></td>
                     <td>Coarse</td>
-                    <td><input type="text" class="form-control" value="" name="result_15" placeholder="Result"/></td>
+                    <td><input type="text" class="form-control" value="<?=$s_data["result_15"]; ?>" name="result_15" placeholder="Result"/></td>
                 </tr>
                 <tr>
                     <td>PH</td>
-                    <td><input type="text" class="form-control" value="" name="result_5" placeholder="Result"/></td>
+                    <td><input type="text" class="form-control" value="<?=$s_data["result_5"]; ?>" name="result_5" placeholder="Result"/></td>
                     <td>Bacteria</td>
-                    <td><input type="text" class="form-control" value="" name="result_11" placeholder="Result"/></td>
+                    <td><input type="text" class="form-control" value="<?=$s_data["result_11"]; ?>" name="result_11" placeholder="Result"/></td>
                     <td>Others</td>
-                    <td><input type="text" class="form-control" value="" name="result_16" placeholder="Result"/></td>
+                    <td><input type="text" class="form-control" value="<?=$s_data["result_16"]; ?>" name="result_16" placeholder="Result"/></td>
                 </tr>
                 <tr>
                     <td>Sp. Gravity</td>
-                    <td><input type="text" class="form-control" value="" name="result_6" placeholder="Result"/></td>
+                    <td><input type="text" class="form-control" value="<?=$s_data["result_6"]; ?>" name="result_6" placeholder="Result"/></td>
                     <td>A. Urates/phosphates</td>
-                    <td><input type="text" class="form-control" value="" name="result_12" placeholder="Result"/></td>
+                    <td><input type="text" class="form-control" value="<?=$s_data["result_12"]; ?>" name="result_12" placeholder="Result"/></td>
                     <td></td>
                     <td></td>
                 </tr>

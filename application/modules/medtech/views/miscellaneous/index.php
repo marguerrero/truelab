@@ -64,8 +64,16 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><input type="text" name="test" class="form-control" value="<?=$result['test'];?>"/></td>
-                    <td><input type="text" name="result" class="form-control" value="<?=$result['result'];?>"/></td>
+                    <?php if(array_key_exists('test', $s_data)): ?>
+                        <td><input type="text" name="test" class="form-control" value="<?=$s_data['test'];?>"/></td>
+                    <?php else: ?>
+                        <td><input type="text" name="test" class="form-control" value="<?=$result['test'];?>"/></td>
+                    <?php endif; ?>
+                    <?php if(array_key_exists('result', $s_data)): ?>
+                        <td><input type="text" name="result" class="form-control" value="<?=$s_data['result'];?>"/></td>
+                    <?php else: ?>
+                        <td><input type="text" name="result" class="form-control" value="<?=$result['result'];?>"/></td>
+                    <?php endif; ?>
                 </tr>
             </tbody>
         </table>

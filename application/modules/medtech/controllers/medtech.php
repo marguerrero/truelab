@@ -67,13 +67,50 @@ class Medtech extends MX_Controller {
         $result = array(
             'test' => $query->subcateg
         );
+
+        $q = $this->db->get_where('service_metadata', array('service_id' => $service_id));
+        $s_data = array();
+        foreach ($q->result() as $key => $value) 
+            $s_data[$value->field] = $value->value;
+
+
         $MX_temp = array('HB', 'PT', 'BT', 'AFB');
+        $this->config->load('results');
+        $max_result = $this->config->item('max_result');
+        for($i = 1; $i <= $max_result; $i++)
+            $s_data["result_$i"] = (array_key_exists("result_$i", $s_data)) ? $s_data["result_$i"] : "";
+        
         $code = (in_array($query->template_code, $MX_temp)) ? "MX" : $query->template_code;
+        // switch ($code) {
+        //     case 'HE':
+        //     case 'UA':
+        //         $s_data['result_1'] = (array_key_exists('result_1', $s_data)) ? $s_data['result_1'] : "";
+        //         $s_data['result_2'] = (array_key_exists('result_2', $s_data)) ? $s_data['result_2'] : "";
+        //         $s_data['result_3'] = (array_key_exists('result_3', $s_data)) ? $s_data['result_3'] : "";
+        //         $s_data['result_4'] = (array_key_exists('result_4', $s_data)) ? $s_data['result_4'] : "";
+        //         $s_data['result_5'] = (array_key_exists('result_5', $s_data)) ? $s_data['result_5'] : "";
+        //         $s_data['result_6'] = (array_key_exists('result_6', $s_data)) ? $s_data['result_6'] : "";
+        //         $s_data['result_7'] = (array_key_exists('result_7', $s_data)) ? $s_data['result_7'] : "";
+        //         $s_data['result_8'] = (array_key_exists('result_8', $s_data)) ? $s_data['result_8'] : "";
+        //         $s_data['result_9'] = (array_key_exists('result_9', $s_data)) ? $s_data['result_9'] : "";
+        //         $s_data['result_10'] = (array_key_exists('result_10', $s_data)) ? $s_data['result_10'] : "";
+        //         $s_data['result_11'] = (array_key_exists('result_11', $s_data)) ? $s_data['result_11'] : "";
+        //         $s_data['result_12'] = (array_key_exists('result_12', $s_data)) ? $s_data['result_12'] : "";
+        //         $s_data['result_13'] = (array_key_exists('result_13', $s_data)) ? $s_data['result_13'] : "";
+        //         $s_data['result_14'] = (array_key_exists('result_14', $s_data)) ? $s_data['result_14'] : "";
+        //         $s_data['result_15'] = (array_key_exists('result_15', $s_data)) ? $s_data['result_15'] : "";
+        //         $s_data['result_16'] = (array_key_exists('result_16', $s_data)) ? $s_data['result_16'] : "";
+        //         break;
+        //     default:
+        //         # code...
+        //         break;
+        // }
         $retval = array(
             'customer' => $customer_info,
             'code' => $code,
             'service_id' => $service_id,
             'result' => $result,
+            's_data' => $s_data,
             'date_recv' => date('')
 
         );
@@ -92,10 +129,10 @@ class Medtech extends MX_Controller {
         $post = $this->input->post();
         $post['medtech'] = $post['medical-technologist'];
         $code = $post['code'];
-        $check_exported = $this->db->get_where('customer_service', array('id' => $post['service-id'], 'exported' => true));
+        // $check_exported = $this->db->get_where('customer_service', array('id' => $post['service-id'], 'exported' => true));
         
-        if($check_exported->num_rows)
-            redirect('/index.php/medtech/service/'.$post['service-id']);
+        // if($check_exported->num_rows)
+        //     redirect('/index.php/medtech/service/'.$post['service-id']);
 
         // $this->db->where('id', $post['service_id']);
         // $this->db->update('customer_service', array('exported' => true));
@@ -105,8 +142,40 @@ class Medtech extends MX_Controller {
         $filename = "EXPORT_$code-".date('Y-m-d h:i:s').".pdf";
         $session_data = $this->session->all_userdata();
         try {
-            foreach ($post as $key => $value)
+            $u_checker = 0;
+            $bypass_arr = array(
+                'fullname',
+                'age_sex',
+                'date_released',
+                'physician',
+                'bday',
+                'case_no',
+                'date_recv',
+                'cust-id',
+                'service-id',
+                'code',
+                'source',
+                'radiologist',
+                'prof_pic'
+            );
+
+            $s_metadata = array();
+            foreach ($post as $key => $value) {
                 $$key = $value;
+                if(!in_array($key, $bypass_arr)){
+                    $temp_metadata = array(
+                        'service_id' => $post['service-id'],
+                        'field' => $key,
+                        'value' => $value
+                    );
+                    $u_checker = ($this->_hasRecord($temp_metadata)) ? ($u_checker + 1) : $u_checker;
+                    $s_metadata[] = $temp_metadata;
+                }
+            }
+            if(($u_checker != 0) && ($u_checker != count($s_metadata)))
+                redirect('/index.php/medtech/service/'.$post['service-id']);
+            $this->db->insert_batch('service_metadata', $s_metadata);
+            
             
             switch ($code) {
                  case 'HE':
@@ -192,7 +261,7 @@ class Medtech extends MX_Controller {
                     $template->set_coarse($result_14);
                     $template->set_hyaline($result_15);
                     $template->set_others($result_16);
-                    $template->set_left_signature($medtech, 'Medical technologist');
+                    $template->set_left_signature($medtech, 'Medical Technologist');
                     $template->build();
                     ob_end_clean();
                     $template->to_file($filename);
@@ -337,7 +406,7 @@ class Medtech extends MX_Controller {
             $allowed = array('UTZ', 'RD');
             foreach($query->result() as $key => $row){
                 $display = in_array($row->template_code, $allowed);
-                $display = ($row->exported) ? true : $display;
+                // $display = ($row->exported) ? true : $display;
                 $services[] = array(
                     'category' => $row->category,
                     'service' => $row->subcateg,
@@ -399,6 +468,13 @@ class Medtech extends MX_Controller {
         );
         echo json_encode($retval);
         return;
+    }
+
+    private function _hasRecord($data) {
+        $this->db->from('service_metadata');
+        $this->db->where('field', $data['field']);
+        $this->db->where('value', $data['value']);
+        return ($this->db->get()->num_rows() > 0);
     }
 
     private function _calculateAge($date){
