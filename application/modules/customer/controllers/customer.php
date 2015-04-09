@@ -100,8 +100,7 @@ class Customer extends MX_Controller {
             $total += $price;
             $services[] = array(
                 'count' => $key + 1,
-                'category' => $value->category,
-                'service' => $value->subcateg,
+                'category' => $value->subcateg,
                 'price' => number_format($price, 2, '.', '')
             );
         }

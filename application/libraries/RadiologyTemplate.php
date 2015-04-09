@@ -31,13 +31,13 @@ class RadiologyTemplate extends ServiceTemplate
 
     protected function build_transaction_details()
     {
-        $this->Ln(5);
+        $this->Ln(0);
         
         $this->SetFont('helvetica', 'B', 9);
         
         $this->build_template_header($this->_type);
 
-        $this->Ln(10);
+        $this->Ln(0);
         $this->writeHTML($this->_html, true, false, true, false, '');
         
         $this->_last_y = ($this->GetY() - 74); // 74 for offset height of header, transaction info and template type
@@ -46,7 +46,7 @@ class RadiologyTemplate extends ServiceTemplate
     public function build_signatures()
     {
         $html_lines = explode("\n", $this->_html);
-        $this->ln(70 - ($this->_last_y));
+        $this->ln(65 - ($this->_last_y));
         $column_styles = array(
             0 => array(
                 'width' => 180,

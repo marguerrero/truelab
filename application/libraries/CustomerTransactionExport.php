@@ -113,9 +113,6 @@ class CustomerTransactionExport extends PDF
 
     public function Header()
     {
-        // echo '<pre>test';
-        // print_r($this->_header_location);
-        // die();
         $this->Image($this->_header_location, 20, 10, 60, '', 'PNG', '', 'T', true, 300, '', false, false, 0, false, false, false);
     }
 
@@ -238,7 +235,7 @@ class CustomerTransactionExport extends PDF
                     )
                 ),
                 array(
-                    'text' => "Category\n(Sub category)",
+                    'text' => "Service",
                     'style' => array(
                         'font_style' => 'B',
                         'height' => $header_row_height 
