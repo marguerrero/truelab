@@ -339,7 +339,7 @@ class ServiceTemplate extends PDF
 
     public function build_signatures()
     {
-        $this->ln(1);
+        $this->ln(8);
 
         $style = array(
             'width' => 90,
@@ -386,7 +386,7 @@ class ServiceTemplate extends PDF
 
     protected function build_template_note($msg = "Note: this result is electronically transmitted.")
     {
-        $this->Ln(5);
+        $this->Ln(1);
         $this->SetFont('helvetica', '', 9);
         $this->Write(3, $msg, '', false, 'L', true);
     }
