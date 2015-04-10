@@ -21,6 +21,7 @@ class ServiceTemplate extends PDF
 
     public function __construct($custom = array())
     {
+        //--Test comment
         $default_layout = array(
             'orietation' => '',
             'unit' => 'mm',
