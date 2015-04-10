@@ -385,7 +385,7 @@ class ServiceTemplate extends PDF
         $this->SetFillColor(224, 235, 255);
     }
 
-    protected function build_template_note($msg = "This result is electronically transmitted. No need for signature.")
+    protected function build_template_note($msg = "***This result is electronically transmitted. No need for signature.")
     {
         $this->Ln(1);
         $this->SetFont('helvetica', '', 9);

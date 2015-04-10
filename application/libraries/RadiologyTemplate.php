@@ -41,8 +41,7 @@ class RadiologyTemplate extends ServiceTemplate
         $this->writeHTML($this->_html, true, false, true, false, '');
         
         $this->_last_y = ($this->GetY() - 74); // 74 for offset height of header, transaction info and template type
-        $this->Ln(3);
-        $this->build_template_note("This result is electronically transmitted. No need for signature");
+        
     }
 
     public function build_signatures()
@@ -66,5 +65,7 @@ class RadiologyTemplate extends ServiceTemplate
         );
         $this->set_font_size(9);
         $this->create_table($signatures_rows, $column_styles);
+        $this->Ln(2);
+        $this->build_template_note();
     }
 }
