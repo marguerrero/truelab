@@ -168,7 +168,7 @@ class ServiceTemplate extends PDF
 
     protected function build_transaction_info()
     {
-        $this->Ln(7);
+        $this->Ln(0);
 
         $this->SetFont('helvetica', '', 9);
 
@@ -384,7 +384,7 @@ class ServiceTemplate extends PDF
         $this->SetFillColor(224, 235, 255);
     }
 
-    protected function build_template_note($msg = "Note: this result is electronically transmitted.")
+    protected function build_template_note($msg = "This result is electronically transmitted. No need for signature.")
     {
         $this->Ln(1);
         $this->SetFont('helvetica', '', 9);
