@@ -21,7 +21,6 @@ class ServiceTemplate extends PDF
 
     public function __construct($custom = array())
     {
-        //--Test comment
         $default_layout = array(
             'orietation' => '',
             'unit' => 'mm',
@@ -169,7 +168,7 @@ class ServiceTemplate extends PDF
 
     protected function build_transaction_info()
     {
-        $this->Ln(0);
+        $this->Ln(7);
 
         $this->SetFont('helvetica', '', 9);
 
@@ -340,7 +339,7 @@ class ServiceTemplate extends PDF
 
     public function build_signatures()
     {
-        $this->ln(8);
+        $this->ln(10);
 
         $style = array(
             'width' => 90,
@@ -372,6 +371,8 @@ class ServiceTemplate extends PDF
         $this->create_table($signatures_rows, $column_styles);
         
         $this->writeHTMLCell(32, 32, 137, ($this->GetY() - 14), '<img src="http://localhost/truelab/web/images/pathologist_signature.png" />');
+        $this->ln(15);
+        $this->build_template_note();
     }
 
     protected function build_template_header($template_type)
@@ -385,9 +386,9 @@ class ServiceTemplate extends PDF
         $this->SetFillColor(224, 235, 255);
     }
 
-    protected function build_template_note($msg = "***This result is electronically transmitted. No need for signature.")
+    protected function build_template_note($msg = "*** This result is electronically transmitted. No need for signature")
     {
-        $this->Ln(1);
+        $this->Ln(3);
         $this->SetFont('helvetica', '', 9);
         $this->Write(3, $msg, '', false, 'L', true);
     }

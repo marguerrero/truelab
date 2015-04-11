@@ -126,13 +126,18 @@ class Radtech extends MX_Controller {
                         'field' => $key,
                         'value' => $value
                     );
+                    if($this->_hasRecord($temp_metadata)){
+
+                    }
                     $u_checker = ($this->_hasRecord($temp_metadata)) ? ($u_checker + 1) : $u_checker;
+                    
                     $s_metadata[] = $temp_metadata;
                 }
             }
             if(($u_checker != 0) && ($u_checker != count($s_metadata)))
                 redirect('/index.php/radtech/service/'.$post['service-id']);
-            $this->db->insert_batch('service_metadata', $s_metadata);
+            if($u_checker == 0)
+                $this->db->insert_batch('service_metadata', $s_metadata);
             
             switch ($code) {
                 case 'RD':
@@ -310,7 +315,8 @@ class Radtech extends MX_Controller {
         $this->db->from('service_metadata');
         $this->db->where('field', $data['field']);
         $this->db->where('value', $data['value']);
-        return ($this->db->get()->num_rows() > 0);
+        $test = $this->db->get();
+        return ($test->num_rows() > 0);
     }
 
     private function _calculateAge($date){

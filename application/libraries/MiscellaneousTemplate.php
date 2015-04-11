@@ -77,6 +77,6 @@ class MiscellaneousTemplate extends ServiceTemplate
         $this->create_table($rows, $column_styles);
         $this->set_font_size(9);
 
-        $this->build_template_note();
+        // $this->build_template_note();
     }
 }

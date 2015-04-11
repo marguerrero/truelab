@@ -461,6 +461,6 @@ class ClinicalChemistryTemplate extends ServiceTemplate
         $this->set_font_size(8);
         $this->create_table($rows, $column_styles);
 
-        $this->build_template_note();
+        // $this->build_template_note();
     }
 }

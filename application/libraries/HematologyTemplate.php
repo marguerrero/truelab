@@ -345,6 +345,6 @@ class HematologyTemplate extends ServiceTemplate
         $this->MultiCell(23, 10, "\nRemarks  :", 'LB', 'R', false, 0, $this->GetX(), '', true, 0);
         $this->MultiCell(163, 10, "\n    " . $this->_remarks, 'BR', 'L', false, 1, $this->GetX(), '', true, 0);
 
-        $this->build_template_note();
+        // $this->build_template_note();
     }
 }

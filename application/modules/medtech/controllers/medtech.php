@@ -72,8 +72,7 @@ class Medtech extends MX_Controller {
         $s_data = array();
         foreach ($q->result() as $key => $value) 
             $s_data[$value->field] = $value->value;
-
-
+        
         $MX_temp = array('HB', 'PT', 'BT', 'AFB');
         $this->config->load('results');
         $max_result = $this->config->item('max_result');
@@ -159,6 +158,8 @@ class Medtech extends MX_Controller {
                 'prof_pic'
             );
 
+           
+            $u_checker = 0;
             $s_metadata = array();
             foreach ($post as $key => $value) {
                 $$key = $value;
@@ -172,9 +173,11 @@ class Medtech extends MX_Controller {
                     $s_metadata[] = $temp_metadata;
                 }
             }
+            
             if(($u_checker != 0) && ($u_checker != count($s_metadata)))
                 redirect('/index.php/medtech/service/'.$post['service-id']);
-            $this->db->insert_batch('service_metadata', $s_metadata);
+            if($u_checker == 0)
+                $this->db->insert_batch('service_metadata', $s_metadata);
             
             
             switch ($code) {
@@ -472,6 +475,7 @@ class Medtech extends MX_Controller {
 
     private function _hasRecord($data) {
         $this->db->from('service_metadata');
+        $this->db->where('service_id', $data['service_id']);
         $this->db->where('field', $data['field']);
         $this->db->where('value', $data['value']);
         return ($this->db->get()->num_rows() > 0);

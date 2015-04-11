@@ -77,7 +77,7 @@
         <div class="row">
             <div class="col-md-12">
                 <?php if($result['result_5']): ?>
-                        <textarea style="resize: none;" class="form-control" name="result_5" placeholder="NO SIGNIFICANT CHEST FINDINGS"> <?=$result["result_5"];?></textarea>
+                        <textarea style="resize: none;" class="form-control" name="result_5" placeholder="NO SIGNIFICANT CHEST FINDINGS"><?=$result["result_5"];?></textarea>
                 <?php else : ?>
                     <textarea style="resize: none;" class="form-control" name="result_5" placeholder="NO SIGNIFICANT CHEST FINDINGS">NO SIGNIFICANT CHEST FINDINGS</textarea>
                 <?php endif; ?>

@@ -129,6 +129,6 @@ class FecalysisTemplate extends ServiceTemplate
         $this->set_font_size(9);
         $this->create_table($rows, $column_styles);
 
-        $this->build_template_note();
+        // $this->build_template_note();
     }
 }
