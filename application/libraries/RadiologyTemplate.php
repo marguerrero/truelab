@@ -47,12 +47,15 @@ class RadiologyTemplate extends ServiceTemplate
     public function build_signatures()
     {
         $html_lines = explode("\n", $this->_html);
-        $this->ln(65 - ($this->_last_y));
+        $this->ln(75 - ($this->_last_y));
+        $this->writeHTMLCell(32, 32, 88, ($this->GetY() - 14), '<img width="100" src="http://localhost/truelab/web/images/rad_signature.jpg" />');
+        $this->ln(20);
         $column_styles = array(
             0 => array(
                 'width' => 180,
                 'height' => 2,
-                'text_align' => 'C'
+                'text_align' => 'C',
+                'z-index' => 9999
             )
         );
         $signatures_rows = array(
@@ -65,7 +68,8 @@ class RadiologyTemplate extends ServiceTemplate
         );
         $this->set_font_size(9);
         $this->create_table($signatures_rows, $column_styles);
-        $this->Ln(2);
+
+        $this->ln(2);
         $this->build_template_note();
     }
 }
