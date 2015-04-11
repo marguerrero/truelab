@@ -295,10 +295,10 @@ class CustomerTransactionExport extends PDF
     public function build_disclaimer_footer(){
         $this->Ln(1);
         $this->SetFont('helvetica', 'I', 9);
-        $this->Write(0, '*Disclaimer: This is not an official receipt', '', false, 'L', true);
+        $this->Write(0, '***DISCLAIMER: This is not an official receipt', '', false, 'L', true);
         $this->Ln(2);
         $this->SetFont('helvetica', '', 9);
-        
+        $this->Write(0, 'Kindly ask for receipt from the cashier', '', false, 'L', true);
     }
     public function set_reference_number($reference_number)
     {

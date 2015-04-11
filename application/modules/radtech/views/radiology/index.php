@@ -90,5 +90,6 @@
         <div class="row text-center">
             <div class="col-md-offset-4 col-md-4 text-center">Radiologist</div><!--col-md-12-->
         </div><!--.row-->
+        <span style="margin-top:30px; display: block;"><i>*** This result is electronically transmitted. No need for signature</i></span>
     </form>
 </div>
