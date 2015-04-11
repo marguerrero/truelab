@@ -48,8 +48,8 @@ class RadiologyTemplate extends ServiceTemplate
     {
         $html_lines = explode("\n", $this->_html);
         $this->ln(75 - ($this->_last_y));
-        $this->writeHTMLCell(32, 32, 88, ($this->GetY() - 14), '<img width="100" src="http://localhost/truelab/web/images/rad_signature.jpg" />');
-        $this->ln(20);
+        $this->writeHTMLCell(27, 27, 88, ($this->GetY() - 14), '<img width="100" height="50" src="http://localhost/truelab/web/images/rad_signature.jpg" />');
+        $this->ln(10);
         $column_styles = array(
             0 => array(
                 'width' => 180,
