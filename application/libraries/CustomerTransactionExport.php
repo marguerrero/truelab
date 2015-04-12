@@ -119,8 +119,8 @@ class CustomerTransactionExport extends PDF
     private function build_customer_panel()
     {
         $this->Ln(1);
-        $this->SetFont('helvetica', 'B', 9);
-        $this->Write(0, 'Customer Information', '', false, 'L', true);
+        $this->SetFont('helvetica', 'B', 12);
+        $this->Write(0, 'Charge Slip', '', false, 'L', true);
         $this->Ln(2);
         $this->SetFont('helvetica', '', 9);
 
