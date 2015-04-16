@@ -2,7 +2,7 @@ $('#reset-fields').on('click', resetFields);
 $('.customer-select').on('click', selectCustomer);
 $('#cust-bday').on('change', calculateAge);
 $('#customer-transaction').on('click', '.service-discount',displayDiscount);
-$('#customer-transaction').on('change', '.service-sub-cat',initPrice);
+$('#customer-transaction').on('change', '.service-sub-cat',displayDiscount);
 $('#customer-transaction').on('change', '.discount-type',displayPrice);
 $('#customer-transaction').on('change', '.service-cat',displaySubCategory);
 $('#existing-customer-dialog').on('click', '.customer-select', selectCustomer);
@@ -15,6 +15,7 @@ $(function(){
       endDate: new Date()
     });
 
+    //--uncomment this once there's an internent
     existingCustomerTable = $('#existing-customer-dialog table').DataTable({
         "ajax": "/truelab/index.php/customer/getCustomers",
         "columns": [
@@ -92,32 +93,45 @@ function selectCustomer(){
 function displayDiscount(){
     var selection = $(this),
         container = selection.parents('.service-form'),
-        discount_checker = container.find('.service-discount-null');
+        // discount_checker = container.find('.service-discount-null');
         subcat = container.find('.service-sub-cat').find(':selected'),
-        disc_container = container.find('.discount-type');
+        // disc_container = container.find('.discount-type');
         reg_price = subcat.attr('data-reg-price'),
         disc_price = subcat.attr('data-disc-price'),
         price_display = container.find('.service-price'),
         disc_container = container.find('.discount-type');
-        has_discount = selection.is(':checked');
+        // has_discount = selection.is(':checked');
 
-        if(has_discount){
-            price_display.val(disc_price);
-            discount_checker.prop('checked', false);
-            disc_container.attr('disabled', false);
-            disc_container.find('.discount-null').hide();
-            disc_container.find('.discount-info').show();
-            
-            $(disc_container.find('option')[1]).prop('selected', true);
-        }
-        else{
-            disc_container.find('.discount-null').show();
-            disc_container.find('.discount-info').hide();
-            disc_container.attr('disabled', true);
-            price_display.val(reg_price);
-            discount_checker.prop('checked', true);
-            $(disc_container.find('option')[0]).prop('selected', true);
-        }
+        // if(has_discount){
+            //-- fetch the list of discounts based on the selected service
+            var s_id = subcat.attr('value');
+            $.ajax({
+                url: curr_url+'/displayDiscounts', 
+                data: {'service-id': s_id},
+                method : 'post',
+                success: function(response){
+                    var response = $.parseJSON(response);
+                    var default_price = reg_price;
+                    var o_html = '<option data-price="' + default_price + '" class="discount-null" selected value="0">No discount available</option>';
+                    $(container).find('.discount-type').html(o_html).prop('disabled', false);
+                    $(container).find('.discount-price').slideDown();
+                        
+                    $(response.data).each(function(k, v){
+                        var disc_price = reg_price - v.less;
+                        o_html += "<option data-disc-id='" + v.d_id + "' data-price='" + disc_price + "' class='discount-info' value='" + v.d_id + "'> Less than " + v.less + " PHP ";
+                    });
+                    $(container).find('.discount-type').html(o_html).prop('disabled', false);
+                    $(container).find('.discount-price').slideDown();
+                    
+                    $(price_display).val(default_price);
+                }
+            });
+        // }
+        // else{
+        //    removeDiscountOptions(container);
+        //    $(price_display).val(reg_price);
+        // }
+        
         return;
 }
 
@@ -136,23 +150,9 @@ function initPrice(){
         disc_container.find('.discount-type').attr('disabled', true);
         disc_container.find('.discount-null').show();
         disc_container.find('.discount-info').remove();
-        
-        if($(this).val() != 0){
-            var less = reg_price - disc_price,
-                less_2 = reg_price - disc_price_2,
-                d_html = "<option data-price='" + disc_price + "' class='discount-info' value='1'> Less than " + less + " PHP ";
-            
-            if(less_2 != 0){
-                d_html += "<option data-price='" + disc_price_2 + "' class='discount-info' value='2'> Less than " + less_2 + " PHP ";
-            }
-            disc_container.append(d_html);
-        }
-
-        service_price.attr('data-reg-price', reg_price);
-        service_price.attr('data-disc-price', disc_price);
         service_price.val(reg_price);
-        if(has_discount)
-            service_price.val(disc_price);
+        removeDiscountOptions(container);
+        return;
 }
 
 function displayPrice(){
@@ -165,7 +165,12 @@ function displayPrice(){
     return;
 }
 
-
+function removeDiscountOptions(container){
+    var o_html = "";
+    $(container).find('.discount-type').html(o_html).prop('disabled', true);
+    $(container).find('.discount-price').slideUp();
+    return;
+}
 
 
 function addMoreService(){

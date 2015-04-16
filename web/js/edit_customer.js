@@ -15,11 +15,23 @@ $(function(){
 				container.find('.service-cat').trigger('change');
 				container.find('.service-sub-cat').find('option[value="'+ value.subcat_id +'"]').prop('selected', true);
 				container.find('.service-sub-cat').trigger('change');
-				if(value.has_discount){
-					container.find('.service-discount').trigger('click');
-					container.find('.discount-type').trigger('change');
-					container.find('.discount-type').val(value.disc_type);
-				}
+				console.log(container);
+				console.log(value);
+				// container.find('.discount-type')
+				// 	.find("option")
+				// 	.removeAttr('option');
+
+				setTimeout(function(){
+					container.find('.discount-type')
+						.find("option[value=" + value.disc_type + "]")
+						.prop('selected', true)
+						.trigger('change');
+						console.log('updated');
+				}, 1000);
+				// container.find('.discount-type').trigger('change');
+				// if(value.has_discount){
+				// 	container.find('.service-discount').trigger('click');
+				// }
 				container.find('.service-price').val(value.price)
 				if(value.exported == '1'){
 					container.find('input').attr('readonly', true);

@@ -109,23 +109,12 @@
                         </select>
                     </div><!--.col-sm-10-->
                 </div><!--.form-group-->
-                <div class="form-group">
-                    <label for="first-name" class="col-sm-2 control-label">Discount</label>
-                    <div class="col-sm-1">
-                        <div class="checkbox">
-                          <label><input class="service-discount" type="checkbox" name="has-discount[]" id="service-1-discount" value="1"></label>
-                        </div><!--.radio-->
-                        <div class="checkbox">
-                          <label><input checked hidden class="service-discount-null" type="checkbox" name="has-discount[]" id="service-2-discount" value="0"></label>
-                        </div><!--.radio-->
-                          
-                    </div>
-                </div><!--.form-group-->
-                <div class="form-group">
+                
+                <div class="form-group discount-price" style="display:none">
 		 <label for="birthday" class="col-sm-2 control-label">Discount Price</label>
                     <div class="col-sm-3">
                         <select name="discount-type[]" class="form-control discount-type" id="" placeholder="No Discount" disabled>
-                            <option class="discount-null" value="0">Discount disabled</option>
+                            <!-- <option class="discount-null" value="0">Discount disabled</option> -->
                         </select>
                     </div>
                     <div class="col-sm-3"></div>
@@ -134,7 +123,7 @@
 	
                     <label for="birthday" class="col-sm-2 control-label">Price</label>
                     <div class="col-sm-3">
-                        <input disabled type="text" name="service-price" class="form-control service-price" id="" placeholder="Amount"/>
+                        <input readonly type="text" name="service-price[]" class="form-control service-price" id="" placeholder="Amount"/>
                     </div>
                     <div class="col-sm-3"><span class="extra-label">PHP</span></div>
                 </div><!--.form-group-->
@@ -233,23 +222,11 @@
             </select>
         </div><!--.col-sm-10-->
     </div><!--.form-group-->
-    <div class="form-group">
-        <label for="first-name" class="col-sm-2 control-label">Discount</label>
-        <div class="col-sm-1">
-            <div class="checkbox">
-              <label><input class="service-discount" type="checkbox" name="has-discount[]" id="service-1-discount" value="1"></label>
-            </div><!--.radio-->
-            <div class="checkbox">
-              <label><input checked hidden class="service-discount-null" type="checkbox" name="has-discount[]" id="service-2-discount" value="0"></label>
-              
-            </div><!--.radio-->
-        </div>
-    </div><!--.form-group-->
-    <div class="form-group">
+    <div class="form-group discount-price" style="display:none">
         <label for="birthday" class="col-sm-2 control-label">Discount Price</label>
         <div class="col-sm-3">
             <select name="discount-type[]" class="form-control discount-type" id="" placeholder="No Discount" disabled>
-                <option class="discount-null" value="0">Discount disabled</option>
+                <!-- <option class="discount-null" value="0">Discount disabled</option> -->
             </select>
         </div>
         <div class="col-sm-3"></div>
@@ -257,12 +234,15 @@
     <div class="form-group">
         <label for="birthday" class="col-sm-2 control-label">Price</label>
         <div class="col-sm-3">
-            <input disabled type="text" class="form-control service-price" id="" placeholder="Amount"/>
+            <input readonly type="text" name="service-price[]" class="form-control service-price" id="" placeholder="Amount"/>
         </div>
         <div class="col-sm-3"><span class="extra-label">PHP</span></div>
     </div><!--.form-group-->
     <div class="hr-line"></div>
 </div><!--.service-form-generator-->
+<script type="text/javascript">
+    var curr_url = "<?=base_url('/index.php/customer/'); ?>";
+</script>
 
 <script type="text/javascript" src="<?php echo site_url('web/js/add_customer.js');?>"></script>
 <script type="text/javascript" src="<?php echo site_url('web/js/edit_customer.js');?>"></script>

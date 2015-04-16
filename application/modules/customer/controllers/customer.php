@@ -158,10 +158,18 @@ class Customer extends MX_Controller {
         
         $query = $this->db->get('subcat');
         foreach ($query->result() as $row){
+            
             $reg_price = $row->reg_price;
             $disc_price = (!$row->disc_price) ? $reg_price : $row->disc_price;
             $disc_price_2 = (!$row->disc_price_2) ? $reg_price : $row->disc_price_2;
             // $sub_options .= "<option  data-reg-price='{$row->reg_price}' data-disc-price='$disc_price' class='child-options child-{$row->main_test_id}' data-price='{$row->reg_price}' data-discount-price='$row->disc_price' data-parent='{$row->main_test_id}' value='{$row->sub_test_id}'>{$row->subcateg}</option>";
+            //-- fetch available discounts for each service
+            $q = $this->db->get_where('service_discounts', array('service_id' => $row->sub_test_id));
+            // $discount_ids = array();
+            // $discount_val = array();
+            // foreach ($q->result() as $key => $value) {
+            //     $discount_
+            // }
             $sub_options .= "<option style='display:none;' data-reg-price='{$row->reg_price}' data-disc-price='$disc_price' data-disc-price-2='$disc_price_2' class='child-options child-{$row->main_test_id}' data-price='{$row->reg_price}' data-discount-price='$row->disc_price' data-parent='{$row->main_test_id}' value={$row->sub_test_id}>{$row->subcateg}</option>";
         }
         
@@ -174,6 +182,33 @@ class Customer extends MX_Controller {
             'sub_options' => $sub_options
         );
         $this->load->view('add_customer/index', $retval);
+    }
+
+    public function displayDiscounts(){
+        $s_id = $this->input->post('service-id');
+        $err_msg = "";
+        $msg_info = "";
+        $data = array();
+        try{
+            $q = $this->db->get_where('service_discounts', array('service_id' => $s_id));
+            if($q->num_rows() == 0)
+                throw new Exception("No discount found", 1);
+            foreach ($q->result() as $key => $value) {
+                $data[] = array(
+                    'd_id' => $value->id,
+                    'less' => $value->disc_amount
+                );
+            }
+        } catch (Exception $e){
+            $err_msg = $e->getMessage();
+        }
+        $retval = array(
+            'success' => true,
+            'status' => ($err_msg) ? 'failure' : 'success',
+            'data' => $data
+        );
+        echo json_encode($retval);
+        return;
     }
 
     /**************************************************
@@ -276,22 +311,25 @@ class Customer extends MX_Controller {
         
         $customer_services = array();
         foreach ($query->result() as $key => $value) {
-
-            $price = $value->reg_price;
-            switch ($value->disc_type) {
-                case 1:
-                    $price = ($value->disc_price) ? $value->disc_price : $value->reg_price;
-                    break;
-                case 2:
-                    $price = $value->disc_price_2;
-                    break;
+            if($value->amount)
+                $price = $value->amount;
+            else{
+                $price = $value->reg_price;
+                switch ($value->disc_type) {
+                    case 1:
+                        $price = ($value->disc_price) ? $value->disc_price : $value->reg_price;
+                        break;
+                    case 2:
+                        $price = $value->disc_price_2;
+                        break;
+                }
             }
             
             $customer_services[] = array(
                 'category_id' => $value->main_test_id,
                 'subcat_id' => $value->subcat_id,
-                'has_discount' => ($value->has_discount) ? true : false,
-                'disc_type' => $value->disc_type,
+                // 'has_discount' => ($value->has_discount) ? true : false,
+                'disc_type' => $value->disc_id,
                 'exported' => $value->exported,
                 'price' => $price
             );
@@ -364,21 +402,27 @@ class Customer extends MX_Controller {
         $services = array();
         $total = 0;
         foreach ($result as $key => $value) {
-            $price = 0;
-            switch ($value->disc_type) {
-                case 0:
-                    $price = $value->reg_price;
-                    break;
-                case 1:
-                    $price = ($value->disc_price) ? $value->disc_price : $value->reg_price;
-                    break;
-                case 2:
-                    $price = $value->disc_price_2;
-                    break;
-                default:
-                	$price = 9999;
-                	break;
+            if($value->amount)
+                $price = $value->amount;
+
+            else {
+                $price = 0;
+                switch ($value->disc_type) {
+                    case 0:
+                        $price = $value->reg_price;
+                        break;
+                    case 1:
+                        $price = ($value->disc_price) ? $value->disc_price : $value->reg_price;
+                        break;
+                    case 2:
+                        $price = $value->disc_price_2;
+                        break;
+                    default:
+                    	$price = 9999;
+                    	break;
+                }
             }
+            
             $total += $price;
             $services[] = array(
                 'count' => $key + 1,
@@ -495,7 +539,7 @@ class Customer extends MX_Controller {
             $services = $input->post('subcat-id');
             $physician = $input->post('physician');
             $has_discount = $input->post('has-discount');
-            
+            $service_price = $input->post('service-price');
             //-- Validate User Here
             if(!$firstname){
                 $field = 'firstname';
@@ -581,18 +625,19 @@ class Customer extends MX_Controller {
             $d_count = 0;
             foreach ($services as $key => $value) {
                 $s_id = $value;
-                $d_type = 0;
-                $discount = $has_discount[$key];
-                if($discount){
-                     $d_type = $disc_type[$d_count];
-                     if($d_type)
-                        $d_count++;
-                }
+                $d_type = $disc_type[$key];
+                $charged = $service_price[$key];
+                // $discount = $has_discount[$key];
+                // if($discount){
+                //      $d_type = $disc_type[$d_count];
+                //      if($d_type)
+                //         $d_count++;
+                // }
                 $service_entry = array(
                     'subcat_id' => $s_id,
-                    'has_discount' => $discount,
                     'trans_id' => $trans_id,
-                    'disc_type' => $d_type
+                    'disc_id' => $d_type,
+                    'amount' => $charged
                 );
                 $this->db->insert('customer_service', $service_entry);
                     

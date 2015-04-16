@@ -11,6 +11,8 @@ class Base extends MX_Controller {
             case 'superadmin':
                 $role = "Super Admin";
                 $access = array(
+                    'reprint_customer' => "",
+                    'reprint_service' => "",
                     'add_customer' => "",
                     'edit_customer' => "",
                     'rad_tech' => "",
@@ -20,6 +22,8 @@ class Base extends MX_Controller {
             case 'user':
                 $role = "User";
                 $access = array(
+                    'reprint_customer' => "",
+                    'reprint_service' => "",
                     'add_customer' => "",
                     'edit_customer' => "",
                     'rad_tech' => "hidden",
@@ -29,6 +33,8 @@ class Base extends MX_Controller {
             case 'rad_tech':
                 $role = "Rad Tech";
                 $access = array(
+                    'reprint_customer' => "hidden",
+                    'reprint_service' => "hidden",
                     'add_customer' => "hidden",
                     'edit_customer' => "hidden",
                     'rad_tech' => "",
@@ -38,6 +44,8 @@ class Base extends MX_Controller {
             case 'med_tech':
                 $role = "Med Tech";
                 $access = array(
+                    'reprint_customer' => "hidden",
+                    'reprint_service' => "hidden",
                     'add_customer' => "hidden",
                     'edit_customer' => "hidden",
                     'rad_tech' => "hidden",
