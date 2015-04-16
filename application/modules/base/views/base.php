@@ -127,7 +127,7 @@
       <ul class="nav nav-sidebar">
         <li><a class="<?=$access['add_customer'];?> <?php if($location == 'users/users/_add'): echo "active"; endif; ?>" href="<?php echo base_url('index.php/customer/add');?>">Add Customer Information</a></li>
         <li><a class="<?=$access['edit_customer'];?>" href="<?php echo base_url('index.php/customer/');?>">Edit Customer Information</a></li>
-        <!-- <li><a class="<?=$access['reprint_customer'];?>" href="<?php echo base_url('index.php/customer/');?>">Reprint Customer Information</a></li> -->
+        <li><a class="<?=$access['reprint_customer'];?>" href="<?php echo base_url('index.php/reprint/');?>">Reprint Customer Information</a></li>
         <!-- <li><a class="<?=$access['reprint_service'];?>" href="<?php echo base_url('index.php/customer/');?>">Reprint Results</a></li> -->
         <li><a class="<?=$access['rad_tech'];?>" href="<?php echo base_url('index.php/radtech');?>">Rad Tech</a></li>
         <li><a class="<?=$access['med_tech'];?>" href="<?php echo base_url('index.php/medtech');?>">Med Tech</a></li>

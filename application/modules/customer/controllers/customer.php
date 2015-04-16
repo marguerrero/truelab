@@ -95,12 +95,18 @@ class Customer extends MX_Controller {
         $services = array();
         $total = 0;
         foreach ($result as $key => $value) {
-            $price = ($value->has_discount) ? $value->disc_price : $value->reg_price ;
-            $price = (!$price) ? $value->reg_price : $price;
+            if($value->amount)
+                $price = $value->amount;
+            else {
+                $price = ($value->has_discount) ? $value->disc_price : $value->reg_price ;
+                $price = (!$price) ? $value->reg_price : $price;
+            }
+            
             $total += $price;
+            $service_name = ($value->is_reprint) ? "{$value->subcateg} [REPRINT] " : $value->subcateg;
             $services[] = array(
                 'count' => $key + 1,
-                'category' => $value->subcateg,
+                'category' => $service_name,
                 'price' => number_format($price, 2, '.', '')
             );
         }
@@ -125,6 +131,7 @@ class Customer extends MX_Controller {
 
         $data = array();
         foreach($services as $key => $value){
+
             $data[] = array(
                 'category' => $value['category'],
                 'sub_category' => $value['service'],
@@ -424,10 +431,11 @@ class Customer extends MX_Controller {
             }
             
             $total += $price;
+            $service_name = ($value->is_reprint) ? "{$value->subcateg} [REPRINT] " : $value->subcateg;
             $services[] = array(
                 'count' => $key + 1,
                 'category' => $value->category,
-                'service' => $value->subcateg,
+                'service' => $service_name,
                 'price' => number_format($price, 2, '.', '')
             );
         }
