@@ -197,7 +197,7 @@ class Customer extends MX_Controller {
         $msg_info = "";
         $data = array();
         try{
-            $q = $this->db->get_where('service_discounts', array('service_id' => $s_id));
+            $q = $this->db->order_by("disc_amount", "ASC")->get_where('service_discounts', array('service_id' => $s_id));
             if($q->num_rows() == 0)
                 throw new Exception("No discount found", 1);
             foreach ($q->result() as $key => $value) {
