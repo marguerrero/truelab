@@ -90,15 +90,22 @@
                         <th>Category</th>
                         <th>Sub Category</th>
                         <th>Amount</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($services as $key => $value) : ?>
+                    
                     <tr>
                         <td><?=$value['count']; ?></td>
                         <td><?=$value['category']; ?></td>
                         <td><?=$value['service']; ?></td>
                         <td>&#8369; <?=$value['price'];?></td>
+                        <?php if($value['reprint_url']): ?>
+                        <td><a href="<?=$value['reprint_url'];?>" class="btn btn-default">Reprint</a></td>
+                        <?php else: ?>
+                        <td></td>
+                        <?php endif; ?>
                     </tr>
                     <?php endforeach; ?>
                 </tbody>

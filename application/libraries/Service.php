@@ -28,4 +28,29 @@ class Service{
         $receipt_no = RECEIPT_INIT."-$unique";
         return $receipt_no;
     }
+
+    public function checkServiceType($s_code = ""){
+        
+        $r = false;
+        try{
+            if(!$s_code)
+                throw new Exception("Error Processing Request", 1);
+            $ci = $this->ci;
+            $ci->load->config('services');
+            $service_type = $ci->config->item('service_hierarchy');
+            foreach ($service_type as $key => $value) {
+                $$key = $value;
+            }
+            
+            // $rad_group = array('RD', 'UTZ');
+            // $med_group = array('')
+            if(in_array($s_code, $rad_group))
+                $r = "radtech";
+            if(in_array($s_code, $med_group))
+                $r = "medtech";
+        } catch (Exception $e){
+
+        }
+        return $r;
+    }
 }

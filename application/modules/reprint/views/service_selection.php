@@ -11,7 +11,7 @@
 </div>
 <div class="row margin-left-sm">
     <form id="customer-transaction" class="form-horizontal form-1">
-    <input type="hidden" id="" name="cust_id" value="<?=$is_edit;?>" />
+    <input type="hidden" id="" name="cust_id" value="<?=$cust_id;?>" />
     
     <fieldset class="<?=$allowed;?>">
         <legend>Services Selection</legend>

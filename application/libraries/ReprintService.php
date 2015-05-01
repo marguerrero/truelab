@@ -22,8 +22,10 @@ class ReprintService Extends Service{
         $sql = " SELECT *,aa.id as service_id FROM customer_service aa 
                 LEFT JOIN customer_transaction bb on bb.id=aa.trans_id 
                 LEFT JOIN subcat cc ON cc.sub_test_id=aa.subcat_id
-                WHERE bb.cust_id=$cust_id;
+                WHERE bb.cust_id=$cust_id AND exported=1 AND is_reprint=0
+                ORDER BY aa.id DESC
                 ";
+
         $query = $this->ci->db->query($sql);
         $customer_services = array();
         if($query->num_rows() == 0)
@@ -48,9 +50,9 @@ class ReprintService Extends Service{
         $ci = $this->ci;
         $r = false;
         try{
-            if(!$services)
+            if(!$services[0])
                 throw new Exception("No services found", 1);
-
+            
             $receipt = $this->_fetchReceipt();
             $trans_id = $this->_fetchPK('customer_transaction');
             $transaction = array(
@@ -59,16 +61,17 @@ class ReprintService Extends Service{
                 'cust_id' => $cust_id,
                 'physician' => "NA"
             );
-            $ci->db->insert('customer_transaction', $transaction);
 
             foreach ($services as $key => $id) {
                 $orig = $ci->db->get_where('customer_service', array('id' => $id));
                 $orig = $orig->result()[0];
+                $s_id = $this->_fetchPK("customer_service");
 
                 //-- Replicate service entry
                 $ci->load->config('results');
                 $amount = $ci->config->item('reprint_price');
                 $customer_service = array(
+                    'id' => $s_id,
                     'subcat_id' => $orig->subcat_id,
                     'amount' => $amount,
                     'trans_id' => $trans_id,
@@ -83,7 +86,7 @@ class ReprintService Extends Service{
                 $metadata = $ci->db->get_where('service_metadata', array('service_id' => $id ));
                 foreach($metadata->result() as $meta){
                     $service_metadata = array(
-                        'service_id' => $id,
+                        'service_id' => $s_id,
                         'field' => $meta->field,
                         'value' => $meta->value
                     );
@@ -91,6 +94,7 @@ class ReprintService Extends Service{
 
                 }
             }
+            $ci->db->insert('customer_transaction', $transaction);
             $r = $receipt;
         }
         catch(Exception $e){

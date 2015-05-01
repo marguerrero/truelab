@@ -21,12 +21,16 @@ class Reprint extends MX_Controller {
     }
 
     public function _reprintSelection($param = array()){
-        if(!$param)
-            redirect('index.php/reprint/');
+        
 
         $msg_info = "The selected customer doesn't have a existing results records";
+
         try{
             $cust_id = $param['cust_id'];
+            if(!$param)
+                throw new Exception("Error Processing Request", 1);
+            if(!$param['cust_id'])
+                throw new Exception("Error Processing Request", 1);
             $session_data = $this->session->all_userdata();
 
             $config = array('cust_id' => $cust_id);
@@ -39,12 +43,13 @@ class Reprint extends MX_Controller {
                 $msg_info = "Please double check the list of results to be reprinted before submitting.";
             }
         } catch (Exception $e){
-
+            redirect('index.php/reprint/');
         }
 
         
         $retval = array(
                 'data' => $data,
+                'cust_id' => $cust_id,
                 'allowed' => ($check) ? "" : "hidden" ,
                 'msg' => $msg_info,
                 'status' => ($check) ? "warning" : "danger"
@@ -56,12 +61,13 @@ class Reprint extends MX_Controller {
     public function saveTransaction(){
         $cust_id = $this->input->post('cust_id');
         $services = $this->input->post('prev-service');
+        
         $msg_info = "";
         $err_info = "";
         $receipt = "";
         try{
             $config = array(
-                'cust_id' => 2,
+                'cust_id' => $cust_id,
                 'services' => $services
             );
             $this->load->library('ReprintService', $config);

@@ -117,6 +117,8 @@
                     <div class="col-sm-3"><span class="extra-label">PHP</span></div>
                 </div><!--.form-group-->
                 <div class="hr-line"></div>
+                <input type="hidden" class="is-reprint[]" name="is_reprint[]" value="0" />
+                <input type="hidden" class="is-exported[]" name="is_exported[]" value="0" />
             </div><!--.service-form-->
             <input type="hidden" id="service-count" value="1" />
         </div>
@@ -220,6 +222,8 @@
         <div class="col-sm-3"><span class="extra-label">PHP</span></div>
     </div><!--.form-group-->
     <div class="hr-line"></div>
+    <input type="hidden" class="is-reprint[]" name="is_reprint[]" value="0" />
+    <input type="hidden" class="is-exported[]" name="is_exported[]" value="0" />
 </div><!--.service-form-generator-->
 <script type="text/javascript">
     var curr_url = "<?=base_url('/index.php/customer/'); ?>";

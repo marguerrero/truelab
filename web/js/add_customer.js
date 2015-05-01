@@ -259,18 +259,24 @@ function displaySubCategory(){
 }
 
 function saveTransaction(event){
-    var postfields = $('#customer-transaction').serialize(),
-        custfields = $('.form-1').serialize();
+    var custfields = $('.form-1').serialize();
         button = $(this),
         cust_id = $('#cust-id').val(),
         is_disable = button.hasClass('disabled');
     event.preventDefault();
-    if(cust_id)
+    //-- enable disabled fields to make it readable by the form
+    var readonlyFields = $('.service-form').find('select[disabled]');
+    // console.log(readonlyFields);
+    if(cust_id){
+        readonlyFields.prop('disabled', false);
+        var postfields = $('#customer-transaction').serialize()
         postfields += "&cust_id=" + cust_id;
+    }
     
     if(is_disable)
         return;
     button.addClass('disabled');
+
     $.ajax({
         url : '/truelab/index.php/customer/saveTransaction',
         method: 'POST',
@@ -278,6 +284,7 @@ function saveTransaction(event){
         success: function(response){
             var response = $.parseJSON(response)
             if(response.status == 'failure'){
+                readonlyFields.prop('disabled', true);
                 button.removeClass('disabled');
                 handleResultById({
                     success: false,

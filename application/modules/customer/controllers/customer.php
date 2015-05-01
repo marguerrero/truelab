@@ -318,7 +318,12 @@ class Customer extends MX_Controller {
         
         $customer_services = array();
         foreach ($query->result() as $key => $value) {
-            if($value->amount)
+            if($value->is_reprint == 1){
+                $this->load->config('results');
+                $amount = $this->config->item('reprint_price');
+                $price = $amount;
+            }
+            elseif($value->amount)
                 $price = $value->amount;
             else{
                 $price = $value->reg_price;
@@ -335,9 +340,10 @@ class Customer extends MX_Controller {
             $customer_services[] = array(
                 'category_id' => $value->main_test_id,
                 'subcat_id' => $value->subcat_id,
-                // 'has_discount' => ($value->has_discount) ? true : false,
+                'service_id' => $value->id,
                 'disc_type' => $value->disc_id,
                 'exported' => $value->exported,
+                'is_reprint' => $value->is_reprint,
                 'price' => $price
             );
         }
@@ -392,7 +398,7 @@ class Customer extends MX_Controller {
         foreach ($r->result() as $key => $value) 
             $result[] = $value;
         
-
+        
         $customer = array(
             'cust_id' => $result[0]->service_id,
             'firstname' => $result[0]->firstname,
@@ -408,6 +414,13 @@ class Customer extends MX_Controller {
         
         $services = array();
         $total = 0;
+
+
+        
+        $this->load->library('Service');
+        $service = $this->service;
+
+
         foreach ($result as $key => $value) {
             if($value->amount)
                 $price = $value->amount;
@@ -429,6 +442,12 @@ class Customer extends MX_Controller {
                     	break;
                 }
             }
+            $type = $service->checkServiceType($value->template_code);
+            
+            $reprint_url = "";
+            if($value->is_reprint)
+                $reprint_url = ($type == 'radtech') ? base_url('index.php/radtech/service/'.$value->id) : base_url('index.php/medtech/service/'.$value->id);;
+            
             
             $total += $price;
             $service_name = ($value->is_reprint) ? "{$value->subcateg} [REPRINT] " : $value->subcateg;
@@ -436,10 +455,15 @@ class Customer extends MX_Controller {
                 'count' => $key + 1,
                 'category' => $value->category,
                 'service' => $service_name,
-                'price' => number_format($price, 2, '.', '')
+                'price' => number_format($price, 2, '.', ''),
+                'is_reprint' => $value->is_reprint,
+                'reprint_url' => $reprint_url
+
             );
         }
-        
+        // echo '<pre>';
+        // print_r($services);
+        // die();
         $total = number_format($total, 2, '.', '');
         $retval = array(
             'customer' => $customer,
@@ -548,6 +572,10 @@ class Customer extends MX_Controller {
             $physician = $input->post('physician');
             $has_discount = $input->post('has-discount');
             $service_price = $input->post('service-price');
+            $is_reprint = $input->post('is_reprint');
+            $is_exported = $input->post('is_exported');
+            $cs_id = $input->post('cs_id');
+            
             //-- Validate User Here
             if(!$firstname){
                 $field = 'firstname';
@@ -635,20 +663,19 @@ class Customer extends MX_Controller {
                 $s_id = $value;
                 $d_type = $disc_type[$key];
                 $charged = $service_price[$key];
-                // $discount = $has_discount[$key];
-                // if($discount){
-                //      $d_type = $disc_type[$d_count];
-                //      if($d_type)
-                //         $d_count++;
-                // }
+                $reprinted = $is_reprint[$key];
+                $exported = $is_exported[$key];
+                $service_id_single = $cs_id[$key];
                 $service_entry = array(
+                    'id' => $service_id_single,
+                    'exported' => $exported,
+                    'is_reprint' => $reprinted,
                     'subcat_id' => $s_id,
                     'trans_id' => $trans_id,
                     'disc_id' => $d_type,
                     'amount' => $charged
                 );
                 $this->db->insert('customer_service', $service_entry);
-                    
             }
             $msg_info = "Successfully saved";
             

@@ -15,31 +15,31 @@ $(function(){
 				container.find('.service-cat').trigger('change');
 				container.find('.service-sub-cat').find('option[value="'+ value.subcat_id +'"]').prop('selected', true);
 				container.find('.service-sub-cat').trigger('change');
-				console.log(container);
-				console.log(value);
-				// container.find('.discount-type')
-				// 	.find("option")
-				// 	.removeAttr('option');
-
+				container.find('.cs-id').val(value.service_id);
 				setTimeout(function(){
 					container.find('.discount-type')
 						.find("option[value=" + value.disc_type + "]")
 						.prop('selected', true)
 						.trigger('change');
-						console.log('updated');
+					container.find('.service-price').val(value.price)
+					if(value.exported == '1'){
+						container.find('input').attr('readonly', true);
+						container.find('select').attr('disabled', true);
+						container.find('.remove-icon ').hide();
+						
+					}
 				}, 1000);
-				// container.find('.discount-type').trigger('change');
-				// if(value.has_discount){
-				// 	container.find('.service-discount').trigger('click');
-				// }
-				container.find('.service-price').val(value.price)
+				
 				if(value.exported == '1'){
 					container.find('input').attr('readonly', true);
-					container.find('select').attr('readonly', true);
+					container.find('select').attr('disabled', true);
 					container.find('.remove-icon ').hide();
-					// container.find('input').prop('disabled', true);
-					// container.find('select').prop('disabled', true);
+					container.find('.is-exported').val(1);
 				}
+				if(value.is_reprint == '1')
+					container.find('.is-reprint').val(1);
+				console.log(value);
+				console.log(container);
 			});
 		} 
 	});
