@@ -70,6 +70,6 @@ class RadiologyTemplate extends ServiceTemplate
         $this->create_table($signatures_rows, $column_styles);
 
         $this->ln(2);
-        $this->build_template_note();
+        $this->build_template_note("*** This is an electronically signed result. No need for signature");
     }
 }
