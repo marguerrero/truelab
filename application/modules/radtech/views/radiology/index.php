@@ -61,7 +61,7 @@
             <?php if($result['result_3']): ?>
                 <div class="col-md-12"><input type="text" class="form-control" name="result_3" value="<?=$result['result_3']; ?>" placeholder="Aorta is not enlarged"/></div><!--col-md-12-->
             <?php else : ?>
-                <div class="col-md-12"><input type="text" class="form-control" name="result_3" value="Aorta is not enlarged" placeholder="Aorta is not enlarged"/></div><!--col-md-12-->
+                <div class="col-md-12"><input type="text" class="form-control" name="result_3" value="Aorta is not dilated " placeholder="Aorta is not enlarged"/></div><!--col-md-12-->
             <?php endif; ?>
         </div><!--.row-->
         <div class="row" style="margin-top:20px; margin-bottom: 20px;">

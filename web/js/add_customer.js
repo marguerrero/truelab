@@ -259,7 +259,7 @@ function displaySubCategory(){
 }
 
 function saveTransaction(event){
-    var custfields = $('.form-1').serialize();
+    var postfields = $('.form-1').serialize();
         button = $(this),
         cust_id = $('#cust-id').val(),
         is_disable = button.hasClass('disabled');
