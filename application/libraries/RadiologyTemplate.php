@@ -31,7 +31,7 @@ class RadiologyTemplate extends ServiceTemplate
 
     protected function build_transaction_details()
     {
-        $this->Ln(7);
+        $this->Ln(1);
         
         $this->SetFont('helvetica', 'B', 9);
         

@@ -2,6 +2,30 @@
 
 
 class Tests extends MX_Controller {
+
+    //-- Invntory Testing
+    public function inventory(){
+        $this->load->library('InventoryEntity');
+        $inventory = $this->inventoryentity;
+
+        // $data = $inventory->loadData();
+        $service_id = 1;
+        $id = 3;
+        $inventory->setServiceId($service_id);
+        $data = $inventory->loadInventory();
+        // $inventory->setId($id);
+        // $data = $inventory->loadSingleData();
+        // $inventory->setId("3");
+        // $inventory->setCount("100");
+        // $inventory->setModifiedBy('reymar.guerrero');
+        // $inventory->setStatus('ADDED BY reymar from test');
+        // $inventory->setType('INCREMENT');
+        // $data = $inventory->update();
+        echo '<pre>';
+        print_r($data);
+        die();
+    }
+
     //-- Radiology PDF Template
     public function radiology(){
         $fullname = "Guerrero, Reymar Clabesillas";
@@ -17,15 +41,15 @@ class Tests extends MX_Controller {
         $result_2 = "Heart is not enlarged";
         $result_3 = "Aorta is not enlarged";
         $result_4 = "Trachea, diaphragm and sulci are intact.";
-
+        $result_5 = "AKSJDKLASJDKLJASKLDJASLKDJALS:JDKLASJDLKAJSLDK:JASL:D:asdfaasdfasdfasdfasdfasdfasdfasdfsdjfjkasdfasdjkfhasjkdhfjkasdhfjkhasdjkfhasdjkhfjaskdfjkasdjfklasdjfkljsdklfjasdklfjlk;sdjfl;k";
         $html = "<br />
-            <h1>CHEST PA VIEW</h1>
+            <h2 style='margin-top:0;'>CHEST PA VIEW</h2>
             <p>$result_1</p>
             <p>$result_2</p>
             <p>$result_3</p>
             <p>$result_4</p>
-            <h2>Impression</h2>
-            <h2>$result_5</h2>
+            <h3 style='margin-top:0;'>Impression</h3>
+            <h3>$result_5</h3>
         ";
         $template = new RadiologyTemplate("Radiology", $html);
         $template->set_name($fullname);

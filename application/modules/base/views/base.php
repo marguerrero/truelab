@@ -131,7 +131,7 @@
         <!-- <li><a class="<?=$access['reprint_service'];?>" href="<?php echo base_url('index.php/customer/');?>">Reprint Results</a></li> -->
         <li><a class="<?=$access['rad_tech'];?>" href="<?php echo base_url('index.php/radtech');?>">Rad Tech</a></li>
         <li><a class="<?=$access['med_tech'];?>" href="<?php echo base_url('index.php/medtech');?>">Med Tech</a></li>
-        <!-- <li><a href="#">Inventory</a></li> -->
+        <li><a class="<?=$access['inventory'];?>" href="<?php echo base_url('index.php/inventory');?>">Inventory</a></li>
         <!-- <li><a href="#">Sales Report</a></li> -->
 
       </ul><!--.nav-sidebar-->
@@ -144,7 +144,20 @@
 </div>
 
 <script type="text/javascript">
-  
+  function handleResult(data) {
+        var el = $('#'+ data.id);
+        var addClass = (data.success) ? 'alert-success' : 'alert-danger';
+
+        el.removeClass('alert-success').removeClass('alert-danger');
+        el.addClass(addClass);
+        el.find('p').text(data.msg);
+
+        el.slideDown(400, function() {
+            setTimeout(function() {
+                el.slideUp();
+            }, 5000);
+        });
+    }
 
 </script>
 </body>

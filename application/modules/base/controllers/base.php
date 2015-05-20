@@ -16,7 +16,8 @@ class Base extends MX_Controller {
                     'add_customer' => "",
                     'edit_customer' => "",
                     'rad_tech' => "",
-                    'med_tech' => ""
+                    'med_tech' => "",
+                    'inventory' => ""
                 );
                 break;
             case 'user':
@@ -27,7 +28,8 @@ class Base extends MX_Controller {
                     'add_customer' => "",
                     'edit_customer' => "",
                     'rad_tech' => "hidden",
-                    'med_tech' => "hidden"
+                    'med_tech' => "hidden",
+                    'inventory' => "hidden"
                 );
                 break;
             case 'rad_tech':
@@ -49,7 +51,8 @@ class Base extends MX_Controller {
                     'add_customer' => "hidden",
                     'edit_customer' => "hidden",
                     'rad_tech' => "hidden",
-                    'med_tech' => ""
+                    'med_tech' => "",
+                    'inventory' => "hidden"
                 );
                 break;
             default:

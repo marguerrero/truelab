@@ -576,6 +576,7 @@ class Customer extends MX_Controller {
             $is_exported = $input->post('is_exported');
             $cs_id = $input->post('cs_id');
             
+
             //-- Validate User Here
             if(!$firstname){
                 $field = 'firstname';
@@ -605,6 +606,7 @@ class Customer extends MX_Controller {
             }
 
             //-- Save entry to customer database
+
             if(!$cust_id){
                 $cust_id = $this->_fetchPK('cust_list');
                 $customer = array(
@@ -643,11 +645,36 @@ class Customer extends MX_Controller {
                 'cust_id' => $cust_id,
                 'physician' => $physician
             );
+
+            $this->load->library('InventoryEntity');
+            $inventory = $this->inventoryentity;
             if(!$reference_no){
                 $transaction['id'] = $trans_id;
                 $this->db->insert('customer_transaction', $transaction);
             }
             else {
+                $previous_service = $this->db->get_where('customer_service', array('trans_id' => $trans_id));
+                if($previous_service->num_rows()){
+                    foreach ($previous_service->result() as $key => $value) {
+                        
+                        $inventory->setServiceId($value->subcat_id);
+                        $i_data = $inventory->loadInventory();
+                        
+                        if($i_data){
+                            foreach ($i_data as $k => $v) {
+                                $inventory->setId($v['i_id']);
+                                $inventory->setCount($v['count']);
+                                $inventory->setModifiedBy($session_data['username']);
+                                $inventory->setStatus('Updated After transaction');
+                                $inventory->setType('INCREMENT');
+                                $inventory->save();
+                            }
+                        }
+                        
+                        
+                    }
+                }
+                
                 $this->db->where('trans_id', $trans_id);
                 $this->db->delete('customer_service'); 
                 $this->db->flush_cache();
@@ -656,9 +683,9 @@ class Customer extends MX_Controller {
                 $this->db->flush_cache();
             }
 
-
             //-- Save entries to customer service
             $d_count = 0;
+            
             foreach ($services as $key => $value) {
                 $s_id = $value;
                 $d_type = $disc_type[$key];
@@ -676,6 +703,21 @@ class Customer extends MX_Controller {
                     'amount' => $charged
                 );
                 $this->db->insert('customer_service', $service_entry);
+
+                //-- Decreement inventory if available
+                $inventory->setServiceId($s_id);
+                $data = $inventory->loadInventory();
+                
+                if($data){
+                    foreach ($data as $key => $value) {
+                        $inventory->setId($value['i_id']);
+                        $inventory->setCount($value['count']);
+                        $inventory->setModifiedBy($session_data['username']);
+                        $inventory->setStatus('Updated After transaction');
+                        $inventory->setType('DECREMENT');
+                        $inventory->save();
+                    }
+                }
             }
             $msg_info = "Successfully saved";
             
