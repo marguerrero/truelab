@@ -48,6 +48,9 @@
                         <input name="bday" class="datepicker" type="text" class="form-control" id="cust-bday" placeholder="Customer's Birthday">
                     </div>
                 </div><!--.form-group-->
+                <div id="bday-alert" class="alert alert-success col-sm-offset-2 col-sm-10" role="alert" style="display: none; float: left;">
+                    <strong></strong><p></p>
+                </div>
                 <div class="form-group">
                     <label for="birthday" class="col-sm-2 control-label">Age</label>
                     <div class="col-sm-3">

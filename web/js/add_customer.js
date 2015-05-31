@@ -227,7 +227,17 @@ function calculateAge(){
          bday = new Date($('#cust-bday').val()),
          partial_age = today - bday,
          age = Math.floor(partial_age/31557600000);
-    $('#cust-age').val(age);
+    // $('#cust-age').val(0);
+    
+    if(!isNaN(age))
+        $('#cust-age').val(age);
+    else{
+        $('#cust-bday').val(null);
+        handleResultById({
+            success: false,
+            msg: "Invalid date format. Please use DD-MM-YYYY."
+        }, 'bday-alert');
+    }
     return;
 }
 

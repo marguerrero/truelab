@@ -163,10 +163,22 @@ try
         );
         $total += $amount;
     }
-    //-- Generate sales report data
+    $full_data[] = $data;
+    //-- Generate inventory report data
     // $data = $result;
-
-
+    $sql = " SELECT * FROM inventory ";
+    $result = $conn->query($sql);
+    $data = array();
+    $total_inv = 0;
+    while($row = $result->fetch_assoc()) {
+        $total_inv += $row['count'];
+        $data[] = array(
+            'name' => $row['description'],
+            'count' => $row['count']
+        );
+    }
+    $full_data[] = $data;
+    
     //-- Configuration for Report Generation
     $upper_area = array();
     $upper_area[] = array('label' => 'Report Type', 'value' =>$report_type);
@@ -175,18 +187,27 @@ try
     $lower_area = array();
     $lower_area[] = array('label' => 'Total Sales', 'value' => $total );
 
+    $lower_area_2 = array();
+    $lower_area_2[] = array('label' => 'Total Items', 'value' => $total_inv );
+
     $suffix = date("Y-m-d");
     $config = array();
-    $config['header'] = array('First Name', 'Last Name' , 'Receipt No', 'Transaction Date', 'Service', 'Category','Discount Type' ,'Amount');
+    $config['header'][] = array('First Name', 'Last Name' , 'Receipt No', 'Transaction Date', 'Service', 'Category','Discount Type' ,'Amount');
+    $config['header'][] = array('Inventory', 'Quantity');
+
+    $config['title'][] = "Sales Report";
+    $config['title'][] = "Invetory Report";
     $config['excel_class'] = 'Excel5';
     $config['filename'] = __cnPREFIX_FILENAME__."-$report_type-$suffix.xls";
     $config['directory'] = __cn_REPORT_DIR__;
     $config['upper_area'] = $upper_area;
-    $config['lower_area'] = $lower_area;
+    $config['lower_area'][] = $lower_area;
+    $config['lower_area'][] = $lower_area_2;
 
     //--Saves the generated data to local which wil be used as attachment
-    $report_generation = new ReportGeneration($data, $config);
-    $report_generation->generate();
+    // $report_generation = new ReportGeneration($data, $config);
+    $report_generation = new ReportGeneration($full_data, $config);
+    $report_generation->generateMultipleTab();
 
     $filename = $config['directory']."/".$config['filename'];
     
@@ -199,14 +220,14 @@ try
     $mail->Subject = "Truelab Clinic Diagnostic Sales Reports [$report_type]- " . date('Y-m-d');
     $mail->AddAttachment('reports/'.$config['filename']);
     
-    if($mail->Send())
-    {
-        die('Email sent');
-    }
-    else
-    {
-        die('Email not sent');
-    }
+    // if($mail->Send())
+    // {
+    //     die('Email sent');
+    // }
+    // else
+    // {
+    //     die('Email not sent');
+    // }
 
     echo "sent \n " ;
 }

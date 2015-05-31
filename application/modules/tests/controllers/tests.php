@@ -11,9 +11,10 @@ class Tests extends MX_Controller {
         // $data = $inventory->loadData();
         $service_id = 1;
         $id = 3;
-        $inventory->setServiceId($service_id);
-        $data = $inventory->loadInventory();
-        // $inventory->setId($id);
+        // $inventory->setServiceId($service_id);
+        $inventory->setId($id);
+        $data = $inventory->loadServices();
+        // $data = $inventory->loadInventory();
         // $data = $inventory->loadSingleData();
         // $inventory->setId("3");
         // $inventory->setCount("100");

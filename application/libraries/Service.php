@@ -29,6 +29,26 @@ class Service{
         return $receipt_no;
     }
 
+    public function fetchCategories(){
+        $r = array();
+        try{
+            $cat = $this->ci->db->get('categ_main');
+            if(!$cat->num_rows())
+                throw new Exception("No Categories found", 1);
+            foreach ($cat->result() as $key => $value) {
+                $r[] = array(
+                    'id' => $value->main_test_id,
+                    'name' => $value->category
+                );
+            }
+                    
+        } catch(Exception $e){
+            $r = array();
+        }
+        return $r;
+    }
+
+
     public function checkServiceType($s_code = ""){
         
         $r = false;
@@ -42,8 +62,6 @@ class Service{
                 $$key = $value;
             }
             
-            // $rad_group = array('RD', 'UTZ');
-            // $med_group = array('')
             if(in_array($s_code, $rad_group))
                 $r = "radtech";
             if(in_array($s_code, $med_group))
