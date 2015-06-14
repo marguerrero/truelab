@@ -1,5 +1,10 @@
 <div class="row">
     <h1>Rad Tech Services</h1>
+    <div class="row">
+        <div class="col-sm-3 pull-right">
+            <div class="checkbox pull-right"><input class="auto-refresh" type="checkbox"> Auto Refresh</div>
+        </div>
+    </div><!--/.row-->
     <table class="table" id="customer-transaction">
         <thead>
             <tr>

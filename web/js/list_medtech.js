@@ -1,4 +1,5 @@
 $(function(){
+    $('.auto-refresh').click(reloadTable);
 	var customerTransactionTable = null;
 	 customerTransactionTable = $('#customer-transaction').DataTable({
         "ajax": "/truelab/index.php/medtech/loadTransaction",
@@ -10,12 +11,15 @@ $(function(){
             { "data": "show" }
         ]
     });
-    setTimeout(reloadTable, 5000);
+    setTimeout(reloadTable, 15000);
 
     function reloadTable(){
-        console.log('reloading');
-        customerTransactionTable.ajax.reload();
-        setTimeout(reloadTable, 5000);
+        var autoRefresh = $('.auto-refresh').is(':checked');
+        if(autoRefresh){
+            customerTransactionTable.ajax.reload();
+            setTimeout(reloadTable, 15000);
+            console.log('reloaded');
+        }
     }
 })
 
