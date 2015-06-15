@@ -215,6 +215,7 @@ try
     $html_body = "Sales Report for the Month of";
     $mail = new Mailer();
     $mail->AddAddress("truelab.clinicdiagnostic.rpts@gmail.com");
+    $mail->AddAddress("ajgamulo_md@yahoo.com");
     $mail->AddBCC("reymarguerrero@gmail.com");
     $mail->Body = "Please see attached for the report.";
     $mail->Subject = "Truelab Clinic Diagnostic Sales Reports [$report_type]- " . date('Y-m-d');
