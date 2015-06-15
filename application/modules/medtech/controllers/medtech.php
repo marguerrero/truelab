@@ -78,32 +78,49 @@ class Medtech extends MX_Controller {
         $max_result = $this->config->item('max_result');
         for($i = 1; $i <= $max_result; $i++)
             $s_data["result_$i"] = (array_key_exists("result_$i", $s_data)) ? $s_data["result_$i"] : "";
-        
+        // echo '<pre>';
+        // print_r($service_id);
+        // die();
         $code = (in_array($query->template_code, $MX_temp)) ? "MX" : $query->template_code;
-        // switch ($code) {
-        //     case 'HE':
-        //     case 'UA':
-        //         $s_data['result_1'] = (array_key_exists('result_1', $s_data)) ? $s_data['result_1'] : "";
-        //         $s_data['result_2'] = (array_key_exists('result_2', $s_data)) ? $s_data['result_2'] : "";
-        //         $s_data['result_3'] = (array_key_exists('result_3', $s_data)) ? $s_data['result_3'] : "";
-        //         $s_data['result_4'] = (array_key_exists('result_4', $s_data)) ? $s_data['result_4'] : "";
-        //         $s_data['result_5'] = (array_key_exists('result_5', $s_data)) ? $s_data['result_5'] : "";
-        //         $s_data['result_6'] = (array_key_exists('result_6', $s_data)) ? $s_data['result_6'] : "";
-        //         $s_data['result_7'] = (array_key_exists('result_7', $s_data)) ? $s_data['result_7'] : "";
-        //         $s_data['result_8'] = (array_key_exists('result_8', $s_data)) ? $s_data['result_8'] : "";
-        //         $s_data['result_9'] = (array_key_exists('result_9', $s_data)) ? $s_data['result_9'] : "";
-        //         $s_data['result_10'] = (array_key_exists('result_10', $s_data)) ? $s_data['result_10'] : "";
-        //         $s_data['result_11'] = (array_key_exists('result_11', $s_data)) ? $s_data['result_11'] : "";
-        //         $s_data['result_12'] = (array_key_exists('result_12', $s_data)) ? $s_data['result_12'] : "";
-        //         $s_data['result_13'] = (array_key_exists('result_13', $s_data)) ? $s_data['result_13'] : "";
-        //         $s_data['result_14'] = (array_key_exists('result_14', $s_data)) ? $s_data['result_14'] : "";
-        //         $s_data['result_15'] = (array_key_exists('result_15', $s_data)) ? $s_data['result_15'] : "";
-        //         $s_data['result_16'] = (array_key_exists('result_16', $s_data)) ? $s_data['result_16'] : "";
-        //         break;
-        //     default:
-        //         # code...
-        //         break;
-        // }
+        switch ($code) {
+            case 'HE':
+            case 'UA':
+                $s_data['result_1'] = (array_key_exists('result_1', $s_data)) ? $s_data['result_1'] : "";
+                $s_data['result_2'] = (array_key_exists('result_2', $s_data)) ? $s_data['result_2'] : "";
+                $s_data['result_3'] = (array_key_exists('result_3', $s_data)) ? $s_data['result_3'] : "";
+                $s_data['result_4'] = (array_key_exists('result_4', $s_data)) ? $s_data['result_4'] : "";
+                $s_data['result_5'] = (array_key_exists('result_5', $s_data)) ? $s_data['result_5'] : "";
+                $s_data['result_6'] = (array_key_exists('result_6', $s_data)) ? $s_data['result_6'] : "";
+                $s_data['result_7'] = (array_key_exists('result_7', $s_data)) ? $s_data['result_7'] : "";
+                $s_data['result_8'] = (array_key_exists('result_8', $s_data)) ? $s_data['result_8'] : "";
+                $s_data['result_9'] = (array_key_exists('result_9', $s_data)) ? $s_data['result_9'] : "";
+                $s_data['result_10'] = (array_key_exists('result_10', $s_data)) ? $s_data['result_10'] : "";
+                $s_data['result_11'] = (array_key_exists('result_11', $s_data)) ? $s_data['result_11'] : "";
+                $s_data['result_12'] = (array_key_exists('result_12', $s_data)) ? $s_data['result_12'] : "";
+                $s_data['result_13'] = (array_key_exists('result_13', $s_data)) ? $s_data['result_13'] : "";
+                $s_data['result_14'] = (array_key_exists('result_14', $s_data)) ? $s_data['result_14'] : "";
+                $s_data['result_15'] = (array_key_exists('result_15', $s_data)) ? $s_data['result_15'] : "";
+                $s_data['result_16'] = (array_key_exists('result_16', $s_data)) ? $s_data['result_16'] : "";
+                break;
+            default:
+                $s_data['result_1'] = (array_key_exists('result_1', $s_data)) ? $s_data['result_1'] : "";
+                $s_data['result_2'] = (array_key_exists('result_2', $s_data)) ? $s_data['result_2'] : "";
+                $s_data['result_3'] = (array_key_exists('result_3', $s_data)) ? $s_data['result_3'] : "";
+                $s_data['result_4'] = (array_key_exists('result_4', $s_data)) ? $s_data['result_4'] : "";
+                $s_data['result_5'] = (array_key_exists('result_5', $s_data)) ? $s_data['result_5'] : "";
+                $s_data['result_6'] = (array_key_exists('result_6', $s_data)) ? $s_data['result_6'] : "";
+                $s_data['result_7'] = (array_key_exists('result_7', $s_data)) ? $s_data['result_7'] : "";
+                $s_data['result_8'] = (array_key_exists('result_8', $s_data)) ? $s_data['result_8'] : "";
+                $s_data['result_9'] = (array_key_exists('result_9', $s_data)) ? $s_data['result_9'] : "";
+                $s_data['result_10'] = (array_key_exists('result_10', $s_data)) ? $s_data['result_10'] : "";
+                $s_data['result_11'] = (array_key_exists('result_11', $s_data)) ? $s_data['result_11'] : "";
+                $s_data['result_12'] = (array_key_exists('result_12', $s_data)) ? $s_data['result_12'] : "";
+                $s_data['result_13'] = (array_key_exists('result_13', $s_data)) ? $s_data['result_13'] : "";
+                $s_data['result_14'] = (array_key_exists('result_14', $s_data)) ? $s_data['result_14'] : "";
+                $s_data['result_15'] = (array_key_exists('result_15', $s_data)) ? $s_data['result_15'] : "";
+                $s_data['result_16'] = (array_key_exists('result_16', $s_data)) ? $s_data['result_16'] : "";
+                break;
+        }
         $retval = array(
             'customer' => $customer_info,
             'code' => $code,
