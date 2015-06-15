@@ -40,7 +40,8 @@ class Base extends MX_Controller {
                     'add_customer' => "hidden",
                     'edit_customer' => "hidden",
                     'rad_tech' => "",
-                    'med_tech' => "hidden"
+                    'med_tech' => "hidden",
+                    'inventory' => "hidden"
                 );
                 break;
             case 'med_tech':
